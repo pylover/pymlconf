@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 import os
+import re
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-from pymlconf import __version__ as package_version
+# reading pymlconf version (same way sqlalchemy does)
+v_file = open(os.path.join(os.path.dirname(__file__),
+                        'pymlconf', '__init__.py'))
+package_version = re.compile(r".*__version__ = '(.*?)'",
+                     re.S).match(v_file.read()).group(1)
+v_file.close()
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
