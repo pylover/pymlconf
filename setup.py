@@ -7,6 +7,15 @@ except ImportError:
 
 from pymlconf import __version__ as package_version
 
+
+dependencies = ['pyyaml>=3.10']
+
+try:
+    from collections import OrderedDict
+except:
+    dependencies.append('ordereddict')
+
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
@@ -22,7 +31,7 @@ setup(
     packages=["pymlconf"],
     platforms=["any"],
     long_description=read('README.txt'),
-    install_requires=['pyyaml>=3.10'],
+    install_requires=dependencies,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: Freeware",
