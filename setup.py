@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 try:
     from setuptools import setup
 except ImportError:
@@ -10,9 +11,7 @@ from pymlconf import __version__ as package_version
 
 dependencies = ['pyyaml>=3.10']
 
-try:
-    from collections import OrderedDict
-except:
+if sys.version_info < (2, 7):
     dependencies.append('ordereddict')
 
 
