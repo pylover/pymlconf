@@ -7,8 +7,6 @@ try:
 except ImportError:
     from distutils.core import setup
 
-from pymlconf import __version__ as package_version
-
 # reading pymlconf version (same way sqlalchemy does)
 with open(os.path.join(os.path.dirname(__file__),'pymlconf', '__init__.py')) as v_file:
     package_version = re.compile(r".*__version__ = '(.*?)'",re.S).match(v_file.read()).group(1)
