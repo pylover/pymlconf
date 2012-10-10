@@ -47,11 +47,7 @@ class ConfigDict(MergableDict, ConfigNode):
             ns = namespaces[0]
             if ns not in self:
                 self[ns] = ConfigDict()
-            try:
-                return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
-            except AttributeError:
-                raise
-                
+            return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])                
         else:
             return self
 

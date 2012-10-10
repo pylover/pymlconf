@@ -25,7 +25,7 @@ setup(
     version=package_version,
     author="Vahid Mardani",
     author_email="vahid.mardani@gmail.com",
-    url="http://packages.python.org/pymlconf",
+    url="http://github.com/pylover/pymlconf",
     description="Python high level configuration library",
     maintainer="Vahid Mardani",
     maintainer_email="vahid.mardani@gmail.com",

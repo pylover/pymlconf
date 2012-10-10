@@ -15,8 +15,6 @@ def load_yaml(filepath):
         return load(_normalize(stream.read()), Loader)
     finally:
         stream.close()
-#    with open(filepath) as stream:
-#        return load(_normalize(stream.read()), Loader)
 
 def load_string(str_data):
     return load(_normalize(str_data), Loader)

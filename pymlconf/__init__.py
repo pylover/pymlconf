@@ -6,7 +6,7 @@ from ConfigDict import ConfigDict
 from ConfigManager import ConfigManager
 from errors import ConfigurationError
 
-__version__ = '0.2.8'
+__version__ = '0.2.9a'
 
 __all__ = ['ConfigManager',
          'ConfigList',
