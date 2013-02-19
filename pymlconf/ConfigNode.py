@@ -1,5 +1,6 @@
 
-from mergable import Mergable
+from pymlconf.mergable import Mergable
+
 
 class ConfigNode(Mergable):
     pass

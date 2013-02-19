@@ -1,22 +1,23 @@
 
-
-from ConfigDict import ConfigDict
-from yaml_helper import load_yaml, load_string
 import os
+
+from pymlconf.ConfigDict import ConfigDict
+from pymlconf.yaml_helper import load_yaml, load_string
+
 
 class ConfigManager(ConfigDict):
     """
     The main class to using the pymlconf package.
-        
+
     Parameters::
         init_value: Initial configuration value that you can pass it before reading the files and directories.can be 'yaml string' or python dictionary.
-            
-        dirs: Python list  or a string that contains comma separated list of directories which contains config files with \*.conf extension. 
-        
+
+        dirs: Python list  or a string that contains comma separated list of directories which contains config files with \*.conf extension.
+
         files: Python list  or a string that contains comma separated list of files which contains yaml config entries.
-                
+
     Example::
-        
+
         from pymlconf import ConfigManager
         from os import path
         config =  ConfigManager('''
@@ -24,10 +25,10 @@ class ConfigManager(ConfigDict):
                 host: localhost
                 port: 4455
             ''','conf','builtins/defaults.conf')
-        
+
         print config.server.host
         print config.server.port
-    
+
     """
     # Operations
     def __init__(self, init_value=None, dirs=None, files=None):
@@ -44,17 +45,16 @@ class ConfigManager(ConfigDict):
                 raise Exception("Invalid config value")
         if dirs:
             if isinstance(dirs, basestring):
-                dirs = [d.strip() for d in  dirs.split(';')]
+                dirs = [d.strip() for d in dirs.split(';')]
             self.load_dirs(*dirs)
         if files:
             if isinstance(files, basestring):
-                files = [f.strip() for f in  files.split(';')]
+                files = [f.strip() for f in files.split(';')]
             self._load_files(files)
-    
-    
+
     def load_files(self, *files):
         self._load_files(files)
-        
+
     def _load_files(self, files, filename_as_namespace=False):
         """
         load files which contains yaml config entries.and merge it by current ConfigManager instance
@@ -72,17 +72,15 @@ class ConfigManager(ConfigDict):
             else:
                 node = self
             node.merge(load_yaml(f))
-    
+
     def load_dirs(self, *dirs):
         """
-        load directories which contains config files with \*.conf extension, and merge it by current ConfigManager instance        
+        load directories which contains config files with \*.conf extension, and merge it by current ConfigManager instance
         """
-        candidate_files = []       
+        candidate_files = []
         for d in dirs:
             for (path, dirs, files) in os.walk(d):
                 for f in files:
                     if f.endswith('.conf'):
                         candidate_files.append(os.path.join(path, f))
         self._load_files(candidate_files, filename_as_namespace=True)
-
-

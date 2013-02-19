@@ -1,7 +1,7 @@
 
 
 import unittest
-from TestConfigManager import TestConfigManager
+from tests.TestConfigManager import TestConfigManager
 
 __all__ = ['TestConfigManager']
 

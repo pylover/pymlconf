@@ -1,13 +1,14 @@
 
-from mergable import MergableDict
-from ConfigNode import ConfigNode
-from errors import ConfigKeyError
-from yaml_helper import load_string
+from pymlconf.mergable import MergableDict
+from pymlconf.ConfigNode import ConfigNode
+from pymlconf.errors import ConfigKeyError
+from pymlconf.yaml_helper import load_string
+
 
 class ConfigDict(MergableDict, ConfigNode):
 
     def __init__(self, data=None):
-        
+
         def _normalize(d):
             for k, v in d.items():
                 if isinstance(v, dict) and not isinstance(v, ConfigDict):
@@ -23,14 +24,13 @@ class ConfigDict(MergableDict, ConfigNode):
         else:
             MergableDict.__init__(self)
         ConfigNode.__init__(self)
-        
-    
+
     def merge(self, *args):
         for data in args:
             if isinstance(data, str):
                 data = load_string(data)
             super(ConfigDict, self).merge(ConfigDict(data))
-            
+
     def __getattr__(self, key):
         if key in self:
             return self.get(key)
@@ -41,13 +41,13 @@ class ConfigDict(MergableDict, ConfigNode):
             self.__dict__[key] = value
         else:
             self[key] = value
-    
+
     def _ensure_namespaces(self, *namespaces):
         if namespaces:
             ns = namespaces[0]
             if ns not in self:
                 self[ns] = ConfigDict()
-            return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])                
+            return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
         else:
             return self
 
