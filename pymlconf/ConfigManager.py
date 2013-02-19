@@ -4,6 +4,14 @@ import os
 from pymlconf.ConfigDict import ConfigDict
 from pymlconf.yaml_helper import load_yaml, load_string
 
+# For compatibility with python3
+# TODO: When support for python 2.x is dropped,
+# get rid of the import as well as substitute all basestring with str
+try:
+    basestring
+except NameError:
+    basestring = str
+
 
 class ConfigManager(ConfigDict):
     """
