@@ -10,7 +10,7 @@ class ConfigDict(MergableDict, ConfigNode):
     def __init__(self, data=None):
 
         def _normalize(d):
-            for k, v in d.items():
+            for k, v in list(d.items()):
                 if isinstance(v, dict) and not isinstance(v, ConfigDict):
                     yield k, ConfigDict(v)
                 else:
