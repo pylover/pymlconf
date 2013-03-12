@@ -8,14 +8,15 @@ except ImportError:
     from distutils.core import setup
 
 # reading pymlconf version (same way sqlalchemy does)
-with open(os.path.join(os.path.dirname(__file__),'pymlconf', '__init__.py')) as v_file:
-    package_version = re.compile(r".*__version__ = '(.*?)'",re.S).match(v_file.read()).group(1)
+with open(os.path.join(os.path.dirname(__file__), 'pymlconf', '__init__.py')) as v_file:
+    package_version = re.compile(r".*__version__ = '(.*?)'", re.S).match(v_file.read()).group(1)
 
 dependencies = ['pyyaml>=3.10']
 
 # checking for current python version to add legacy `ordereddict` module into dependencies
 if sys.version_info < (2, 7):
     dependencies.append('ordereddict')
+
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -40,6 +41,9 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
         'Topic :: Software Development :: Libraries'
-        ],
-    )
+    ],
+    test_suite='tests'
+)
