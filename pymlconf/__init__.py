@@ -6,7 +6,7 @@ from pymlconf.ConfigDict import ConfigDict
 from pymlconf.ConfigManager import ConfigManager
 from pymlconf.errors import ConfigurationError
 
-__version__ = '0.2.9a'
+__version__ = '0.2.10a'
 
 __all__ = ['ConfigManager',
            'ConfigList',
