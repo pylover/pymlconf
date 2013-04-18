@@ -24,6 +24,8 @@ class ConfigManager(ConfigDict):
 
         files: Python list  or a string that contains comma separated list of files which contains yaml config entries.
 
+        filename_as_namespace: when loading dirs, use the filename as a namespace.
+
     Example::
 
         from pymlconf import ConfigManager
@@ -39,7 +41,7 @@ class ConfigManager(ConfigDict):
 
     """
     # Operations
-    def __init__(self, init_value=None, dirs=None, files=None):
+    def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True):
         ConfigDict.__init__(self)
         if init_value:
             if isinstance(init_value, (list, tuple)):
@@ -54,7 +56,7 @@ class ConfigManager(ConfigDict):
         if dirs:
             if isinstance(dirs, basestring):
                 dirs = [d.strip() for d in dirs.split(';')]
-            self.load_dirs(*dirs)
+            self.load_dirs(dirs, filename_as_namespace=filename_as_namespace)
         if files:
             if isinstance(files, basestring):
                 files = [f.strip() for f in files.split(';')]
@@ -81,7 +83,7 @@ class ConfigManager(ConfigDict):
                 node = self
             node.merge(load_yaml(f))
 
-    def load_dirs(self, *dirs):
+    def load_dirs(self, dirs, filename_as_namespace=True):
         """
         load directories which contains config files with \*.conf extension, and merge it by current ConfigManager instance
         """
@@ -90,4 +92,4 @@ class ConfigManager(ConfigDict):
             full_paths = (os.path.join(d, f) for f in os.listdir(d))
             conf_files = (f for f in full_paths if (os.path.isfile(f) or os.path.islink(f)) and f.endswith('.conf'))
             candidate_files.extend(sorted(conf_files))
-        self._load_files(candidate_files, filename_as_namespace=True)
+        self._load_files(candidate_files, filename_as_namespace=filename_as_namespace)
