@@ -11,7 +11,7 @@ from pymlconf import ConfigDict, ConfigList, ConfigManager, ConfigNode
 this_dir = os.path.abspath(os.path.dirname(__file__))
 conf_dir = os.path.join(this_dir, 'conf')
 
-
+'''
 class TestConfigManager(unittest.TestCase):
 
     def setUp(self):
@@ -91,3 +91,4 @@ class TestConfigManager(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=5)
+'''
