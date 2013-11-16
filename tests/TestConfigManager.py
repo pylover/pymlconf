@@ -8,8 +8,8 @@ import os
 import unittest
 from pymlconf import ConfigDict, ConfigList, ConfigManager, ConfigNode
 
-instance_dir = os.path.abspath(os.path.dirname(__file__))
-conf_dir = os.path.join(instance_dir, 'conf')
+this_dir = os.path.abspath(os.path.dirname(__file__))
+conf_dir = os.path.join(this_dir, 'conf')
 
 
 class TestConfigManager(unittest.TestCase):
@@ -90,4 +90,4 @@ class TestConfigManager(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=5)
