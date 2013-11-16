@@ -1,7 +1,7 @@
 
 import os
 
-from pymlconf.ConfigDict import ConfigDict
+from pymlconf.config_dict import ConfigDict
 from pymlconf.yaml_helper import load_yaml, load_string
 
 # For compatibility with python3

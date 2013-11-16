@@ -1,5 +1,5 @@
 
-from pymlconf.ConfigNode import ConfigNode
+from pymlconf.config_node import ConfigNode
 from pymlconf.mergable import MergableList
 
 

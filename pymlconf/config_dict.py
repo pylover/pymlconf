@@ -1,6 +1,6 @@
 
 from pymlconf.mergable import MergableDict
-from pymlconf.ConfigNode import ConfigNode
+from pymlconf.config_node import ConfigNode
 from pymlconf.errors import ConfigKeyError
 from pymlconf.yaml_helper import load_string
 
