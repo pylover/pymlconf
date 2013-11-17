@@ -6,7 +6,6 @@ Created on Nov 17, 2013
 '''
 import unittest
 import string
-import io
 if __name__ == '__main__' and not __package__:
     from os import path,sys
     sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
