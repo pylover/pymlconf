@@ -34,6 +34,30 @@ logging:
         
         cm = ConfigManager(init_value=self._builtin)
         
+        # testing merge
+        additinal_config="""
+my_section:
+    item1:    hi
+app:
+    listen:
+        sock3:
+            addr: 10.8.0.2
+            port: 9090
+"""
+        cm.merge(additinal_config)
+        self.assertEqual(cm.app.name, "MyApp")
+        self.assertEqual(len(cm.app.listen), 3)
+        self.assertEqual(cm.app.listen.sock1.addr, "192.168.0.1")
+        self.assertEqual(cm.app.listen.sock1.port, 8080)
+        self.assertEqual(cm.app.listen.sock2.addr, "127.0.0.1")
+        self.assertEqual(cm.app.listen.sock2.port, '89')
+        self.assertEqual(cm.app.listen.sock3.addr, "10.8.0.2") #Issue 7
+        self.assertEqual(cm.app.listen.sock3.port, 9090) #Issue 7
+        self.assertEqual(cm.logging.logfile, "/var/log/myapp.log")
+                
+        self.assertEqual(cm.my_section.item1, "hi") 
+
+        # testing replace
         additinal_config="""
 my_section:
     item1:    hi
@@ -42,7 +66,7 @@ app:
 """
         cm.merge(additinal_config)
         self.assertEqual(cm.my_section.item1, "hi")
-#        self.assertEqual(cm.app.listen, False) #Issue 7
+        self.assertEqual(cm.app.listen, False) #Issue 7
         
         
         
