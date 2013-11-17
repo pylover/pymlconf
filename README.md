@@ -34,10 +34,6 @@
 	# iran
 	# /var/log/myapp.log
 	
-### Merging
-	
-		
-
 ### Installation
 
 Latest stable version:
@@ -63,5 +59,6 @@ You can find the canonical syntax reference on [PyYAML](http://pyyaml.org/wiki/P
 
 ### Documentation
 
-    
+[pythonhosted.org] (http://pythonhosted.org/pymlconf/)
+[readthedocs.org] (http://pymlconf.readthedocs.org/en/latest/)
 
