@@ -5,6 +5,8 @@ Created on Nov 17, 2013
 @author: vahid
 '''
 import unittest
+import string
+import io
 if __name__ == '__main__' and not __package__:
     from os import path,sys
     sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
@@ -13,6 +15,9 @@ if __name__ == '__main__' and not __package__:
     
 from ..__init__ import ConfigManager
 
+class MyWriter(object):
+    def write(self,t):
+        print(t)
 
 class Test(unittest.TestCase):
 
@@ -30,10 +35,13 @@ app:
     languages:
         - english
         - {language: persian, country: iran}
+    
         
 logging:
     logfile: /var/log/myapp.log
-'''
+    formatter: !!python/name:string.strip
+    writer: !!python/object:%s.MyWriter {}
+''' % __name__
 
 
     def test_simple_syntax(self):
@@ -54,7 +62,8 @@ logging:
         self.assertEqual(cm.app.languages[0],'english')
         self.assertEqual(cm.app.languages[1].language,'persian')
         self.assertEqual(cm.app.languages[1].country,'iran')
-        
+        self.assertEqual(cm.logging.formatter, string.strip)
+        self.assertTrue(isinstance(cm.logging.writer,MyWriter))
 #Aims to test `ConfigDict` and `ConfigList`        
 
 
