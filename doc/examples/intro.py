@@ -34,7 +34,5 @@ print cfg.logfile
 # english
 # iran
 # /var/log/myapp.log
- 
-
 
 
