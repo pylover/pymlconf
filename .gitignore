@@ -30,3 +30,4 @@ pip-log.txt
 .settings
 .pydevproject
 .project
+doc/_build

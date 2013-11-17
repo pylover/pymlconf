@@ -8,7 +8,6 @@ __version__ = '0.3.0a'
 __all__ = ['ConfigManager',
            'ConfigList',
            'ConfigDict',
-           'ConfigNode',
            'ConfigurationError']
 
 

@@ -1,6 +1,13 @@
 
 import os
 import unittest
+if __name__ == '__main__' and not __package__:
+    from os import path,sys
+    sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
+    import pymlconf
+    __package__ = 'pymlconf.tests'
+
+
 from ..__init__ import ConfigDict, ConfigManager
 
 this_dir = os.path.abspath(os.path.dirname(__file__))

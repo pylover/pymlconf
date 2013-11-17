@@ -9,34 +9,18 @@ pymlconf Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`ConfigDict` Module
-------------------------
+:mod:`config_nodes` Module
+--------------------------
 
-.. automodule:: pymlconf.ConfigDict
+.. automodule:: pymlconf.config_nodes
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`ConfigList` Module
-------------------------
+:mod:`config_manager` Module
+----------------------------
 
-.. automodule:: pymlconf.ConfigList
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`ConfigManager` Module
----------------------------
-
-.. automodule:: pymlconf.ConfigManager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`ConfigNode` Module
-------------------------
-
-.. automodule:: pymlconf.ConfigNode
+.. automodule:: pymlconf.config_manager
     :members:
     :undoc-members:
     :show-inheritance:

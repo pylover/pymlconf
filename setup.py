@@ -32,7 +32,7 @@ setup(
     maintainer_email="vahid.mardani@gmail.com",
     packages=["pymlconf"],
     platforms=["any"],
-    long_description=read('README.txt'),
+    long_description=read('README.rst'),
     install_requires=dependencies,
     classifiers=[
         "Development Status :: 5 - Production/Stable",

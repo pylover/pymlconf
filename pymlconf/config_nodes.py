@@ -8,7 +8,7 @@ def _make_mergable_if_possible(data):
     if isinstance(data,dict):
         return ConfigDict(data=data)
     elif hasattr(data, '__iter__'):
-        return ConfigList(data=data)
+        return [_make_mergable_if_possible(i) for i in ConfigList(data=data)]
     else:
         return data 
 
