@@ -1,14 +1,14 @@
 
 from pymlconf.mergable import Mergable
 from pymlconf.errors import ConfigKeyError
-from pymlconf.compat import OrderedDict
+from pymlconf.compat import OrderedDict,isiterable
 import copy
 
 def _make_mergable_if_possible(data):
     if isinstance(data,dict):
         return ConfigDict(data=data)
-    elif hasattr(data, '__iter__'):
-        return [_make_mergable_if_possible(i) for i in ConfigList(data=data)]
+    elif isiterable(data):
+        return ConfigList([_make_mergable_if_possible(i) for i in data])
     else:
         return data 
 

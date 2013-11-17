@@ -5,11 +5,12 @@ Created on Nov 17, 2013
 @author: vahid
 '''
 import unittest
-import string
+
+
 if __name__ == '__main__' and not __package__:
     from os import path,sys
     sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
-    import pymlconf
+    import pymlconf.tests
     __package__ = 'pymlconf.tests'
     
 from ..__init__ import ConfigManager
@@ -38,7 +39,7 @@ app:
         
 logging:
     logfile: /var/log/myapp.log
-    formatter: !!python/name:string.strip
+    formatter: !!python/name:str
     writer: !!python/object:%s.MyWriter {}
 ''' % __name__
 
@@ -61,7 +62,7 @@ logging:
         self.assertEqual(cm.app.languages[0],'english')
         self.assertEqual(cm.app.languages[1].language,'persian')
         self.assertEqual(cm.app.languages[1].country,'iran')
-        self.assertEqual(cm.logging.formatter, string.strip)
+        self.assertEqual(cm.logging.formatter, str)
         self.assertTrue(isinstance(cm.logging.writer,MyWriter))
 #Aims to test `ConfigDict` and `ConfigList`        
 

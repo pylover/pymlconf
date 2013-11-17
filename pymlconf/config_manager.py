@@ -3,15 +3,7 @@ import os
 
 from pymlconf.config_nodes import ConfigDict
 from pymlconf.yaml_helper import load_yaml
-
-# For compatibility with python3
-# TODO: When support for python 2.x is dropped,
-# get rid of the import as well as substitute all basestring with str
-try:
-    basestring
-except NameError:
-    basestring = str
-
+from pymlconf.compat import basestring
 
 class ConfigManager(ConfigDict):
     """
