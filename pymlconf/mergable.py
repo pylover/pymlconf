@@ -1,50 +1,39 @@
 
-try:
-    from collections import OrderedDict
-except:
-    from ordereddict import OrderedDict
-
+from pymlconf.yaml_helper import load_string
+import copy
 
 class Mergable(object):
 
-    def _can_merge(self, o):
+    def __init__(self,data=None):
+        if data:
+            self.merge(data)
+
+    def can_merge(self, data):
         raise NotImplementedError()
 
-    def merge(self, data):
-        raise NotImplementedError()
-
-
-class MergableDict(OrderedDict, Mergable):
-
-    def _can_merge(self, o):
-        return isinstance(o, dict)
-
-    def merge(self, data):
-        if not data:
-            return
-        for k in list(data.keys()):
-            v = data[k]
-            if k in self and isinstance(self[k], Mergable):
-                try:
-                    self[k].merge(v)
-                except AttributeError:
-                    raise Exception('config key was not found:%s' % k)
+    def merge(self, *args):
+        """
+        Merges this instance with new instances, in-place.
+        returns the self.empty(), if the empty string or None was passed as data.
+        """
+        for data in args:
+            to_merge = None
+            if isinstance(data, str):
+                to_merge = load_string(data)
             else:
-                self[k] = v
-
+                to_merge = data
+            if self.can_merge(to_merge):
+                self._merge(to_merge)
+            else:
+                raise ValueError('Cannot merge data: %s' % data)
+    
+    def _merge(self,data):
+        raise NotImplementedError()
+    
+    @classmethod
+    def empty(self):
+        raise NotImplementedError()
+        
     def copy(self):
-        return MergableDict(OrderedDict.copy(self))
+        return copy.deepcopy(self)
 
-
-class MergableList(list, Mergable):
-
-    def _can_merge(self, o):
-        return isinstance(o, (list, tuple))
-
-    def merge(self, data):
-        for item in data:
-            if item not in self:
-                self.append(item)
-
-    def copy(self):
-        return MergableList(list.copy(self))

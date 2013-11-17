@@ -1,8 +1,8 @@
 
 import os
 
-from pymlconf.config_dict import ConfigDict
-from pymlconf.yaml_helper import load_yaml, load_string
+from pymlconf.config_nodes import ConfigDict
+from pymlconf.yaml_helper import load_yaml
 
 # For compatibility with python3
 # TODO: When support for python 2.x is dropped,
@@ -42,30 +42,20 @@ class ConfigManager(ConfigDict):
     """
     # Operations
     def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True):
-        ConfigDict.__init__(self)
-        if init_value:
-            if isinstance(init_value, (list, tuple)):
-                for iv in init_value:
-                    self.merge(iv)
-            elif isinstance(init_value, dict):
-                self.merge(init_value)
-            elif isinstance(init_value, basestring):
-                self.merge(load_string(init_value))
-            else:
-                raise Exception("Invalid config value")
+        super(ConfigManager,self).__init__(data=init_value)
+        
         if dirs:
             if isinstance(dirs, basestring):
                 dirs = [d.strip() for d in dirs.split(';')]
             self.load_dirs(dirs, filename_as_namespace=filename_as_namespace)
+            
         if files:
             if isinstance(files, basestring):
                 files = [f.strip() for f in files.split(';')]
-            self._load_files(files)
+            self.load_files(files)
 
-    def load_files(self, *files):
-        self._load_files(files)
 
-    def _load_files(self, files, filename_as_namespace=False):
+    def load_files(self, files, filename_as_namespace=False):
         """
         load files which contains yaml config entries.and merge it by current ConfigManager instance
         """
@@ -92,4 +82,4 @@ class ConfigManager(ConfigDict):
             full_paths = (os.path.join(d, f) for f in os.listdir(d))
             conf_files = (f for f in full_paths if (os.path.isfile(f) or os.path.islink(f)) and f.endswith('.conf'))
             candidate_files.extend(sorted(conf_files))
-        self._load_files(candidate_files, filename_as_namespace=filename_as_namespace)
+        self.load_files(candidate_files, filename_as_namespace=filename_as_namespace)

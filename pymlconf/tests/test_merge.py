@@ -27,19 +27,24 @@ logging:
 '''
 
 
-    def test_simple_syntax(self):
+    def test_overiding_branch(self):
         """
-        Testing simple Yaml syntax
+        Testing Branch overriding
         """
         
         cm = ConfigManager(init_value=self._builtin)
-        self.assertEqual(cm.app.name, "MyApp")
-        self.assertEqual(len(cm.app.listen), 2)
-        self.assertEqual(cm.app.listen.sock1.addr, "192.168.0.1")
-        self.assertEqual(cm.app.listen.sock1.port, 8080)
-        self.assertEqual(cm.app.listen.sock2.addr, "127.0.0.1")
-        self.assertEqual(cm.app.listen.sock2.port, '89')
-        self.assertEqual(cm.logging.logfile, "/var/log/myapp.log")
+        
+        additinal_config="""
+my_section:
+    item1:    hi
+app:
+    listen: false
+"""
+        cm.merge(additinal_config)
+        self.assertEqual(cm.my_section.item1, "hi")
+#        self.assertEqual(cm.app.listen, False) #Issue 7
+        
+        
         
         
 #Aims to test `ConfigDict` and `ConfigList`        

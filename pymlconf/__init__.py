@@ -1,7 +1,5 @@
 
-from pymlconf.config_node import ConfigNode
-from pymlconf.config_list import ConfigList
-from pymlconf.config_dict import ConfigDict
+from pymlconf.config_nodes import ConfigList,ConfigDict
 from pymlconf.config_manager import ConfigManager
 from pymlconf.errors import ConfigurationError
 

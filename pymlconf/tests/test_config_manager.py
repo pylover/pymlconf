@@ -1,23 +1,17 @@
-'''
-Created on Jul 25, 2011
-
-@author: vahid
-'''
 
 import os
 import unittest
-from pymlconf import ConfigDict, ConfigList, ConfigManager, ConfigNode
+from ..__init__ import ConfigDict, ConfigManager
 
 this_dir = os.path.abspath(os.path.dirname(__file__))
 conf_dir = os.path.join(this_dir, 'conf')
 
-'''
 class TestConfigManager(unittest.TestCase):
 
     def setUp(self):
         self.builtin_config = {
             'version': 2.5,
-            'general': ConfigDict({'name': 'albatross'}),
+            'general': {'name': 'albatross'},
             'domains': ConfigDict({'coldon_ir': ConfigDict(), 'fangtooth_ir': ConfigDict({'name': 'fangtooth'})}),
             'data': {'url': 'some uri'}  # without ConfigDict
         }
@@ -82,13 +76,3 @@ class TestConfigManager(unittest.TestCase):
 
         # builtins
         self.assertEqual(cm.data.url, 'some uri')
-
-    def test_import(self):
-        _cd = ConfigDict
-        _cl = ConfigList
-        _cn = ConfigNode
-
-
-if __name__ == '__main__':
-    unittest.main(verbosity=5)
-'''
