@@ -67,3 +67,9 @@ Syntax Reference
 
 You can find the canonical syntax reference on
 `PyYAML <http://pyyaml.org/wiki/PyYAMLDocumentation#YAMLsyntax>`__ site
+
+Documentation
+~~~~~~~~~~~~~
+
+[pythonhosted.org] (http://pythonhosted.org/pymlconf/) [readthedocs.org]
+(http://pymlconf.readthedocs.org/en/latest/)
