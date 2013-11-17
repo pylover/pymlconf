@@ -31,3 +31,6 @@ pip-log.txt
 .pydevproject
 .project
 doc/_build
+
+#Python3
+__pycache__
