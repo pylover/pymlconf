@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Generating README.rst"
+pandoc --from=markdown --to=rst --output=README.rst README.md
+
+echo "Generating README.html"
+python setup.py --long-description | rst2html > README.html
+
+echo "done."
