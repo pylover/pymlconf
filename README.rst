@@ -5,6 +5,12 @@ pymlconf
 and access to your application configurations which was already Written
 in `YAML <http://pyyaml.org>`__ language.
 
+It can merge two or more configuration files according their names and
+automatically treat file-names as namespaces, or simply merge several
+parts of configuration(YAML-string or Python-dict) on arbitrary config
+node. for more informations see
+`documentations <https://github.com/pylover/pymlconf#documentation>`__.
+
 ::
 
     from pymlconf import ConfigManager
