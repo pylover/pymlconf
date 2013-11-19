@@ -45,5 +45,5 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Topic :: Software Development :: Libraries'
     ],
-    test_suite='tests'
+    test_suite='pymlconf.tests'
 )

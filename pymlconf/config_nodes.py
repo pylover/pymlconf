@@ -1,23 +1,24 @@
 
 from pymlconf.mergable import Mergable
 from pymlconf.errors import ConfigKeyError
-from pymlconf.compat import OrderedDict,isiterable
+from pymlconf.compat import OrderedDict, isiterable
 import copy
 
+
 def _make_mergable_if_possible(data):
-    if isinstance(data,dict):
+    if isinstance(data, dict):
         return ConfigDict(data=data)
     elif isiterable(data):
         return ConfigList([_make_mergable_if_possible(i) for i in data])
     else:
-        return data 
+        return data
+
 
 class ConfigDict(OrderedDict, Mergable):
 
     def __init__(self, data=None):
         OrderedDict.__init__(self)
-        Mergable.__init__(self,data=data)
-        
+        Mergable.__init__(self, data=data)
 
     def can_merge(self, data):
         return data and isinstance(data, dict)
@@ -25,13 +26,13 @@ class ConfigDict(OrderedDict, Mergable):
     def _merge(self, data):
         for k in list(data.keys()):
             v = data[k]
-                
+
             if k in self \
-            and isinstance(self[k], Mergable) \
-            and self[k].can_merge(v):
+                and isinstance(self[k], Mergable) \
+                and self[k].can_merge(v):
                 self[k].merge(v)
             else:
-                if isinstance(v,Mergable):
+                if isinstance(v, Mergable):
                     self[k] = v.copy()
                 else:
                     self[k] = _make_mergable_if_possible(copy.deepcopy(v))
@@ -55,22 +56,23 @@ class ConfigDict(OrderedDict, Mergable):
             return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
         else:
             return self
-        
+
     def copy(self):
-        return self.__class__(self)        
+        return self.__class__(self)
 
     @classmethod
     def empty(cls):
         return cls()
 
+
 class ConfigList(list, Mergable):
 
     def __init__(self, data=None):
         list.__init__(self)
-        Mergable.__init__(self,data=data)
+        Mergable.__init__(self, data=data)
 
-    def _can_merge(self, data):
-        return data and hasattr(data,'__iter__')
+    def can_merge(self, data):
+        return data and hasattr(data, '__iter__')
 
     def merge(self, data):
         for item in data:
