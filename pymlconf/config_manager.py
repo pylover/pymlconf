@@ -12,7 +12,7 @@ class ConfigManager(ConfigDict):
     Parameters::
         init_value: Initial configuration value that you can pass it before reading the files and directories.can be 'yaml string' or python dictionary.
 
-        dirs: Python list  or a string that contains comma separated list of directories which contains config files with \*.conf extension.
+        dirs: Python list  or a string that contains comma separated list of directories which contains config files with specified extension(default *.conf).
 
         files: Python list  or a string that contains comma separated list of files which contains yaml config entries.
 
@@ -32,10 +32,11 @@ class ConfigManager(ConfigDict):
         print config.server.port
 
     """
+    default_extension = ".conf"
     # Operations
-    def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True):
+    def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,extension='.conf'):
         super(ConfigManager,self).__init__(data=init_value)
-        
+        self.default_extension = extension
         if dirs:
             if isinstance(dirs, basestring):
                 dirs = [d.strip() for d in dirs.split(';')]
@@ -55,7 +56,7 @@ class ConfigManager(ConfigDict):
             if not os.path.exists(f):
                 continue
             if filename_as_namespace:
-                assert f.endswith('.conf'), 'Invalid config filename.expected: ns1.ns2.*.conf'
+                assert f.endswith(self.default_extension), 'Invalid config filename.expected: ns1.ns2.*%s' % self.default_extension
                 namespace = os.path.splitext(os.path.split(f)[1])[0]
                 if namespace == 'root':
                     node = self
@@ -67,11 +68,11 @@ class ConfigManager(ConfigDict):
 
     def load_dirs(self, dirs, filename_as_namespace=True):
         """
-        load directories which contains config files with \*.conf extension, and merge it by current ConfigManager instance
+        load directories which contains config files with specified extension, and merge it by current ConfigManager instance
         """
         candidate_files = []
         for d in dirs:
             full_paths = (os.path.join(d, f) for f in os.listdir(d))
-            conf_files = (f for f in full_paths if (os.path.isfile(f) or os.path.islink(f)) and f.endswith('.conf'))
+            conf_files = (f for f in full_paths if (os.path.isfile(f) or os.path.islink(f)) and f.endswith(self.default_extension))
             candidate_files.extend(sorted(conf_files))
         self.load_files(candidate_files, filename_as_namespace=filename_as_namespace)
