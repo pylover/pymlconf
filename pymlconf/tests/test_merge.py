@@ -5,8 +5,11 @@ Created on Nov 17, 2013
 @author: vahid
 '''
 import unittest
+from os import path
+thisdir = path.join(path.dirname(__file__))
+                    
 if __name__ == '__main__' and not __package__:
-    from os import path,sys
+    import sys
     sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
     import pymlconf
     __package__ = 'pymlconf.tests'
@@ -73,7 +76,19 @@ app:
         self.assertEqual(cm.my_section.item1, "hi")
         self.assertEqual(cm.app.listen, False) #Issue 7
         
-        
+    def test_issue9(self):
+        """
+        Test just loading config files: https://github.com/pylover/pymlconf/issues/9
+        """
+        files = [path.join(thisdir, 'files', 'pytest_sauce.conf')]
+        _cm = ConfigManager(files=files)        
+        self.assertTrue(_cm != None)
+        _cm.merge("""
+browsers:
+    -   browsername: chrome
+        platform: linux
+        driver: chrome
+        """)
         
         
 #Aims to test `ConfigDict` and `ConfigList`        
