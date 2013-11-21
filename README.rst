@@ -68,6 +68,14 @@ From source:
     $ cd source_dir
     $ python setup.py install
 
+Running tests
+~~~~~~~~~~~~~
+
+::
+
+    $ cd path/to/pymlconf 
+    $ nosetests
+
 Syntax Reference
 ~~~~~~~~~~~~~~~~
 
