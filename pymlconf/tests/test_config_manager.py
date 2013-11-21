@@ -1,14 +1,14 @@
 
 import os
 import unittest
-if __name__ == '__main__' and not __package__:
-    from os import path,sys
-    sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
-    import pymlconf
-    __package__ = 'pymlconf.tests'
+# if __name__ == '__main__' and not __package__:
+#     from os import path,sys
+#     sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
+#     import pymlconf
+#     __package__ = 'pymlconf.tests'
 
 
-from ..__init__ import ConfigDict, ConfigManager
+from pymlconf import ConfigDict, ConfigManager
 
 this_dir = os.path.abspath(os.path.dirname(__file__))
 conf_dir = os.path.join(this_dir, 'conf')
@@ -85,3 +85,19 @@ class TestConfigManager(unittest.TestCase):
         self.assertEqual(cm.data.url, 'some uri')
 
 
+    def test_new_extension(self):
+        dirs = [conf_dir]
+        cm = ConfigManager(init_value=self.builtin_config, dirs=dirs,extension=".yaml")
+
+        # root.conf
+        self.assertEqual(cm.run.baseurl, 'http://localhost:9090')
+        self.assertEqual(cm.run.skipurlcheck, True)
+        self.assertEqual(cm.type, 'selenuim')
+        self.assertEqual(cm.testpath, './')
+        
+        #self.assertEqual(cm.selenium.xvfb.options.server-args, '-screen 0 1024x768x24')
+
+
+
+if __name__ == '__main__':
+    unittest.main()
