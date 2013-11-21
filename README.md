@@ -63,8 +63,10 @@ Install nose and change current directory to project's dir:
 
 Runing tests:
 
-	$ nosetests	
+	$ nosetests
+		
 Or
+
 	$ python setup.py test
 
 ### Syntax Reference

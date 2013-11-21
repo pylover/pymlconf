@@ -82,9 +82,14 @@ Runing tests:
 
 ::
 
-    $ nosetests 
+    $ nosetests
+        
 
-Or $ python setup.py test
+Or
+
+::
+
+    $ python setup.py test
 
 Syntax Reference
 ~~~~~~~~~~~~~~~~
