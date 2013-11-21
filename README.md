@@ -53,8 +53,12 @@ From source:
 
     $ cd source_dir
     $ python setup.py install
-    
-    
+
+### Running tests
+
+	$ cd path/to/pymlconf 
+	$ nosetests
+
 ### Syntax Reference
 
 You can find the canonical syntax reference on [PyYAML](http://pyyaml.org/wiki/PyYAMLDocumentation#YAMLsyntax) site
