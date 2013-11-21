@@ -25,7 +25,7 @@ class Mergable(object):
             if self.can_merge(to_merge):
                 self._merge(to_merge)
             else:
-                raise ValueError('Cannot merge data: %s' % data)
+                raise ValueError('Cannot merge myself:%s with %s. data: %s' % (type(self),type(data),data))
     
     def _merge(self,data):
         raise NotImplementedError()
