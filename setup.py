@@ -30,7 +30,9 @@ setup(
     description="Python high level configuration library",
     maintainer="Vahid Mardani",
     maintainer_email="vahid.mardani@gmail.com",
-    packages=["pymlconf"],
+    packages=["pymlconf","pymlconf.tests"],
+    package_dir={'pymlconf': 'pymlconf'},
+    package_data={'pymlconf': ['tests/conf/*','tests/files/*']},
     platforms=["any"],
     long_description=read('README.rst'),
     install_requires=dependencies,
@@ -45,5 +47,5 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Topic :: Software Development :: Libraries'
     ],
-    test_suite='pymlconf.tests'
+    test_suite='pymlconf.tests',
 )
