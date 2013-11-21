@@ -83,3 +83,11 @@ class TestConfigManager(unittest.TestCase):
 
         # builtins
         self.assertEqual(cm.data.url, 'some uri')
+
+    def test_issue9(self):
+        """
+        Test just loading config files: https://github.com/pylover/pymlconf/issues/9
+        """
+        files = [os.path.join(conf_dir, '../files', 'pytest_sauce.conf')]
+        _cm = ConfigManager(files=files)
+        self.assertTrue(_cm != None)
