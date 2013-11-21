@@ -3,7 +3,7 @@ from pymlconf.config_nodes import ConfigList,ConfigDict
 from pymlconf.config_manager import ConfigManager
 from pymlconf.errors import ConfigurationError
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 
 __all__ = ['ConfigManager',
            'ConfigList',
