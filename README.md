@@ -56,8 +56,16 @@ From source:
 
 ### Running tests
 
+Install nose and change current directory to project's dir:
+
+	$ pip install nose 	
 	$ cd path/to/pymlconf 
-	$ nosetests
+
+Runing tests:
+
+	$ nosetests	
+Or
+	$ python setup.py test
 
 ### Syntax Reference
 
