@@ -34,9 +34,11 @@ class ConfigManager(ConfigDict):
     """
     default_extension = ".conf"
     # Operations
-    def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,extension='.conf'):
+    def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,
+                 extension='.conf',root_file_name='root'):
         super(ConfigManager,self).__init__(data=init_value)
         self.default_extension = extension
+        self.root_file_name = root_file_name
         if dirs:
             if isinstance(dirs, basestring):
                 dirs = [d.strip() for d in dirs.split(';')]
@@ -58,7 +60,7 @@ class ConfigManager(ConfigDict):
             if filename_as_namespace:
                 assert f.endswith(self.default_extension), 'Invalid config filename.expected: ns1.ns2.*%s' % self.default_extension
                 namespace = os.path.splitext(os.path.split(f)[1])[0]
-                if namespace == 'root':
+                if namespace == self.root_file_name:
                     node = self
                 else:
                     node = self._ensure_namespaces(*namespace.split('.'))
@@ -75,4 +77,15 @@ class ConfigManager(ConfigDict):
             full_paths = (os.path.join(d, f) for f in os.listdir(d))
             conf_files = (f for f in full_paths if (os.path.isfile(f) or os.path.islink(f)) and f.endswith(self.default_extension))
             candidate_files.extend(sorted(conf_files))
+            
+        root_file_name = None
+        for f in candidate_files:
+            if f.endswith(self.root_file_name + self.default_extension):
+                root_file_name = f
+                break
+                
+        # remove and insert root.conf in index 0. 
+        if root_file_name:
+            candidate_files = [root_file_name] + [f for f in candidate_files if f != root_file_name]
+            
         self.load_files(candidate_files, filename_as_namespace=filename_as_namespace)
