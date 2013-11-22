@@ -37,3 +37,12 @@ class Mergable(object):
     def copy(self):
         return copy.deepcopy(self)
 
+    def _ensure_namespaces(self, *namespaces):
+        from pymlconf import ConfigDict
+        if namespaces:
+            ns = namespaces[0]
+            if ns not in self:
+                self[ns] = ConfigDict()
+            return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
+        else:
+            return self

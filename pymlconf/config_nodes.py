@@ -48,14 +48,7 @@ class ConfigDict(OrderedDict, Mergable):
         else:
             self[key] = value
 
-    def _ensure_namespaces(self, *namespaces):
-        if namespaces:
-            ns = namespaces[0]
-            if ns not in self:
-                self[ns] = ConfigDict()
-            return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
-        else:
-            return self
+
 
     def copy(self):
         return self.__class__(self)
