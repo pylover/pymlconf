@@ -67,7 +67,7 @@ class ConfigList(list, Mergable):
     def can_merge(self, data):
         return data and hasattr(data, '__iter__')
 
-    def merge(self, data):
+    def _merge(self, data):
         for item in data:
             if item not in self:
                 self.append(item)
