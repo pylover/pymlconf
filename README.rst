@@ -59,7 +59,7 @@ Development version:
 
 ::
 
-    pip install git+git@github.com:pylover/pymlconf.git
+    $ pip install git+git@github.com:pylover/pymlconf.git
 
 From source:
 
@@ -68,8 +68,8 @@ From source:
     $ cd source_dir
     $ python setup.py install
 
-Running tests
-~~~~~~~~~~~~~
+Unit-Tests
+~~~~~~~~~~
 
 Install nose and change current directory to project's dir:
 
@@ -78,7 +78,7 @@ Install nose and change current directory to project's dir:
     $ pip install nose  
     $ cd path/to/pymlconf 
 
-Runing tests:
+Running tests:
 
 ::
 
@@ -100,5 +100,6 @@ You can find the canonical syntax reference on
 Documentation
 ~~~~~~~~~~~~~
 
-[pythonhosted.org] (http://pythonhosted.org/pymlconf/) [readthedocs.org]
-(http://pymlconf.readthedocs.org/en/latest/)
+-  [pythonhosted.org] (http://pythonhosted.org/pymlconf/)
+-  [readthedocs.org] (http://pymlconf.readthedocs.org/en/latest/)
+
