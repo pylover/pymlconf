@@ -1,8 +1,6 @@
 
 import os
 import unittest
-
-
 from pymlconf import ConfigDict, ConfigManager
 
 this_dir = os.path.abspath(os.path.dirname(__file__))

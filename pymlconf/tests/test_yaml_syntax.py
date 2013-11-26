@@ -5,15 +5,7 @@ Created on Nov 17, 2013
 @author: vahid
 '''
 import unittest
-
-
-if __name__ == '__main__' and not __package__:
-    from os import path,sys
-    sys.path.append(path.abspath(path.join(path.dirname(__file__),'..','..')))
-    import pymlconf.tests
-    __package__ = 'pymlconf.tests'
-    
-from ..__init__ import ConfigManager
+from pymlconf import ConfigManager
 
 class MyWriter(object):
     def write(self,t):
