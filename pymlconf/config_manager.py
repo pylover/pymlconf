@@ -5,6 +5,7 @@ from pymlconf.config_nodes import ConfigDict
 from pymlconf.yaml_helper import load_yaml
 from pymlconf.compat import basestring
 
+
 class ConfigManager(ConfigDict):
     """
     The main class to using the pymlconf package.
@@ -32,7 +33,9 @@ class ConfigManager(ConfigDict):
         print config.server.port
 
     """
+    
     default_extension = ".conf"
+    
     # Operations
     def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,
                  extension='.conf',root_file_name='root'):
@@ -48,7 +51,6 @@ class ConfigManager(ConfigDict):
             if isinstance(files, basestring):
                 files = [f.strip() for f in files.split(';')]
             self.load_files(files)
-
 
     def load_files(self, files, filename_as_namespace=False):
         """
