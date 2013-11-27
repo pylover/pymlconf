@@ -54,6 +54,8 @@ From source:
     $ cd source_dir
     $ python setup.py install
 
+Manually download it from [pypi](https://pypi.python.org/pypi/pymlconf)
+
 ### Unit-Tests
 
 Install nose and change current directory to project's dir:

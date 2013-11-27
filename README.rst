@@ -68,6 +68,9 @@ From source:
     $ cd source_dir
     $ python setup.py install
 
+Manually download it from
+`pypi <https://pypi.python.org/pypi/pymlconf>`__
+
 Unit-Tests
 ~~~~~~~~~~
 
