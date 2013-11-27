@@ -1,5 +1,4 @@
 
 implement parser for `merge` and `replace` keywords. AND include some notes in readme about it.
-config_file extention
 convert dash to underscore
 compare nodes, hash based
