@@ -1,0 +1,4 @@
+#! /bin/bash
+
+#sphinx-apidoc --force -o doc pymlconf pymlconf/tests
+sphinx-build -Eab html doc/ doc/_build/

@@ -7,14 +7,28 @@ import copy
 
 
 class Mergable(object):
+    """ Base class for all configuration nodes, so all configuration nodes are mergable
+    """
     __metaclass__ = abc.ABCMeta
 
     def __init__(self,data=None):
+        """
+        :param data: Initial value to constract a mergable instance. default: None.
+        :type data: list or dict
+        """
         if data:
             self.merge(data)
 
     @abc.abstractmethod
     def can_merge(self, data):
+        """
+        Determines whenever can merge with the passed argument or not.
+        
+        :param data: An object to test.
+        :type data: any
+        
+        :returns: bool
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -23,15 +37,31 @@ class Mergable(object):
     
     @abc.abstractmethod
     def copy(self):
+        """
+        When implemented, returns copy of current config instance.
+        
+        :returns: :class:`.Mergable`
+        """
         return copy.deepcopy(self)
 
     @classmethod
     @abc.abstractmethod
     def empty(cls):
+        """
+        When implemented, returns an empty instance of drived :class:`.Mergable` class.
+        
+        :returns: :class:`.Mergable`
+        """ 
         raise NotImplementedError()
 
     @classmethod    
     def make_mergable_if_possible(cls,data):
+        """
+        Makes an object mergable if possible. Returns the virgin object if cannot convert it to a mergable instance.
+        
+        :returns: :class:`.Mergable` or type(data)
+          
+        """
         if isinstance(data, dict):
             return ConfigDict(data=data)
         elif isiterable(data):
@@ -42,7 +72,10 @@ class Mergable(object):
     def merge(self, *args):
         """
         Merges this instance with new instances, in-place.
-        returns the self.empty(), if the empty string or None was passed as data.
+        
+        :param \*args: Configuration values to merge with current instance.
+        :type \*args: iterable
+        
         """
         for data in args:
             to_merge = None
@@ -66,6 +99,9 @@ class Mergable(object):
 
 
 class ConfigDict(OrderedDict, Mergable):
+    """
+    Configuration node that represents python dictionary data.
+    """
 
     def __init__(self, data=None):
         OrderedDict.__init__(self)
@@ -107,13 +143,18 @@ class ConfigDict(OrderedDict, Mergable):
         return cls()
 
 class ConfigNamespace(ConfigDict, Mergable):
+    """
+    Configuration node that represents the configuration namespace node.
+    """    
     def __init__(self, data=None):
         ConfigDict.__init__(self)
         Mergable.__init__(self, data=data)
         
 
 class ConfigList(list, Mergable):
-
+    """
+    Configuration node that represents the python list data.
+    """
     def __init__(self, data=None):
         list.__init__(self)
         Mergable.__init__(self, data=data)
