@@ -27,3 +27,8 @@ def isiterable(o):
         return True
     else:
         return False 
+    
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO

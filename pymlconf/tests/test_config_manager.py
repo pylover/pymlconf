@@ -26,8 +26,11 @@ class TestConfigManager(unittest.TestCase):
  
     def test_files(self):
  
-        files = [os.path.join(conf_dir, '../files', 'c111.conf')]
+        files = [os.path.join(conf_dir, '../files', 'c111.conf'),
+                 os.path.join(conf_dir, '../files', 'something-that-not-exists.conf')]
         cm = ConfigManager(init_value=self.builtin_config, dirs=[conf_dir], files=files)
+        
+        
  
         # root.conf
         self.assertEqual(cm.version, 2.5)
@@ -50,6 +53,28 @@ class TestConfigManager(unittest.TestCase):
         self.assertEqual(cm.baghali, 2)
         # builtins
         self.assertEqual(cm.data.url, 'some uri')
+ 
+    def test_non_existance_file(self):
+        files = [os.path.join(conf_dir, '../files', 'c111.conf'),
+                 os.path.join(conf_dir, '../files', 'something-that-not-exists.conf')]
+        
+        import logging
+        import sys
+        from pymlconf.compat import StringIO
+        logger = logging.getLogger('pymlconf')
+        logger.level = logging.DEBUG
+        saved_stdout = sys.stdout
+
+        sys.stdout = StringIO()        
+        stream_handler = logging.StreamHandler(sys.stdout)
+        logger.addHandler(stream_handler)
+        try:
+            _cm = ConfigManager(init_value=self.builtin_config, dirs=[conf_dir], files=files)
+            output = sys.stdout.getvalue().strip()
+            self.assertRegexpMatches(output, "^File not found: ['\"]?(?:/[^/]+)*['\"]?$")
+        finally:
+            logger.removeHandler(stream_handler)        
+            sys.stdout = saved_stdout
  
     def test_dirs(self):
         dirs = [conf_dir]

@@ -4,8 +4,10 @@ import os
 from pymlconf.config_nodes import ConfigDict
 from pymlconf.yaml_helper import load_yaml
 from pymlconf.compat import basestring
+import logging
 
-
+logging.basicConfig()
+logger = logging.getLogger('pymlconf')
 
 class ConfigManager(ConfigDict):
     """
@@ -76,6 +78,7 @@ class ConfigManager(ConfigDict):
         """
         for f in files:
             if not os.path.exists(f):
+                logger.warning('File not found: %s' % f)
                 continue
             if filename_as_namespace:
                 assert f.endswith(self.default_extension), 'Invalid configuration filename.expected: ns1.ns2.*%s' % self.default_extension
