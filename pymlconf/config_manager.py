@@ -56,13 +56,9 @@ class ConfigManager(ConfigDict):
         self.default_extension = extension
         self.root_file_name = root_file_name
         if dirs:
-            if isinstance(dirs, basestring):
-                dirs = [d.strip() for d in dirs.split(';')]
             self.load_dirs(dirs, filename_as_namespace=filename_as_namespace)
             
         if files:
-            if isinstance(files, basestring):
-                files = [f.strip() for f in files.split(';')]
             self.load_files(files)
 
     def load_files(self, files, filename_as_namespace=False):
@@ -76,6 +72,7 @@ class ConfigManager(ConfigDict):
         :type filename_as_namespace: bool
         
         """
+        files = [f.strip() for f in files.split(';')] if isinstance( files,basestring) else files 
         for f in files:
             if not os.path.exists(f):
                 logger.warning('File not found: %s' % f)
@@ -91,17 +88,21 @@ class ConfigManager(ConfigDict):
                 node = self
             node.merge(load_yaml(f))
 
+    loadfiles = load_files
+
     def load_dirs(self, dirs, filename_as_namespace=True):
         """
         load directories which contains configuration files with specified extension, and merge it by current ConfigManager instance
         
         :param dirs: Dirs to search for configuration files.
-        :type dirs: list
+        :type dirs: list,string
         
         :param filename_as_namespace: when loading dirs, use the filename as a namespace. default: true.
         :type filename_as_namespace: bool
         
         """
+        
+        dirs = [d.strip() for d in dirs.split(';')] if isinstance(dirs, basestring) else dirs        
         candidate_files = []
         for d in dirs:
             full_paths = (os.path.join(d, f) for f in os.listdir(d))
@@ -119,3 +120,5 @@ class ConfigManager(ConfigDict):
             candidate_files = [root_file_name] + [f for f in candidate_files if f != root_file_name]
             
         self.load_files(candidate_files, filename_as_namespace=filename_as_namespace)
+        
+    loaddirs = load_dirs
