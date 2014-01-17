@@ -86,7 +86,10 @@ class ConfigManager(ConfigDict):
                     node = self._ensure_namespaces(*namespace.split('.'))
             else:
                 node = self
-            node.merge(load_yaml(f))
+            
+            loaded_yaml = load_yaml(f)
+            if loaded_yaml:
+                node.merge(loaded_yaml)
 
     loadfiles = load_files
 
