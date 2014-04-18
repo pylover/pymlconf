@@ -3,7 +3,7 @@ from pymlconf.config_nodes import Mergable, ConfigList, ConfigDict, ConfigNamesp
 from pymlconf.config_manager import ConfigManager
 from pymlconf.errors import ConfigurationError, ConfigKeyError, ConfigurationMergeError
 
-__version__ = '0.3.9'
+__version__ = '0.3.10'
 
 __all__ = ['ConfigManager',
            'Mergable',

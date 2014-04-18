@@ -23,10 +23,10 @@ class Mergable(object):
     def can_merge(self, data):
         """
         Determines whenever can merge with the passed argument or not.
-        
+
         :param data: An object to test.
         :type data: any
-        
+
         :returns: bool
         """
         raise NotImplementedError()
@@ -34,12 +34,12 @@ class Mergable(object):
     @abc.abstractmethod
     def _merge(self,data):
         raise NotImplementedError()
-    
+
     @abc.abstractmethod
     def copy(self):
         """
         When implemented, returns copy of current config instance.
-        
+
         :returns: :class:`.Mergable`
         """
         return copy.deepcopy(self)
@@ -49,18 +49,18 @@ class Mergable(object):
     def empty(cls):
         """
         When implemented, returns an empty instance of drived :class:`.Mergable` class.
-        
+
         :returns: :class:`.Mergable`
-        """ 
+        """
         raise NotImplementedError()
 
-    @classmethod    
+    @classmethod
     def make_mergable_if_possible(cls,data):
         """
         Makes an object mergable if possible. Returns the virgin object if cannot convert it to a mergable instance.
-        
+
         :returns: :class:`.Mergable` or type(data)
-          
+
         """
         if isinstance(data, dict):
             return ConfigDict(data=data)
@@ -72,17 +72,20 @@ class Mergable(object):
     def merge(self, *args):
         """
         Merges this instance with new instances, in-place.
-        
+
         :param \*args: Configuration values to merge with current instance.
         :type \*args: iterable
-        
+
         """
         for data in args:
             to_merge = None
             if isinstance(data, str):
                 to_merge = load_string(data)
+                if not to_merge:
+                    continue
             else:
                 to_merge = data
+
             if self.can_merge(to_merge):
                 self._merge(to_merge)
             else:
@@ -145,11 +148,11 @@ class ConfigDict(OrderedDict, Mergable):
 class ConfigNamespace(ConfigDict, Mergable):
     """
     Configuration node that represents the configuration namespace node.
-    """    
+    """
     def __init__(self, data=None):
         ConfigDict.__init__(self)
         Mergable.__init__(self, data=data)
-        
+
 
 class ConfigList(list, Mergable):
     """
