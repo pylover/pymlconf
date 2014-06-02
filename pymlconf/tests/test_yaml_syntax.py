@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Created on Nov 17, 2013
 
 @author: vahid
-'''
+"""
 import unittest
 from pymlconf import ConfigManager
 
+
 class MyWriter(object):
-    def write(self,t):
+    @staticmethod
+    def write(t):
         print(t)
+
 
 class Test(unittest.TestCase):
 
     def setUp(self):
-        self._builtin='''
+        self._builtin = '''
 app:
     name: MyApp
     listen:
@@ -35,7 +38,6 @@ logging:
     writer: !!python/object:%s.MyWriter {}
 ''' % __name__
 
-
     def test_simple_syntax(self):
         """
         Testing simple Yaml syntax
@@ -50,12 +52,12 @@ logging:
         self.assertEqual(cm.app.listen.sock2.port, '89')
         self.assertEqual(cm.logging.logfile, "/var/log/myapp.log")
         
-        self.assertEqual(len(cm.app.languages),2)
-        self.assertEqual(cm.app.languages[0],'english')
-        self.assertEqual(cm.app.languages[1].language,'persian')
-        self.assertEqual(cm.app.languages[1].country,'iran')
+        self.assertEqual(len(cm.app.languages), 2)
+        self.assertEqual(cm.app.languages[0], 'english')
+        self.assertEqual(cm.app.languages[1].language, 'persian')
+        self.assertEqual(cm.app.languages[1].country, 'iran')
         self.assertEqual(cm.logging.formatter, str)
-        self.assertTrue(isinstance(cm.logging.writer,MyWriter))
+        self.assertTrue(isinstance(cm.logging.writer, MyWriter))
 #Aims to test `ConfigDict` and `ConfigList`        
 
 

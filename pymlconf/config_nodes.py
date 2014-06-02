@@ -6,6 +6,7 @@ from pymlconf.yaml_helper import load_string
 import copy
 
 
+# noinspection PyUnresolvedReferences,PyUnresolvedReferences
 class Mergable(object):
     """ Base class for all configuration nodes, so all configuration nodes are mergable
     """
@@ -78,7 +79,6 @@ class Mergable(object):
 
         """
         for data in args:
-            to_merge = None
             if isinstance(data, str):
                 to_merge = load_string(data)
                 if not to_merge:
@@ -91,11 +91,12 @@ class Mergable(object):
             else:
                 raise ConfigurationMergeError('Cannot merge myself:%s with %s. data: %s' % (type(self),type(data),data))
 
-    def _ensure_namespaces(self,*namespaces):
+    def _ensure_namespaces(self, *namespaces):
         if namespaces:
             ns = namespaces[0]
             if ns not in self:
                 self[ns] = ConfigNamespace()
+            # noinspection PyProtectedMember
             return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
         else:
             return self
@@ -159,6 +160,7 @@ class ConfigList(list, Mergable):
     Configuration node that represents the python list data.
     """
     def __init__(self, data=None):
+        # noinspection PyTypeChecker
         list.__init__(self)
         Mergable.__init__(self, data=data)
 

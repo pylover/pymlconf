@@ -25,7 +25,7 @@ node. for more informations see
         languages:
             - english
             - {language: persian, country: iran}
-
+            
     logfile: /var/log/myapp.log
     '''
 
@@ -78,15 +78,15 @@ Install nose and change current directory to project's dir:
 
 ::
 
-    $ pip install nose
-    $ cd path/to/pymlconf
+    $ pip install nose  
+    $ cd path/to/pymlconf 
 
 Running tests:
 
 ::
 
     $ nosetests
-
+        
 
 Or
 

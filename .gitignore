@@ -34,3 +34,6 @@ doc/_build
 
 #Python3
 __pycache__
+
+#PyCharm
+.idea

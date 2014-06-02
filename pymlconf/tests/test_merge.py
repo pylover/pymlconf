@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Created on Nov 17, 2013
 
 @author: vahid
-'''
+"""
 import unittest
 from os import path
 from pymlconf.errors import ConfigurationMergeError

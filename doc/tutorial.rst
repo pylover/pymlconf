@@ -95,8 +95,6 @@ You can simply merge all config files above with on statement::
    
    print config_root.licence_file      # from ../other_path/../special.conf
    print config_root.log_file          # from ../other_path/../special.conf
-   
-   
-   
-   
-   
+
+
+

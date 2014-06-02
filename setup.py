@@ -18,8 +18,8 @@ if sys.version_info < (2, 7):
     dependencies.append('ordereddict')
 
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+def read(filename):
+    return open(os.path.join(os.path.dirname(__file__), filename)).read()
 
 setup(
     name="pymlconf",
@@ -30,9 +30,9 @@ setup(
     description="Python high level configuration library",
     maintainer="Vahid Mardani",
     maintainer_email="vahid.mardani@gmail.com",
-    packages=["pymlconf","pymlconf.tests"],
+    packages=["pymlconf", "pymlconf.tests"],
     package_dir={'pymlconf': 'pymlconf'},
-    package_data={'pymlconf': ['tests/conf/*','tests/files/*']},
+    package_data={'pymlconf': ['tests/conf/*', 'tests/files/*']},
     platforms=["any"],
     long_description=read('README.rst'),
     install_requires=dependencies,

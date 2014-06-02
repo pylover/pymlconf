@@ -4,9 +4,17 @@ import os
 from pymlconf.config_nodes import ConfigDict
 from pymlconf.yaml_helper import load_yaml
 from pymlconf.compat import basestring
+from pymlconf.errors import ConfigFileNotFoundError
 import logging
 
 logger = logging.getLogger('pymlconf')
+
+IGNORE = 0
+ERROR = 1
+WARNING = 2
+missing_file_behaviors = [IGNORE,
+                          ERROR,
+                          WARNING]
 
 class ConfigManager(ConfigDict):
     """
@@ -30,7 +38,7 @@ class ConfigManager(ConfigDict):
     default_extension = ".conf"
 
     def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,
-                 extension='.conf',root_file_name='root'):
+                 extension='.conf', root_file_name='root', missing_file_behavior = WARNING):
         """
         :param init_value: Initial configuration value that you can pass it before reading the files and directories.can be 'yaml string' or python dictionary.
         :type init_value: str or dict
@@ -47,13 +55,16 @@ class ConfigManager(ConfigDict):
         :param extension: File extension to search for configuration files, in dirs parameter, default '.conf'
         :type extension: str
 
-        :param root_file_name: Filename to treat as root configuration file, so it loads first, and do not uses the filesname as namespaces.
+        :param root_file_name: Filename to treat as root configuration file, so it loads first, and do not uses the filename as namespaces.
         :type root_file_name: str
 
+        :param missing_file_behavior: What should do when a file was not found, set to 0 (zero) to ignore. default to 2:warning
+        :type missing_file_behavior: integer 0:ignore, 1:throw error, 2:warning
         """
-        super(ConfigManager,self).__init__(data=init_value)
+        super(ConfigManager, self).__init__(data=init_value)
         self.default_extension = extension
         self.root_file_name = root_file_name
+        self.missing_file_behavior = missing_file_behavior
         if dirs:
             self.load_dirs(dirs, filename_as_namespace=filename_as_namespace)
 
@@ -64,7 +75,7 @@ class ConfigManager(ConfigDict):
         """
         load files which contains yaml configuration entries.and merge it by current ConfigManager instance
 
-        :param files: files to load and merge into exisiting configuration instance
+        :param files: files to load and merge into existing configuration instance
         :type files: list
 
         :param filename_as_namespace: when loading files, use the filename as a namespace. default: false.
@@ -74,8 +85,12 @@ class ConfigManager(ConfigDict):
         files = [f.strip() for f in files.split(';')] if isinstance( files,basestring) else files
         for f in files:
             if not os.path.exists(f):
-                logger.warning('File not found: %s' % f)
+                if self.missing_file_behavior == ERROR:
+                    raise ConfigFileNotFoundError(f)
+                elif self.missing_file_behavior == WARNING:
+                    logger.warning('File not found: %s' % f)
                 continue
+
             if filename_as_namespace:
                 assert f.endswith(self.default_extension), 'Invalid configuration filename.expected: ns1.ns2.*%s' % self.default_extension
                 namespace = os.path.splitext(os.path.split(f)[1])[0]
@@ -89,8 +104,6 @@ class ConfigManager(ConfigDict):
             loaded_yaml = load_yaml(f)
             if loaded_yaml:
                 node.merge(loaded_yaml)
-
-    loadfiles = load_files
 
     def load_dirs(self, dirs, filename_as_namespace=True):
         """
@@ -123,4 +136,6 @@ class ConfigManager(ConfigDict):
 
         self.load_files(candidate_files, filename_as_namespace=filename_as_namespace)
 
+    # Supporting Deprecated methods
+    loadfiles = load_files
     loaddirs = load_dirs

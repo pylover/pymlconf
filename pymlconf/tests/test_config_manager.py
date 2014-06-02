@@ -2,6 +2,9 @@
 import os
 import unittest
 from pymlconf import ConfigDict, ConfigManager
+from pymlconf.config_manager import ERROR, IGNORE
+from pymlconf.errors import ConfigFileNotFoundError
+
 
 this_dir = os.path.abspath(os.path.dirname(__file__))
 conf_dir = os.path.join(this_dir, 'conf')
@@ -26,6 +29,7 @@ class TestConfigManager(unittest.TestCase):
  
     def test_files(self):
  
+        # noinspection PyUnresolvedReferences
         files = [os.path.join(conf_dir, '../files', 'c111.conf'),
                  os.path.join(conf_dir, '../files', 'something-that-not-exists.conf')]
         cm = ConfigManager(init_value=self.builtin_config, dirs=[conf_dir], files=files)
@@ -54,7 +58,8 @@ class TestConfigManager(unittest.TestCase):
         # builtins
         self.assertEqual(cm.data.url, 'some uri')
  
-    def test_non_existance_file(self):
+    def test_non_existence_file(self):
+        # noinspection PyUnresolvedReferences
         files = [os.path.join(conf_dir, '../files', 'c111.conf'),
                  os.path.join(conf_dir, '../files', 'something-that-not-exists.conf')]
         
@@ -68,14 +73,30 @@ class TestConfigManager(unittest.TestCase):
         sys.stdout = StringIO()        
         stream_handler = logging.StreamHandler(sys.stdout)
         logger.addHandler(stream_handler)
+
         try:
-            _cm = ConfigManager(init_value=self.builtin_config, dirs=[conf_dir], files=files)
+            # Testing ignore behavior
+            ConfigManager(init_value=self.builtin_config, dirs=[conf_dir], files=files,
+                          missing_file_behavior=IGNORE)
+            output = sys.stdout.getvalue().strip()
+            self.assertNotRegexpMatches(output, "^File not found: ['\"]?(?:/[^/]+)*['\"]?$")
+
+            # Testing default behavior which just prints a warning
+            ConfigManager(init_value=self.builtin_config, dirs=[conf_dir], files=files)
             output = sys.stdout.getvalue().strip()
             self.assertRegexpMatches(output, "^File not found: ['\"]?(?:/[^/]+)*['\"]?$")
+
+            # Testing strict behavior
+            self.assertRaises(ConfigFileNotFoundError, ConfigManager,
+                              init_value=self.builtin_config,
+                              dirs=[conf_dir],
+                              files=files,
+                              missing_file_behavior=ERROR)
+
         finally:
-            logger.removeHandler(stream_handler)        
+            logger.removeHandler(stream_handler)
             sys.stdout = saved_stdout
- 
+
     def test_dirs(self):
         dirs = [conf_dir]
         cm = ConfigManager(init_value=self.builtin_config, dirs=dirs)
