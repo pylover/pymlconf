@@ -89,7 +89,7 @@ class Mergable(object):
             if self.can_merge(to_merge):
                 self._merge(to_merge)
             else:
-                raise ConfigurationMergeError('Cannot merge myself:%s with %s. data: %s' % (type(self),type(data),data))
+                raise ConfigurationMergeError('Cannot merge myself:%s with %s. data: %s' % (type(self), type(data), data))
 
     def _ensure_namespaces(self, *namespaces):
         if namespaces:
@@ -145,6 +145,7 @@ class ConfigDict(OrderedDict, Mergable):
     @classmethod
     def empty(cls):
         return cls()
+
 
 class ConfigNamespace(ConfigDict, Mergable):
     """
