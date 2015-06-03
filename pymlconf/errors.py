@@ -15,3 +15,8 @@ class ConfigurationMergeError(ConfigurationError, ValueError):
 class ConfigFileNotFoundError(ConfigurationError):
     def __init__(self, filename):
         ConfigurationError.__init__(self,'Config File not found: "%s"' % filename)
+
+class ConfigFileSyntaxError(ConfigurationError):
+    def __init__(self, filename, inner_exception):
+        ConfigurationError.__init__(self, '%s\nFilename: %s"'
+                                    % (str(inner_exception), filename))

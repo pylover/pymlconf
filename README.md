@@ -3,9 +3,19 @@
 **pymlconf** (Python YAML Configuration Library) helps to easily manage and access to your application configurations which was already Written in [YAML](http://pyyaml.org) language.
 
 It can merge two or more configuration files according their names and automatically treat file-names as namespaces, or simply merge several parts of configuration(YAML-string or Python-dict) on arbitrary config node. for more informations see [documentations](https://github.com/pylover/pymlconf#documentation).
+
+
+Config file
    
+   
+    # filename: config.yaml
+    app:
+        root_dir: %(here)s
  
 
+Python code:
+ 
+	# filename: config.py
 	from pymlconf import ConfigManager
 	
 	config_str='''
@@ -13,8 +23,8 @@ It can merge two or more configuration files according their names and automatic
 	    name: MyApp
 	    listen:
 	        sock1:
-	            addr: 192.168.0.1
-	            port: 8080
+	            addr: %(hostname)s
+	            port: %(port)s
 	    languages:
 	        - english
 	        - {language: persian, country: iran}
@@ -22,7 +32,7 @@ It can merge two or more configuration files according their names and automatic
 	logfile: /var/log/myapp.log
 	'''
 	
-	cfg = ConfigManager(init_value=config_str)
+	cfg = ConfigManager(init_value=config_str, context=dict(hostname='192.168.0.1', port=8080))
 	
 	print cfg.app.name
 	print cfg.app.listen.sock1.addr
@@ -36,7 +46,8 @@ It can merge two or more configuration files according their names and automatic
 	# english
 	# iran
 	# /var/log/myapp.log
-	
+
+
 ### Installation
 
 Latest stable version:

@@ -12,11 +12,12 @@ class Mergable(object):
     """
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self,data=None):
+    def __init__(self, data=None, context=None):
         """
         :param data: Initial value to constract a mergable instance. default: None.
         :type data: list or dict
         """
+        self.context = context if context else {}
         if data:
             self.merge(data)
 
@@ -33,7 +34,7 @@ class Mergable(object):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def _merge(self,data):
+    def _merge(self, data):
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -43,7 +44,8 @@ class Mergable(object):
 
         :returns: :class:`.Mergable`
         """
-        return copy.deepcopy(self)
+        #return copy.deepcopy(self)
+        raise NotImplementedError()
 
     @classmethod
     @abc.abstractmethod
@@ -56,7 +58,7 @@ class Mergable(object):
         raise NotImplementedError()
 
     @classmethod
-    def make_mergable_if_possible(cls,data):
+    def make_mergable_if_possible(cls, data, context):
         """
         Makes an object mergable if possible. Returns the virgin object if cannot convert it to a mergable instance.
 
@@ -64,9 +66,11 @@ class Mergable(object):
 
         """
         if isinstance(data, dict):
-            return ConfigDict(data=data)
+            return ConfigDict(data=data,
+                              context=context)
         elif isiterable(data):
-            return ConfigList([cls.make_mergable_if_possible(i) for i in data])
+            return ConfigList(data=[cls.make_mergable_if_possible(i, context) for i in data],
+                              context=context)
         else:
             return data
 
@@ -80,7 +84,7 @@ class Mergable(object):
         """
         for data in args:
             if isinstance(data, str):
-                to_merge = load_string(data)
+                to_merge = load_string(data, self.context)
                 if not to_merge:
                     continue
             else:
@@ -89,14 +93,14 @@ class Mergable(object):
             if self.can_merge(to_merge):
                 self._merge(to_merge)
             else:
-                raise ConfigurationMergeError('Cannot merge myself:%s with %s. data: %s' % (type(self), type(data), data))
+                raise ConfigurationMergeError(
+                    'Cannot merge myself:%s with %s. data: %s' % (type(self), type(data), data))
 
     def _ensure_namespaces(self, *namespaces):
         if namespaces:
             ns = namespaces[0]
             if ns not in self:
-                self[ns] = ConfigNamespace()
-            # noinspection PyProtectedMember
+                self[ns] = ConfigNamespace(context=self.context)
             return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
         else:
             return self
@@ -107,9 +111,9 @@ class ConfigDict(OrderedDict, Mergable):
     Configuration node that represents python dictionary data.
     """
 
-    def __init__(self, data=None):
+    def __init__(self, *args, **kwargs):
         OrderedDict.__init__(self)
-        Mergable.__init__(self, data=data)
+        Mergable.__init__(self, *args, **kwargs)
 
     def can_merge(self, data):
         return data and isinstance(data, dict)
@@ -119,14 +123,14 @@ class ConfigDict(OrderedDict, Mergable):
             v = data[k]
 
             if k in self \
-                and isinstance(self[k], Mergable) \
-                and self[k].can_merge(v):
+                    and isinstance(self[k], Mergable) \
+                    and self[k].can_merge(v):
                 self[k].merge(v)
             else:
                 if isinstance(v, Mergable):
                     self[k] = v.copy()
                 else:
-                    self[k] = Mergable.make_mergable_if_possible(copy.deepcopy(v))
+                    self[k] = Mergable.make_mergable_if_possible(copy.deepcopy(v), self.context)
 
     def __getattr__(self, key):
         if key in self:
@@ -140,7 +144,7 @@ class ConfigDict(OrderedDict, Mergable):
             self[key] = value
 
     def copy(self):
-        return ConfigDict(self)
+        return ConfigDict(self, context=self.context)
 
     @classmethod
     def empty(cls):
@@ -151,19 +155,20 @@ class ConfigNamespace(ConfigDict, Mergable):
     """
     Configuration node that represents the configuration namespace node.
     """
-    def __init__(self, data=None):
+
+    def __init__(self, *args, **kwargs):
         ConfigDict.__init__(self)
-        Mergable.__init__(self, data=data)
+        Mergable.__init__(self, *args, **kwargs)
 
 
 class ConfigList(list, Mergable):
     """
     Configuration node that represents the python list data.
     """
-    def __init__(self, data=None):
-        # noinspection PyTypeChecker
+
+    def __init__(self, *args, **kwargs):
         list.__init__(self)
-        Mergable.__init__(self, data=data)
+        Mergable.__init__(self, *args, **kwargs)
 
     def can_merge(self, data):
         return data and hasattr(data, '__iter__')
@@ -174,7 +179,7 @@ class ConfigList(list, Mergable):
                 self.append(item)
 
     def copy(self):
-        return ConfigList(self)
+        return ConfigList(self, context=self.context)
 
     @classmethod
     def empty(cls):

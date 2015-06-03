@@ -39,7 +39,7 @@ class ConfigManager(ConfigDict):
     default_extension = ".conf"
 
     def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,
-                 extension='.conf', root_file_name='root', missing_file_behavior = WARNING):
+                 extension='.conf', root_file_name='root', missing_file_behavior=WARNING, context=None):
         """
         :param init_value: Initial configuration value that you can pass it before reading the files and directories.can be 'yaml string' or python dictionary.
         :type init_value: str or dict
@@ -61,8 +61,12 @@ class ConfigManager(ConfigDict):
 
         :param missing_file_behavior: What should do when a file was not found, set to 0 (zero) to ignore. default to 2:warning
         :type missing_file_behavior: integer 0:ignore, 1:throw error, 2:warning
+
+        :param context: dictionary to format the yaml before parsing in pre processor.
+        :type context: dict
+
         """
-        super(ConfigManager, self).__init__(data=init_value)
+        super(ConfigManager, self).__init__(data=init_value, context=context)
         self.default_extension = extension
         self.root_file_name = root_file_name
         self.missing_file_behavior = missing_file_behavior
@@ -83,7 +87,7 @@ class ConfigManager(ConfigDict):
         :type filename_as_namespace: bool
 
         """
-        files = [f.strip() for f in files.split(';')] if isinstance( files,basestring) else files
+        files = [f.strip() for f in files.split(';')] if isinstance(files, basestring) else files
         for f in files:
             if not os.path.exists(f):
                 if self.missing_file_behavior == ERROR:
@@ -93,7 +97,8 @@ class ConfigManager(ConfigDict):
                 continue
 
             if filename_as_namespace:
-                assert f.endswith(self.default_extension), 'Invalid configuration filename.expected: ns1.ns2.*%s' % self.default_extension
+                assert f.endswith(
+                    self.default_extension), 'Invalid configuration filename.expected: ns1.ns2.*%s' % self.default_extension
                 namespace = os.path.splitext(os.path.split(f)[1])[0]
                 if namespace == self.root_file_name:
                     node = self
@@ -102,9 +107,11 @@ class ConfigManager(ConfigDict):
             else:
                 node = self
 
-            loaded_yaml = load_yaml(f)
+            loaded_yaml = load_yaml(f, self.context)
             if loaded_yaml:
                 node.merge(loaded_yaml)
+
+    loadfiles = load_files
 
     def load_dirs(self, dirs, filename_as_namespace=True):
         """
@@ -122,7 +129,8 @@ class ConfigManager(ConfigDict):
         candidate_files = []
         for d in dirs:
             full_paths = (os.path.join(d, f) for f in os.listdir(d))
-            conf_files = (f for f in full_paths if (os.path.isfile(f) or os.path.islink(f)) and f.endswith(self.default_extension))
+            conf_files = (f for f in full_paths if
+                          (os.path.isfile(f) or os.path.islink(f)) and f.endswith(self.default_extension))
             candidate_files.extend(sorted(conf_files))
 
         root_file_name = None
@@ -137,6 +145,4 @@ class ConfigManager(ConfigDict):
 
         self.load_files(candidate_files, filename_as_namespace=filename_as_namespace)
 
-    # Supporting Deprecated methods
-    loadfiles = load_files
     loaddirs = load_dirs

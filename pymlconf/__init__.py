@@ -3,7 +3,7 @@ from pymlconf.config_nodes import Mergable, ConfigList, ConfigDict, ConfigNamesp
 from pymlconf.config_manager import ConfigManager
 from pymlconf.errors import ConfigurationError, ConfigKeyError, ConfigurationMergeError
 
-__version__ = '0.3.11'
+__version__ = '0.3.12'
 
 __all__ = ['ConfigManager',
            'Mergable',
@@ -14,5 +14,3 @@ __all__ = ['ConfigManager',
            'ConfigKeyError',
            'ConfigurationMergeError']
 
-
-# TODO: Reserved keys in configuration file

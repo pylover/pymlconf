@@ -12,7 +12,7 @@ run:
 
 # this sets the test type (selenium or saucelabs)
 type: selenium
-testpath: ./    # basepath to run tests in
+testpath: %(here)s    # basepath to run tests in
 selenium:
     xvfb:
         xvfb_on: true
@@ -34,3 +34,5 @@ saucelabs:
     connect: # saucelabs connect and download url
         file: ./Saucelabs-Connect-latest.jar
         url: https://saucelabs.com/downloads/Sauce-Connect-latest.zip
+
+
