@@ -11,8 +11,19 @@ parts of configuration(YAML-string or Python-dict) on arbitrary config
 node. for more informations see
 `documentations <https://github.com/pylover/pymlconf#documentation>`__.
 
+Config file
+
 ::
 
+    # filename: config.yaml
+    app:
+        root_dir: %(here)s
+
+Python code:
+
+::
+
+    # filename: config.py
     from pymlconf import ConfigManager
 
     config_str='''
@@ -20,8 +31,8 @@ node. for more informations see
         name: MyApp
         listen:
             sock1:
-                addr: 192.168.0.1
-                port: 8080
+                addr: %(hostname)s
+                port: %(port)s
         languages:
             - english
             - {language: persian, country: iran}
@@ -29,7 +40,7 @@ node. for more informations see
     logfile: /var/log/myapp.log
     '''
 
-    cfg = ConfigManager(init_value=config_str)
+    cfg = ConfigManager(init_value=config_str, context=dict(hostname='192.168.0.1', port=8080))
 
     print cfg.app.name
     print cfg.app.listen.sock1.addr

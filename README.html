@@ -349,7 +349,15 @@ automatically treat file-names as namespaces, or simply merge several
 parts of configuration(YAML-string or Python-dict) on arbitrary config
 node. for more informations see
 <a class="reference external" href="https://github.com/pylover/pymlconf#documentation">documentations</a>.</p>
+<p>Config file</p>
 <pre class="literal-block">
+# filename: config.yaml
+app:
+    root_dir: %(here)s
+</pre>
+<p>Python code:</p>
+<pre class="literal-block">
+# filename: config.py
 from pymlconf import ConfigManager
 
 config_str='''
@@ -357,8 +365,8 @@ app:
     name: MyApp
     listen:
         sock1:
-            addr: 192.168.0.1
-            port: 8080
+            addr: %(hostname)s
+            port: %(port)s
     languages:
         - english
         - {language: persian, country: iran}
@@ -366,7 +374,7 @@ app:
 logfile: /var/log/myapp.log
 '''
 
-cfg = ConfigManager(init_value=config_str)
+cfg = ConfigManager(init_value=config_str, context=dict(hostname='192.168.0.1', port=8080))
 
 print cfg.app.name
 print cfg.app.listen.sock1.addr
