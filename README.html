@@ -375,6 +375,7 @@ logfile: /var/log/myapp.log
 '''
 
 cfg = ConfigManager(init_value=config_str, context=dict(hostname='192.168.0.1', port=8080))
+cfg.load_files('path/to/config.yaml')
 
 print cfg.app.name
 print cfg.app.listen.sock1.addr
