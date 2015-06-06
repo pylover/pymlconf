@@ -2,7 +2,7 @@
 import os.path
 from yaml import load
 from yaml.scanner import ScannerError
-from errors import ConfigFileSyntaxError
+from pymlconf.errors import ConfigFileSyntaxError
 try:
     from yaml import CLoader as Loader
 except ImportError:
@@ -36,4 +36,3 @@ def load_yaml(file_path, macros=None):
         raise ConfigFileSyntaxError(file_path, ex)
     finally:
         stream.close()
-
