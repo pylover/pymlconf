@@ -5,9 +5,7 @@ from pymlconf.config_nodes import ConfigDict
 from pymlconf.yaml_helper import load_yaml
 from pymlconf.compat import basestring
 from pymlconf.errors import ConfigFileNotFoundError
-import logging
-
-logger = logging.getLogger('pymlconf')
+import warnings
 
 IGNORE = 0
 ERROR = 1
@@ -93,7 +91,7 @@ class ConfigManager(ConfigDict):
                 if self.missing_file_behavior == ERROR:
                     raise ConfigFileNotFoundError(f)
                 elif self.missing_file_behavior == WARNING:
-                    logger.warning('File not found: %s' % f)
+                    warnings.warn('File not found: %s' % f)
                 continue
 
             if filename_as_namespace:
