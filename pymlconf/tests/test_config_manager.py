@@ -1,4 +1,5 @@
 import os
+import re
 import unittest
 from pymlconf import ConfigDict, ConfigManager
 from pymlconf.config_manager import ERROR, IGNORE
@@ -71,10 +72,14 @@ a_date: %(date)s
         logger = logging.getLogger('pymlconf')
         logger.level = logging.DEBUG
         saved_stdout = sys.stdout
+        saved_stderr = sys.stderr
 
         sys.stdout = StringIO()
+        sys.stderr = StringIO()
         stream_handler = logging.StreamHandler(sys.stdout)
         logger.addHandler(stream_handler)
+
+
 
         try:
             # Testing ignore behavior
@@ -85,8 +90,10 @@ a_date: %(date)s
 
             # Testing default behavior which just prints a warning
             ConfigManager(init_value=self.builtin_config, dirs=[conf_dir], files=files)
-            output = sys.stdout.getvalue().strip()
-            self.assertRegexpMatches(output, "^File not found: ['\"]?(?:/[^/]+)*['\"]?$")
+            output = sys.stderr.getvalue().strip()
+
+            self.assertRegexpMatches(output,
+                                     re.compile("UserWarning: File not found: ['\"]?(?:/[^/]+)*['\"]?", re.MULTILINE))
 
             # Testing strict behavior
             self.assertRaises(ConfigFileNotFoundError, ConfigManager,
@@ -98,6 +105,7 @@ a_date: %(date)s
         finally:
             logger.removeHandler(stream_handler)
             sys.stdout = saved_stdout
+            sys.stderr = saved_stderr
 
     def test_dirs(self):
         dirs = [conf_dir]
