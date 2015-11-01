@@ -98,3 +98,13 @@ You can simply merge all config files above with on statement::
 
 
 
+
+
+Reserved Keys
+-------------
+
+- keys
+- can_merge
+- copy
+- empty
+- merge
