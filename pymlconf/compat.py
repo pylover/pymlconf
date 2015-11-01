@@ -4,6 +4,7 @@
 Created on:    Nov 17, 2013
 @author:        vahid
 """
+import sys
 
 # noinspection PyBroadException
 try:
@@ -37,3 +38,10 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
+
+
+# unittest compatibility
+from unittest import TestCase
+if sys.version_info >= (3, 0):  # Python 3.X
+    TestCase.assertRegexpMatches = TestCase.assertRegex
+    TestCase.assertNotRegexpMatches = TestCase.assertNotRegex

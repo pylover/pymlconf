@@ -116,7 +116,7 @@ class ConfigDict(OrderedDict, Mergable):
         Mergable.__init__(self, *args, **kwargs)
 
     def can_merge(self, data):
-        return data and isinstance(data, dict)
+        return data is not None and isinstance(data, dict)
 
     def _merge(self, data):
         for k in list(data.keys()):
