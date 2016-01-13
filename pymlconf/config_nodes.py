@@ -174,9 +174,11 @@ class ConfigList(list, Mergable):
         return data and hasattr(data, '__iter__')
 
     def _merge(self, data):
-        for item in data:
-            if item not in self:
-                self.append(item)
+        self.clear()
+        self.extend(data)
+        # for item in data:
+        #     if item not in self:
+        #         self.append(item)
 
     def copy(self):
         return ConfigList(self, context=self.context)
