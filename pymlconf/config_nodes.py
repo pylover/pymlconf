@@ -174,7 +174,7 @@ class ConfigList(list, Mergable):
         return data and hasattr(data, '__iter__')
 
     def _merge(self, data):
-        self.clear()
+        del self[:]
         self.extend(data)
         # for item in data:
         #     if item not in self:
