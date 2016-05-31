@@ -49,6 +49,24 @@ Python code:
 	# /var/log/myapp.log
 
 
+### Deferred(Proxied)
+
+    # module configuration.py
+    from pymlconf import DeferredConfigManager
+    settings = DeferredConfigManager()
+    
+    # another_module.py
+    from configuration import settings
+    def serve_request():
+        return settings.message
+
+    # in application startup
+    from configuration import settings
+    settings.load(
+        # the signature is the same as the `ConfigManager.__init__`
+    )
+    
+    
 ### Installation
 
 Latest stable version:
@@ -93,3 +111,7 @@ You can find the canonical syntax reference on [PyYAML](http://pyyaml.org/wiki/P
  * [pythonhosted.org] (http://pythonhosted.org/pymlconf/)
  * [readthedocs.org] (http://pymlconf.readthedocs.org/en/latest/)
 
+
+### Change Log
+
+- [0.4.0] Adding DeferredConfigManager

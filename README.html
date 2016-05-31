@@ -390,6 +390,25 @@ print cfg.logfile
 # iran
 # /var/log/myapp.log
 </pre>
+<div class="section" id="deferred-proxied">
+<h1>Deferred(Proxied)</h1>
+<pre class="literal-block">
+# module configuration.py
+from pymlconf import DeferredConfigManager
+settings = DeferredConfigManager()
+
+# another_module.py
+from configuration import settings
+def serve_request():
+    return settings.message
+
+# in application startup
+from configuration import settings
+settings.load(
+    # the signature is the same as the `ConfigManager.__init__`
+)
+</pre>
+</div>
 <div class="section" id="installation">
 <h1>Installation</h1>
 <p>Latest stable version:</p>
@@ -436,6 +455,12 @@ $ python setup.py test
 <ul class="simple">
 <li>[pythonhosted.org] (<a class="reference external" href="http://pythonhosted.org/pymlconf/">http://pythonhosted.org/pymlconf/</a>)</li>
 <li>[readthedocs.org] (<a class="reference external" href="http://pymlconf.readthedocs.org/en/latest/">http://pymlconf.readthedocs.org/en/latest/</a>)</li>
+</ul>
+</div>
+<div class="section" id="change-log">
+<h1>Change Log</h1>
+<ul class="simple">
+<li>[0.4.0] Adding DeferredConfigManager</li>
 </ul>
 </div>
 </div>
