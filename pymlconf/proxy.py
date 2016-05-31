@@ -63,15 +63,11 @@ class DeferredConfigManager(ObjectProxy):
     def _set_instance(cls, v):
         cls._instance = v
 
-    def load(self, config=None, directories=None, files=None, force=False, context=None, **kw):
+    def load(self, force=False, **kw):
         """
         Initialize the configuration manager
 
-        :param config: `string` or `dict`
-        :param directories: semi-colon separated `string` or `list` of director(y|es)
-        :param files: semi-colon separated `string` or `list` of file(s)
         :param force: force initialization even if it's already initialized
-        :param context: the pymlconf context
         :return:
         """
 
@@ -79,11 +75,4 @@ class DeferredConfigManager(ObjectProxy):
         if not force and instance is not None:
             raise ConfigurationAlreadyInitializedError("Configuration manager object is already initialized.")
 
-        instance = ConfigManager(
-            config,
-            files=files,
-            dirs=directories,
-            context=context or {},
-            **kw
-        )
-        self._set_instance(instance)
+        self._set_instance(ConfigManager(**kw))
