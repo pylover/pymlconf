@@ -24,6 +24,7 @@ class TestConfigManager(TestCase):
         cm.merge("""
 a_date: %(date)s
         """)
+        self.assertEqual(cm.version, 2.5)
         cm.version = 2.6
         self.assertEqual(cm.version, 2.6)
         self.assertEqual(cm.a_date, a_date)

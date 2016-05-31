@@ -1,6 +1,6 @@
 from os.path import abspath
 
-# noinspection PyUnresolvedReferences
+
 class ConfigurationError(Exception):
     def __init__(self, message):
         super(ConfigurationError, self).__init__(message)
@@ -26,3 +26,11 @@ class ConfigFileSyntaxError(ConfigurationError):
     def __init__(self, filename, inner_exception):
         ConfigurationError.__init__(self, '%s\nFilename: %s"'
                                     % (str(inner_exception), abspath(filename)))
+
+
+class ConfigurationNotInitializedError(ConfigurationError):
+    pass
+
+
+class ConfigurationAlreadyInitializedError(ConfigurationError):
+    pass

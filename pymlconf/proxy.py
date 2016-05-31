@@ -1,4 +1,4 @@
-from pymlconf.exceptions import ConfigurationAlreadyInitializedError, ConfigurationNotInitializedError
+from pymlconf.errors import ConfigurationAlreadyInitializedError, ConfigurationNotInitializedError
 from pymlconf import ConfigManager
 
 
