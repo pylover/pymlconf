@@ -37,7 +37,7 @@ class ConfigManager(ConfigDict):
     default_extension = ".conf"
 
     def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,
-                 extension='.conf', root_file_name='root', missing_file_behavior=WARNING, context=None):
+                 extension='.conf', root_file_name='root', missing_file_behavior=WARNING, encoding='ascii', context=None):
         """
         :param init_value: Initial configuration value that you can pass it before reading the files and directories.can be 'yaml string' or python dictionary.
         :type init_value: str or dict
@@ -68,13 +68,14 @@ class ConfigManager(ConfigDict):
         self.default_extension = extension
         self.root_file_name = root_file_name
         self.missing_file_behavior = missing_file_behavior
+        self.encoding = encoding
         if dirs:
-            self.load_dirs(dirs, filename_as_namespace=filename_as_namespace)
+            self.load_dirs(dirs, filename_as_namespace=filename_as_namespace, encoding=self.encoding)
 
         if files:
-            self.load_files(files)
+            self.load_files(files, encoding=self.encoding)
 
-    def load_files(self, files, filename_as_namespace=False):
+    def load_files(self, files, filename_as_namespace=False, encoding='ascii'):
         """
         load files which contains yaml configuration entries.and merge it by current ConfigManager instance
 
@@ -105,13 +106,13 @@ class ConfigManager(ConfigDict):
             else:
                 node = self
 
-            loaded_yaml = load_yaml(f, self.context)
+            loaded_yaml = load_yaml(f, self.context, encoding=encoding)
             if loaded_yaml:
                 node.merge(loaded_yaml)
 
     loadfiles = load_files
 
-    def load_dirs(self, dirs, filename_as_namespace=True):
+    def load_dirs(self, dirs, filename_as_namespace=True, encoding='ascii'):
         """
         load directories which contains configuration files with specified extension, and merge it by current ConfigManager instance
 
@@ -141,6 +142,6 @@ class ConfigManager(ConfigDict):
         if root_file_name:
             candidate_files = [root_file_name] + [f for f in candidate_files if f != root_file_name]
 
-        self.load_files(candidate_files, filename_as_namespace=filename_as_namespace)
+        self.load_files(candidate_files, filename_as_namespace=filename_as_namespace, encoding=encoding)
 
     loaddirs = load_dirs
