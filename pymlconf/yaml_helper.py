@@ -25,7 +25,7 @@ def load_string(str_data, macros=None):
     return load(str_data, Loader)
 
 
-def load_yaml(file_path, macros=None, encoding='ascii'):
+def load_yaml(file_path, macros=None, encoding='utf-8'):
     stream = open(file_path, encoding=encoding)
     file_dir = os.path.abspath(os.path.dirname(file_path))
     macros = {} if macros is None else macros
