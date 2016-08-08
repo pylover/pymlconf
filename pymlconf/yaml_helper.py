@@ -8,6 +8,8 @@ try:
 except ImportError:
     from yaml import Loader
 
+from pymlconf.compat import read_file
+
 
 # def _normalize(content):
 #     return content.replace('\t', ' ')
@@ -29,18 +31,12 @@ def load_yaml(file_path, macros=None, encoding='utf-8'):
     file_dir = os.path.abspath(os.path.dirname(file_path))
     macros = {} if macros is None else macros
     macros.update(here=file_dir)
-    
-    if sys.version_info.major == 3:
-        stream = open(file_path, encoding=encoding)
-    else:
-        stream = open(file_path)
 
     try:
         return load_string(
-            stream.read() if sys.version_info.major == 3 else stream.read().decode('utf-8'),
+            read_file(file_path, encoding),
             macros
         )
     except ScannerError as ex:
         raise ConfigFileSyntaxError(file_path, ex)
-    finally:
-        stream.close()
+
