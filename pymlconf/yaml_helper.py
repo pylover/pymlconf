@@ -1,5 +1,5 @@
-
 import os.path
+import sys
 from yaml import load
 from yaml.scanner import ScannerError
 from pymlconf.errors import ConfigFileSyntaxError
@@ -25,13 +25,21 @@ def load_string(str_data, macros=None):
     return load(str_data, Loader)
 
 
-def load_yaml(file_path, macros=None, encoding='utf-8'):
-    stream = open(file_path, encoding=encoding)
+def load_yaml(file_path, macros=None, encoding='utf-8'):  
     file_dir = os.path.abspath(os.path.dirname(file_path))
     macros = {} if macros is None else macros
     macros.update(here=file_dir)
+    
+    if sys.version_info.major == 3:
+        stream = open(file_path, encoding=encoding)
+    else:
+        stream = open(file_path)
+
     try:
-        return load_string(stream.read(), macros)
+        return load_string(
+            stream.read() if sys.version_info.major == 3 else stream.read().decode('utf-8'),
+            macros
+        )
     except ScannerError as ex:
         raise ConfigFileSyntaxError(file_path, ex)
     finally:
