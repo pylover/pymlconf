@@ -141,5 +141,5 @@ Documentation
 Change Log
 ~~~~~~~~~~
 
+-  [0.5.1] Encoding option for files
 -  [0.4.0] Adding DeferredConfigManager
-
