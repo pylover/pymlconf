@@ -45,14 +45,12 @@ from unittest import TestCase
 if sys.version_info >= (3, 0):  # Python 3.X
     TestCase.assertRegexpMatches = TestCase.assertRegex
     TestCase.assertNotRegexpMatches = TestCase.assertNotRegex
-    
+
+
 def read_file(file_path, encoding):
     if sys.version_info.major == 3:
-        stream = open(file_path, encoding=encoding)
-        return stream.read()
+        with open(file_path, encoding=encoding) as stream:
+            return stream.read()
     else:
-        stream = open(file_path)
-        return stream.read().decode(encoding)
-    stream.close()
-
-        
+        with open(file_path) as stream:
+            return stream.read().decode(encoding)
