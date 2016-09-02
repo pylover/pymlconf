@@ -113,6 +113,6 @@ You can find the canonical syntax reference on [PyYAML](http://pyyaml.org/wiki/P
 
 
 ### Change Log
-
+- [0.5.6-dev0] Unittest for dot in config key names.
 - [0.5.1] Encoding option for files
 - [0.4.0] Adding DeferredConfigManager
