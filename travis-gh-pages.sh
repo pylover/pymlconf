@@ -20,9 +20,8 @@ ssh-add $OUT_KEY
 
 # Clone/checkout the gh-pages branch from Github alongside the master branch working copy directory :
 cd ..
-git clone git@github.com:pylover/pymlconf.git pymlconf.io
+git clone -b gh-pages git@github.com:pylover/pymlconf.git pymlconf.io
 cd pymlconf.io
-git checkout -b gh-pages
 git pull origin gh-pages
 cd ..
 
