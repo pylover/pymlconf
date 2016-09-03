@@ -18,6 +18,17 @@ pymlconf
      :target: https://github.com/pylover/pymlconf/blob/master/LICENSE
 
 
+Jump To:
+^^^^^^^^
+
+ * `Documentation <http://pylover.dobisel.com>`_
+ * `Python package index <https://pypi.python.org/pypi/pymlconf>`_
+ * `Source on github <https://github.com/pylover/pymlconf>`_
+ * `Downloads <https://pypi.python.org/pypi/pymlconf#downloads>`_
+
+
+About
+^^^^^
 
 **pymlconf** (Python YAML Configuration Library) helps to easily manage
 and access to your application configurations which was already Written
@@ -159,5 +170,6 @@ Documentation
 Change Log
 ~~~~~~~~~~
 
+-  [0.5.9] ci
 -  [0.5.1] Encoding option for files
 -  [0.4.0] Adding DeferredConfigManager
