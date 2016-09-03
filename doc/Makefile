@@ -6,6 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
+GITHUB_OUT_DIR = ./../../pymlconf.io
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -45,6 +46,19 @@ html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+
+pymlconf.io:
+	rm -r $(GITHUB_OUT_DIR)/*;
+	$(SPHINXBUILD) -Eb html $(ALLSPHINXOPTS) $(GITHUB_OUT_DIR)
+	echo "pymlconf.dobisel.com" > $(GITHUB_OUT_DIR)/CNAME
+	touch $(GITHUB_OUT_DIR)/.nojekyll
+	touch $(GITHUB_OUT_DIR)/_config.yml
+	git --work-tree=$(GITHUB_OUT_DIR) --git-dir=$(GITHUB_OUT_DIR)/.git add --all
+	git --work-tree=$(GITHUB_OUT_DIR) --git-dir=$(GITHUB_OUT_DIR)/.git add -f .nojekyll
+	git --work-tree=$(GITHUB_OUT_DIR) --git-dir=$(GITHUB_OUT_DIR)/.git add -f _config.yml
+	echo "include: ['_static']" >> $(GITHUB_OUT_DIR)/_config.yml
+	@echo
+	@echo "Build finished. The HTML pages are in $(GITHUB_OUT_DIR)."
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
