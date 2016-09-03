@@ -42,7 +42,7 @@ except ImportError:
 
 # unittest compatibility
 from unittest import TestCase
-if sys.version_info[0] >= 3:
+if sys.version_info[0] < 3:
     TestCase.assertRegexpMatches = TestCase.assertRegex
     TestCase.assertNotRegexpMatches = TestCase.assertNotRegex
 
