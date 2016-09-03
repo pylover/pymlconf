@@ -42,13 +42,13 @@ except ImportError:
 
 # unittest compatibility
 from unittest import TestCase
-if sys.version_info >= (3, 0):  # Python 3.X
+if sys.version_info[0] >= 3:
     TestCase.assertRegexpMatches = TestCase.assertRegex
     TestCase.assertNotRegexpMatches = TestCase.assertNotRegex
 
 
 def read_file(file_path, encoding):
-    if sys.version_info.major == 3:
+    if sys.version_info[0] >= 3:
         with open(file_path, encoding=encoding) as stream:
             return stream.read()
     else:
