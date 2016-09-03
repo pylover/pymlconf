@@ -23,6 +23,7 @@ cd ..
 git clone git@github.com:pylover/pymlconf.git pymlconf.io
 cd pymlconf.io
 git checkout -b gh-pages
+git pull origin gh-pages
 cd ..
 
 # Build in-project documents: docs/html
