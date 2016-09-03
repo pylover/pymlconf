@@ -21,7 +21,7 @@ pymlconf
 Jump To:
 ^^^^^^^^
 
- * `Documentation <http://pylover.dobisel.com>`_
+ * `Documentation <http://pymlconf.dobisel.com>`_
  * `Python package index <https://pypi.python.org/pypi/pymlconf>`_
  * `Source on github <https://github.com/pylover/pymlconf>`_
  * `Downloads <https://pypi.python.org/pypi/pymlconf#downloads>`_
