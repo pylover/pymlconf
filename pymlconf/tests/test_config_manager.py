@@ -1,7 +1,7 @@
 import os
 import re
 from pymlconf import ConfigDict, ConfigManager
-from pymlconf.compat import TestCase
+from pymlconf.compat import TestCase, _CompatTestCase
 from pymlconf.config_manager import ERROR, IGNORE
 from pymlconf.errors import ConfigFileNotFoundError
 
@@ -9,7 +9,7 @@ this_dir = os.path.abspath(os.path.dirname(__file__))
 conf_dir = os.path.abspath(os.path.join(this_dir, 'conf'))
 
 
-class TestConfigManager(TestCase):
+class TestConfigManager(TestCase, _CompatTestCase):
     def setUp(self):
         self.builtin_config = {
             'version': 2.5,

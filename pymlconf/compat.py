@@ -46,6 +46,17 @@ if sys.version_info[0] >= 3:
     TestCase.assertRegexpMatches = TestCase.assertRegex
     TestCase.assertNotRegexpMatches = TestCase.assertNotRegex
 
+if hasattr(TestCase, 'assertIsInstance'):
+    class _CompatTestCase: pass
+else:
+    from unittest.util import safe_repr
+    class _CompatTestCase:
+        def assertIsInstance(self, obj, cls, msg=None):
+            if not isinstance(obj, cls):
+                standardMsg = '%s is not an instance of %r' % (safe_repr(obj), cls)
+                self.fail(self._formatMessage(msg, standardMsg))
+
+
 
 def read_file(file_path, encoding):
     if sys.version_info[0] >= 3:
