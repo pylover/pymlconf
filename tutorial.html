@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="html">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial &#8212; pymlconf 0.3.7 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pymlconf 0.3.7 documentation" href="index.html" />
+    <link rel="next" title="pymlconf Package" href="pymlconf.html" />
+    <link rel="prev" title="Install" href="install.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pymlconf.html" title="pymlconf Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Install"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.3.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="story">
+<h2>Story<a class="headerlink" href="#story" title="Permalink to this headline">¶</a></h2>
+<p>Assume we need to provide flexible configuration for a web application.</p>
+<p>We have tree configuration levels:</p>
+<blockquote>
+<div><ul class="simple">
+<li>builtin configurations</li>
+<li>User configurations</li>
+<li>Admin configurations</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="config-files">
+<h2>Config files<a class="headerlink" href="#config-files" title="Permalink to this headline">¶</a></h2>
+<p>app/conf/users/sites.mysite.conf:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">name</span><span class="p">:</span> <span class="n">mysite</span><span class="o">.</span><span class="n">com</span>
+<span class="n">owner</span><span class="p">:</span>
+   <span class="n">name</span><span class="p">:</span> <span class="n">My</span> <span class="n">Name</span>
+   <span class="n">phone</span><span class="p">:</span> <span class="n">My</span> <span class="n">Phone</span> <span class="n">Number</span>
+   <span class="n">address</span><span class="p">:</span> <span class="n">My</span> <span class="n">Address</span>
+</pre></div>
+</div>
+<p>app/conf/admin/root.conf:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">server</span><span class="p">:</span>
+   <span class="n">version</span><span class="p">:</span> <span class="mf">0.3</span><span class="n">a</span>
+
+<span class="n">sites</span><span class="p">:</span>
+   <span class="n">admin</span><span class="p">:</span>
+      <span class="n">name</span><span class="p">:</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">com</span>
+      <span class="n">owner</span><span class="p">:</span>
+         <span class="n">name</span><span class="p">:</span> <span class="n">Admin</span> <span class="n">Name</span>
+         <span class="n">phone</span><span class="p">:</span> <span class="n">Admin</span> <span class="n">Phone</span> <span class="n">Number</span>
+         <span class="n">address</span><span class="p">:</span> <span class="n">Admin</span> <span class="n">Address</span>
+</pre></div>
+</div>
+<p>app/conf/admin/server.conf:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">host</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+<span class="n">port</span><span class="p">:</span> <span class="mi">80</span>
+</pre></div>
+</div>
+<p>../other_path/../special.conf:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">licence_file</span><span class="p">:</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+<span class="n">log_file</span><span class="p">:</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+</div>
+<p>app/src/builtin_config.py:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">_builtin_config</span><span class="o">=</span><span class="p">{</span>
+   <span class="s1">&#39;server&#39;</span><span class="p">:{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Power Server&#39;</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>OR:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">_builtin_config</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">server:</span>
+<span class="s2">   name: Power Server</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initialize">
+<h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h2>
+<p>You can simply merge all config files above with on statement:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymlconf</span> <span class="k">import</span> <span class="n">ConfigManager</span>
+<span class="kn">from</span> <span class="nn">app.builtin_config</span> <span class="k">import</span> <span class="n">_builtin_config</span>
+
+<span class="n">config_root</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span>
+   <span class="n">_builtin_config</span><span class="p">,</span>
+   <span class="p">[</span><span class="s1">&#39;app/conf/admin&#39;</span><span class="p">,</span><span class="s1">&#39;app/conf/users&#39;</span><span class="p">],</span>
+   <span class="s1">&#39;../other_path/../special.conf&#39;</span><span class="p">)</span>
+
+<span class="c1"># All from app/conf/users/sites.mysite.conf</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">mysite</span><span class="o">.</span><span class="n">name</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">mysite</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">name</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">mysite</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">address</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">mysite</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">phone</span>
+
+<span class="c1"># All from app/conf/admin/root.conf</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">name</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">name</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">address</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">phone</span>
+
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">name</span>       <span class="c1"># from _builtin_config</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">version</span>    <span class="c1"># from app/conf/admin/root.conf</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">host</span>       <span class="c1"># from app/conf/admin/server.conf</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">port</span>       <span class="c1"># from app/conf/admin/server.conf</span>
+
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">licence_file</span>      <span class="c1"># from ../other_path/../special.conf</span>
+<span class="nb">print</span> <span class="n">config_root</span><span class="o">.</span><span class="n">log_file</span>          <span class="c1"># from ../other_path/../special.conf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reserved-keys">
+<h2>Reserved Keys<a class="headerlink" href="#reserved-keys" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>keys</li>
+<li>can_merge</li>
+<li>copy</li>
+<li>empty</li>
+<li>merge</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#story">Story</a></li>
+<li><a class="reference internal" href="#config-files">Config files</a></li>
+<li><a class="reference internal" href="#initialize">Initialize</a></li>
+<li><a class="reference internal" href="#reserved-keys">Reserved Keys</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">Install</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pymlconf.html"
+                        title="next chapter">pymlconf Package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pymlconf.html" title="pymlconf Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Install"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.3.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, Vahid Mardani.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

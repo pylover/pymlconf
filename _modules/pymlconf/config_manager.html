@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="html">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymlconf.config_manager &#8212; pymlconf 0.3.7 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.3.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="pymlconf 0.3.7 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">pymlconf 0.3.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pymlconf.config_manager</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">pymlconf.config_nodes</span> <span class="k">import</span> <span class="n">ConfigDict</span>
+<span class="kn">from</span> <span class="nn">pymlconf.yaml_helper</span> <span class="k">import</span> <span class="n">load_yaml</span>
+<span class="kn">from</span> <span class="nn">pymlconf.compat</span> <span class="k">import</span> <span class="n">basestring</span>
+<span class="kn">from</span> <span class="nn">pymlconf.errors</span> <span class="k">import</span> <span class="n">ConfigFileNotFoundError</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">IGNORE</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">ERROR</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">WARNING</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">missing_file_behaviors</span> <span class="o">=</span> <span class="p">[</span><span class="n">IGNORE</span><span class="p">,</span>
+                          <span class="n">ERROR</span><span class="p">,</span>
+                          <span class="n">WARNING</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="ConfigManager"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.config_manager.ConfigManager">[docs]</a><span class="k">class</span> <span class="nc">ConfigManager</span><span class="p">(</span><span class="n">ConfigDict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The main class which exposes pymlconf package.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        from pymlconf import ConfigManager</span>
+<span class="sd">        from os import path</span>
+<span class="sd">        config =  ConfigManager(&#39;&#39;&#39;</span>
+<span class="sd">            server:</span>
+<span class="sd">                host: localhost</span>
+<span class="sd">                port: 4455</span>
+<span class="sd">            &#39;&#39;&#39;,&#39;conf&#39;,&#39;builtins/defaults.conf&#39;)</span>
+
+<span class="sd">        print config.server.host</span>
+<span class="sd">        print config.server.port</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">default_extension</span> <span class="o">=</span> <span class="s2">&quot;.conf&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dirs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename_as_namespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.conf&#39;</span><span class="p">,</span> <span class="n">root_file_name</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">missing_file_behavior</span><span class="o">=</span><span class="n">WARNING</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param init_value: Initial configuration value that you can pass it before reading the files and directories.can be &#39;yaml string&#39; or python dictionary.</span>
+<span class="sd">        :type init_value: str or dict</span>
+
+<span class="sd">        :param dirs: Python list  or a string that contains semi-colon separated list of directories which contains configuration files with specified extension(default \*.conf).</span>
+<span class="sd">        :type dirs: str or list</span>
+
+<span class="sd">        :param files: Python list  or a string that contains semi-colon separated list of files which contains yaml configuration entries.</span>
+<span class="sd">        :type files: str or list</span>
+
+<span class="sd">        :param filename_as_namespace: when loading dirs, use the filename as a namespace. default: true.</span>
+<span class="sd">        :type filename_as_namespace: bool</span>
+
+<span class="sd">        :param extension: File extension to search for configuration files, in dirs parameter, default &#39;.conf&#39;</span>
+<span class="sd">        :type extension: str</span>
+
+<span class="sd">        :param root_file_name: Filename to treat as root configuration file, so it loads first, and do not uses the filename as namespaces.</span>
+<span class="sd">        :type root_file_name: str</span>
+
+<span class="sd">        :param missing_file_behavior: What should do when a file was not found, set to 0 (zero) to ignore. default to 2:warning</span>
+<span class="sd">        :type missing_file_behavior: integer 0:ignore, 1:throw error, 2:warning</span>
+
+<span class="sd">        :param context: dictionary to format the yaml before parsing in pre processor.</span>
+<span class="sd">        :type context: dict</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConfigManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">init_value</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_extension</span> <span class="o">=</span> <span class="n">extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_file_name</span> <span class="o">=</span> <span class="n">root_file_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">missing_file_behavior</span> <span class="o">=</span> <span class="n">missing_file_behavior</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span>
+        <span class="k">if</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_dirs</span><span class="p">(</span><span class="n">dirs</span><span class="p">,</span> <span class="n">filename_as_namespace</span><span class="o">=</span><span class="n">filename_as_namespace</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">files</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_files</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConfigManager.load_files"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.config_manager.ConfigManager.load_files">[docs]</a>    <span class="k">def</span> <span class="nf">load_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">filename_as_namespace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        load files which contains yaml configuration entries.and merge it by current ConfigManager instance</span>
+
+<span class="sd">        :param files: files to load and merge into existing configuration instance</span>
+<span class="sd">        :type files: list</span>
+
+<span class="sd">        :param filename_as_namespace: when loading files, use the filename as a namespace. default: false.</span>
+<span class="sd">        :type filename_as_namespace: bool</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">basestring</span><span class="p">)</span> <span class="k">else</span> <span class="n">files</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">missing_file_behavior</span> <span class="o">==</span> <span class="n">ERROR</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ConfigFileNotFoundError</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">missing_file_behavior</span> <span class="o">==</span> <span class="n">WARNING</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;File not found: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">filename_as_namespace</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">default_extension</span><span class="p">),</span> <span class="s1">&#39;Invalid configuration filename.expected: ns1.ns2.*</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_extension</span>
+                <span class="n">namespace</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">namespace</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_file_name</span><span class="p">:</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_namespaces</span><span class="p">(</span><span class="o">*</span><span class="n">namespace</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span>
+
+            <span class="n">loaded_yaml</span> <span class="o">=</span> <span class="n">load_yaml</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">loaded_yaml</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span></div>
+
+    <span class="n">loadfiles</span> <span class="o">=</span> <span class="n">load_files</span>
+
+<div class="viewcode-block" id="ConfigManager.load_dirs"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.config_manager.ConfigManager.load_dirs">[docs]</a>    <span class="k">def</span> <span class="nf">load_dirs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">filename_as_namespace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        load directories which contains configuration files with specified extension, and merge it by current ConfigManager instance</span>
+
+<span class="sd">        :param dirs: Dirs to search for configuration files.</span>
+<span class="sd">        :type dirs: list,string</span>
+
+<span class="sd">        :param filename_as_namespace: when loading dirs, use the filename as a namespace. default: true.</span>
+<span class="sd">        :type filename_as_namespace: bool</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dirs</span><span class="p">,</span> <span class="n">basestring</span><span class="p">)</span> <span class="k">else</span> <span class="n">dirs</span>
+        <span class="n">candidate_files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="n">full_paths</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+            <span class="n">conf_files</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">full_paths</span> <span class="k">if</span>
+                          <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_extension</span><span class="p">))</span>
+            <span class="n">candidate_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">conf_files</span><span class="p">))</span>
+
+        <span class="n">root_file_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">candidate_files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_file_name</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_extension</span><span class="p">):</span>
+                <span class="n">root_file_name</span> <span class="o">=</span> <span class="n">f</span>
+                <span class="k">break</span>
+
+        <span class="c1"># remove and insert root.conf in index 0.</span>
+        <span class="k">if</span> <span class="n">root_file_name</span><span class="p">:</span>
+            <span class="n">candidate_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">root_file_name</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">candidate_files</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="n">root_file_name</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_files</span><span class="p">(</span><span class="n">candidate_files</span><span class="p">,</span> <span class="n">filename_as_namespace</span><span class="o">=</span><span class="n">filename_as_namespace</span><span class="p">)</span></div>
+
+    <span class="n">loaddirs</span> <span class="o">=</span> <span class="n">load_dirs</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">pymlconf 0.3.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, Vahid Mardani.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

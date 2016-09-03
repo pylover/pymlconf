@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="html">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymlconf Package &#8212; pymlconf 0.3.7 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pymlconf 0.3.7 documentation" href="index.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.3.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pymlconf-package">
+<h1>pymlconf Package<a class="headerlink" href="#pymlconf-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pymlconf.config_manager">
+<span id="config-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">config_manager</span></code> Module<a class="headerlink" href="#module-pymlconf.config_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pymlconf.config_manager.ConfigManager">
+<em class="property">class </em><code class="descclassname">pymlconf.config_manager.</code><code class="descname">ConfigManager</code><span class="sig-paren">(</span><em>init_value=None</em>, <em>dirs=None</em>, <em>files=None</em>, <em>filename_as_namespace=True</em>, <em>extension='.conf'</em>, <em>root_file_name='root'</em>, <em>missing_file_behavior=2</em>, <em>encoding='utf-8'</em>, <em>context=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_manager.html#ConfigManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_manager.ConfigManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.config_nodes.ConfigDict" title="pymlconf.config_nodes.ConfigDict"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.config_nodes.ConfigDict</span></code></a></p>
+<p>The main class which exposes pymlconf package.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymlconf</span> <span class="k">import</span> <span class="n">ConfigManager</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
+<span class="n">config</span> <span class="o">=</span>  <span class="n">ConfigManager</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    server:</span>
+<span class="s1">        host: localhost</span>
+<span class="s1">        port: 4455</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;conf&#39;</span><span class="p">,</span><span class="s1">&#39;builtins/defaults.conf&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">host</span>
+<span class="nb">print</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">port</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>init_value</strong> (<em>str or dict</em>) &#8211; Initial configuration value that you can pass it before reading the files and directories.can be &#8216;yaml string&#8217; or python dictionary.</li>
+<li><strong>dirs</strong> (<em>str or list</em>) &#8211; Python list  or a string that contains semi-colon separated list of directories which contains configuration files with specified extension(default *.conf).</li>
+<li><strong>files</strong> (<em>str or list</em>) &#8211; Python list  or a string that contains semi-colon separated list of files which contains yaml configuration entries.</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
+<li><strong>extension</strong> (<em>str</em>) &#8211; File extension to search for configuration files, in dirs parameter, default &#8216;.conf&#8217;</li>
+<li><strong>root_file_name</strong> (<em>str</em>) &#8211; Filename to treat as root configuration file, so it loads first, and do not uses the filename as namespaces.</li>
+<li><strong>missing_file_behavior</strong> (<em>integer 0:ignore, 1:throw error, 2:warning</em>) &#8211; What should do when a file was not found, set to 0 (zero) to ignore. default to 2:warning</li>
+<li><strong>context</strong> (<em>dict</em>) &#8211; dictionary to format the yaml before parsing in pre processor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pymlconf.config_manager.ConfigManager.default_extension">
+<code class="descname">default_extension</code><em class="property"> = '.conf'</em><a class="headerlink" href="#pymlconf.config_manager.ConfigManager.default_extension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_manager.ConfigManager.load_dirs">
+<code class="descname">load_dirs</code><span class="sig-paren">(</span><em>dirs</em>, <em>filename_as_namespace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_manager.html#ConfigManager.load_dirs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_manager.ConfigManager.load_dirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>load directories which contains configuration files with specified extension, and merge it by current ConfigManager instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dirs</strong> (<em>list,string</em>) &#8211; Dirs to search for configuration files.</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_manager.ConfigManager.load_files">
+<code class="descname">load_files</code><span class="sig-paren">(</span><em>files</em>, <em>filename_as_namespace=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_manager.html#ConfigManager.load_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_manager.ConfigManager.load_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>load files which contains yaml configuration entries.and merge it by current ConfigManager instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>files</strong> (<em>list</em>) &#8211; files to load and merge into existing configuration instance</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading files, use the filename as a namespace. default: false.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_manager.ConfigManager.loaddirs">
+<code class="descname">loaddirs</code><span class="sig-paren">(</span><em>dirs</em>, <em>filename_as_namespace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pymlconf.config_manager.ConfigManager.loaddirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>load directories which contains configuration files with specified extension, and merge it by current ConfigManager instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dirs</strong> (<em>list,string</em>) &#8211; Dirs to search for configuration files.</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_manager.ConfigManager.loadfiles">
+<code class="descname">loadfiles</code><span class="sig-paren">(</span><em>files</em>, <em>filename_as_namespace=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pymlconf.config_manager.ConfigManager.loadfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>load files which contains yaml configuration entries.and merge it by current ConfigManager instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>files</strong> (<em>list</em>) &#8211; files to load and merge into existing configuration instance</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading files, use the filename as a namespace. default: false.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pymlconf.config_nodes">
+<span id="config-nodes-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">config_nodes</span></code> Module<a class="headerlink" href="#module-pymlconf.config_nodes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pymlconf.config_nodes.ConfigDict">
+<em class="property">class </em><code class="descclassname">pymlconf.config_nodes.</code><code class="descname">ConfigDict</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">collections.OrderedDict</span></code>, <a class="reference internal" href="#pymlconf.config_nodes.Mergable" title="pymlconf.config_nodes.Mergable"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.config_nodes.Mergable</span></code></a></p>
+<p>Configuration node that represents python dictionary data.</p>
+<dl class="method">
+<dt id="pymlconf.config_nodes.ConfigDict.can_merge">
+<code class="descname">can_merge</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigDict.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigDict.can_merge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_nodes.ConfigDict.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigDict.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pymlconf.config_nodes.ConfigDict.empty">
+<em class="property">classmethod </em><code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigDict.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigDict.empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymlconf.config_nodes.ConfigList">
+<em class="property">class </em><code class="descclassname">pymlconf.config_nodes.</code><code class="descname">ConfigList</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">list</span></code>, <a class="reference internal" href="#pymlconf.config_nodes.Mergable" title="pymlconf.config_nodes.Mergable"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.config_nodes.Mergable</span></code></a></p>
+<p>Configuration node that represents the python list data.</p>
+<dl class="method">
+<dt id="pymlconf.config_nodes.ConfigList.can_merge">
+<code class="descname">can_merge</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigList.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigList.can_merge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_nodes.ConfigList.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigList.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigList.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pymlconf.config_nodes.ConfigList.empty">
+<em class="property">classmethod </em><code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigList.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigList.empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymlconf.config_nodes.ConfigNamespace">
+<em class="property">class </em><code class="descclassname">pymlconf.config_nodes.</code><code class="descname">ConfigNamespace</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#ConfigNamespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.ConfigNamespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.config_nodes.ConfigDict" title="pymlconf.config_nodes.ConfigDict"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.config_nodes.ConfigDict</span></code></a>, <a class="reference internal" href="#pymlconf.config_nodes.Mergable" title="pymlconf.config_nodes.Mergable"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.config_nodes.Mergable</span></code></a></p>
+<p>Configuration node that represents the configuration namespace node.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pymlconf.config_nodes.Mergable">
+<em class="property">class </em><code class="descclassname">pymlconf.config_nodes.</code><code class="descname">Mergable</code><span class="sig-paren">(</span><em>data=None</em>, <em>context=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#Mergable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.Mergable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Base class for all configuration nodes, so all configuration nodes are mergable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list or dict</em>) &#8211; Initial value to constract a mergable instance. default: None.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pymlconf.config_nodes.Mergable.can_merge">
+<code class="descname">can_merge</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#Mergable.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.Mergable.can_merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines whenever can merge with the passed argument or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>any</em>) &#8211; An object to test.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_nodes.Mergable.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#Mergable.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.Mergable.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>When implemented, returns copy of current config instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#pymlconf.config_nodes.Mergable" title="pymlconf.config_nodes.Mergable"><code class="xref py py-class docutils literal"><span class="pre">Mergable</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pymlconf.config_nodes.Mergable.empty">
+<em class="property">classmethod </em><code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#Mergable.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.Mergable.empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>When implemented, returns an empty instance of drived <a class="reference internal" href="#pymlconf.config_nodes.Mergable" title="pymlconf.config_nodes.Mergable"><code class="xref py py-class docutils literal"><span class="pre">Mergable</span></code></a> class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#pymlconf.config_nodes.Mergable" title="pymlconf.config_nodes.Mergable"><code class="xref py py-class docutils literal"><span class="pre">Mergable</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pymlconf.config_nodes.Mergable.make_mergable_if_possible">
+<em class="property">classmethod </em><code class="descname">make_mergable_if_possible</code><span class="sig-paren">(</span><em>data</em>, <em>context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#Mergable.make_mergable_if_possible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.Mergable.make_mergable_if_possible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes an object mergable if possible. Returns the virgin object if cannot convert it to a mergable instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#pymlconf.config_nodes.Mergable" title="pymlconf.config_nodes.Mergable"><code class="xref py py-class docutils literal"><span class="pre">Mergable</span></code></a> or type(data)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.config_nodes.Mergable.merge">
+<code class="descname">merge</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/config_nodes.html#Mergable.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.config_nodes.Mergable.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merges this instance with new instances, in-place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*args</strong> (<em>iterable</em>) &#8211; Configuration values to merge with current instance.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pymlconf.errors">
+<span id="errors-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">errors</span></code> Module<a class="headerlink" href="#module-pymlconf.errors" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="pymlconf.errors.ConfigFileNotFoundError">
+<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigFileNotFoundError</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigFileNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigFileNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pymlconf.errors.ConfigFileSyntaxError">
+<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigFileSyntaxError</code><span class="sig-paren">(</span><em>filename</em>, <em>inner_exception</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigFileSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigFileSyntaxError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pymlconf.errors.ConfigKeyError">
+<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigKeyError</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigKeyError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigKeyError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">AttributeError</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pymlconf.errors.ConfigurationAlreadyInitializedError">
+<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigurationAlreadyInitializedError</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationAlreadyInitializedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationAlreadyInitializedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pymlconf.errors.ConfigurationError">
+<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigurationError</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pymlconf.errors.ConfigurationMergeError">
+<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigurationMergeError</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationMergeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationMergeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">ValueError</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pymlconf.errors.ConfigurationNotInitializedError">
+<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigurationNotInitializedError</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationNotInitializedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationNotInitializedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pymlconf Package</a><ul>
+<li><a class="reference internal" href="#module-pymlconf.config_manager"><code class="docutils literal"><span class="pre">config_manager</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pymlconf.config_nodes"><code class="docutils literal"><span class="pre">config_nodes</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pymlconf.errors"><code class="docutils literal"><span class="pre">errors</span></code> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="previous chapter">Tutorial</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pymlconf.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.3.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, Vahid Mardani.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>
