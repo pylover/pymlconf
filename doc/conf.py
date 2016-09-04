@@ -13,6 +13,7 @@
 
 import sys
 import os
+import re
 sys.path.insert(0, os.path.abspath('../'))
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -52,7 +53,7 @@ copyright = u'2013, Vahid Mardani'
 #
 # The short X.Y version.
 # reading package version (same way sqlalchemy does)
-with open(os.path.join(os.path.dirname(__file__), '..', 'khayyam', '__init__.py')) as v_file:
+with open(os.path.join(os.path.dirname(__file__), '..', 'pymlconf', '__init__.py')) as v_file:
     package_version_parts = re.compile(r".*__version__ = '(.*?)'",re.S).match(v_file.read()).group(1).split('.')
 
 # The short X.Y version.
