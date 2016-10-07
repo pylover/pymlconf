@@ -5,34 +5,25 @@ env:
   - COMMIT_AUTHOR_EMAIL: vahid@dobisel.com
 
 language: python
-sudo: required
-dist: trusty
 
 python:
   - "2.7"
-  - "3.2"
   - "3.3"
   - "3.4"
   - "3.5"
   - "3.5-dev"
-  - "nightly"
 
 before_install:
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then pip install -U pip setuptools wheel sphinx coverage coveralls; fi
+  - pip install -U pip setuptools wheel
+  - pip install -r requirements-dev.txt
 
-install:
-  - pip install -ve .
+install: pip install -ve .
+script: coverage run --source pymlconf $(which nosetests)
+after_success: coveralls
 
-script:
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then coverage run --source pymlconf $(which nosetests);
-    else nosetests; fi
+after_deploy: if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
 
-after_success:
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then coveralls ; fi
-
-after_deploy:
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then python3 setup.py sdist upload; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
+#  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then python3 setup.py sdist upload; fi
 
 deploy:
   provider: pypi
@@ -41,10 +32,11 @@ deploy:
     secure: B36EgPpgSTEneklHrsDPk8DA0r556PoQrepW24hPkm+kBkq0tluQ8xyT/vaFlMe348+M+OuUFLY2bHHpfciLJfS4ZOSNP2FGflV6RUuPJZjwVgzB7m8+afZQjcss5sDAJxJaV5Y4BAxEfbAAnjrYPkGzjl3N8YTRjeghyZZIQOw=
   skip_cleanup: true
   overwrite: true
-  distributions: bdist_wheel
+  distributions: sdist bdist_wheel
   on:
     tags: true
     all_branches: true
     repo: pylover/pymlconf
     condition: "$TRAVIS_TAG =~ ^v[0-9][.][0-9]*[.][0-9]*$"
+    all_branches: true
 
