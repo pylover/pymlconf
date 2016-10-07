@@ -15,7 +15,6 @@ python:
 
 before_install:
   - pip install -U pip setuptools wheel
-  - pip uninstall coveralls
   - pip install -r requirements-dev.txt
 
 install: pip install -ve .
