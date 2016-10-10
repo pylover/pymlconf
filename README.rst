@@ -42,92 +42,97 @@ node. for more informations see
 
 Config file
 
-::
+.. code-block:: yaml
 
-    # filename: config.yaml
-    app:
-        root_dir: %(here)s
+   # filename: config.yaml
+   app:
+       root_dir: %(here)s
+
 
 Python code:
 
+.. code-block:: python
+
+   # filename: config.py
+
+   from pymlconf import ConfigManager
+
+   config_str='''
+   app:
+       name: MyApp
+       listen:
+           sock1:
+               addr: %(hostname)s
+               port: %(port)s
+       languages:
+           - english
+           - {language: persian, country: iran}
+
+   logfile: /var/log/myapp.log
+   '''
+
+   cfg = ConfigManager(init_value=config_str, context=dict(hostname='192.168.0.1', port=8080))
+   cfg.load_files('path/to/config.yaml')
+
+   print cfg.app.name
+   print cfg.app.listen.sock1.addr
+   print cfg.app.languages[0]
+   print cfg.app.languages[1].country
+   print cfg.logfile
+
+Will produce
 ::
 
-    # filename: config.py
-    from pymlconf import ConfigManager
-
-    config_str='''
-    app:
-        name: MyApp
-        listen:
-            sock1:
-                addr: %(hostname)s
-                port: %(port)s
-        languages:
-            - english
-            - {language: persian, country: iran}
-            
-    logfile: /var/log/myapp.log
-    '''
-
-    cfg = ConfigManager(init_value=config_str, context=dict(hostname='192.168.0.1', port=8080))
-    cfg.load_files('path/to/config.yaml')
-
-    print cfg.app.name
-    print cfg.app.listen.sock1.addr
-    print cfg.app.languages[0]
-    print cfg.app.languages[1].country
-    print cfg.logfile
-
-    # --------- Prints:
-    # MyApp
-    # 192.168.0.1
-    # english
-    # iran
-    # /var/log/myapp.log
+   # MyApp
+   # 192.168.0.1
+   # english
+   # iran
+   # /var/log/myapp.log
 
 Deferred(Proxied)
 ~~~~~~~~~~~~~~~~~
 
-::
+.. code-block:: python
 
-    # module configuration.py
-    from pymlconf import DeferredConfigManager
-    settings = DeferredConfigManager()
+   # module configuration.py
+   from pymlconf import DeferredConfigManager
+   settings = DeferredConfigManager()
 
-    # another_module.py
-    from configuration import settings
-    def serve_request():
-        return settings.message
+   # another_module.py
+   from configuration import settings
+   def serve_request():
+       return settings.message
 
     # in application startup
-    from configuration import settings
-    settings.load(
-        # the signature is the same as the `ConfigManager.__init__`
-    )
+   from configuration import settings
+   settings.load(
+       # the signature is the same as the `ConfigManager.__init__`
+   )
+
 
 Installation
 ~~~~~~~~~~~~
 
 Latest stable version:
 
-::
+.. code-block:: shell
 
-    $ pip install pymlconf
-    # or
-    $ easy_install pymlconf
+   $ pip install pymlconf
+   # or
+   $ easy_install pymlconf
 
 Development version:
 
-::
+.. code-block:: shell
 
-    $ pip install git+git@github.com:pylover/pymlconf.git
+   $ pip install git+git@github.com:pylover/pymlconf.git
 
 From source:
 
-::
+.. code-block:: shell
 
-    $ cd source_dir
-    $ python setup.py install
+   $ cd source_dir
+   $ python setup.py install
 
 Manually download it from
 `pypi <https://pypi.python.org/pypi/pymlconf>`__
@@ -137,23 +142,24 @@ Unit-Tests
 
 Install nose and change current directory to project's dir:
 
-::
+.. code-block:: shell
 
-    $ pip install nose  
-    $ cd path/to/pymlconf 
+   $ pip install nose
+   $ cd path/to/pymlconf
 
 Running tests:
 
-::
+.. code-block:: shell
 
-    $ nosetests
+   $ nosetests
         
 
 Or
 
-::
+.. code-block:: shell
 
-    $ python setup.py test
+   $ python setup.py test
+
 
 Syntax Reference
 ~~~~~~~~~~~~~~~~
