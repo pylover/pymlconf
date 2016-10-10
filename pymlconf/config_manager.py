@@ -37,15 +37,19 @@ class ConfigManager(ConfigDict):
     default_extension = ".conf"
 
     def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,
-                 extension='.conf', root_file_name='root', missing_file_behavior=WARNING, encoding='utf-8', context=None):
+                 extension='.conf', root_file_name='root', missing_file_behavior=WARNING, encoding='utf-8',
+                 context=None, builtin=None):
         """
-        :param init_value: Initial configuration value that you can pass it before reading the files and directories.can be 'yaml string' or python dictionary.
+        :param init_value: Initial configuration value that you can pass it before reading the files and directories.can
+                           be 'yaml string' or python dictionary.
         :type init_value: str or dict
 
-        :param dirs: Python list  or a string that contains semi-colon separated list of directories which contains configuration files with specified extension(default \*.conf).
+        :param dirs: Python list  or a string that contains semi-colon separated list of directories which contains
+                     configuration files with specified extension(default \*.conf).
         :type dirs: str or list
 
-        :param files: Python list  or a string that contains semi-colon separated list of files which contains yaml configuration entries.
+        :param files: Python list  or a string that contains semi-colon separated list of files which contains yaml
+                      configuration entries.
         :type files: str or list
 
         :param filename_as_namespace: when loading dirs, use the filename as a namespace. default: true.
@@ -54,21 +58,39 @@ class ConfigManager(ConfigDict):
         :param extension: File extension to search for configuration files, in dirs parameter, default '.conf'
         :type extension: str
 
-        :param root_file_name: Filename to treat as root configuration file, so it loads first, and do not uses the filename as namespaces.
+        :param root_file_name: Filename to treat as root configuration file, so it loads first, and do not uses the
+                               filename as namespaces.
         :type root_file_name: str
 
-        :param missing_file_behavior: What should do when a file was not found, set to 0 (zero) to ignore. default to 2:warning
+        :param missing_file_behavior: What should do when a file was not found, set to 0 (zero) to ignore. default to
+                                      ``warning(2)``
         :type missing_file_behavior: integer 0:ignore, 1:throw error, 2:warning
 
         :param context: dictionary to format the yaml before parsing in pre processor.
         :type context: dict
 
+        :param builtin: Same as the ``init_value``, but it will be loaded before the loading the ``init_value``,
+                        helps to implement builtin config pattern.
+        :type builtin: str or dict
+
+        .. versionadded:: 0.6.0a
+
+           The ``builtin`` parameter was added.
+
         """
-        super(ConfigManager, self).__init__(data=init_value, context=context)
+
         self.default_extension = extension
         self.root_file_name = root_file_name
         self.missing_file_behavior = missing_file_behavior
         self.encoding = encoding
+
+        # Loading the instance with built-in config
+        super(ConfigManager, self).__init__(data=builtin, context=context)
+
+        # Loading init_value
+        if init_value:
+            self.merge(init_value)
+
         if dirs:
             self.load_dirs(dirs, filename_as_namespace=filename_as_namespace)
 
@@ -96,8 +118,8 @@ class ConfigManager(ConfigDict):
                 continue
 
             if filename_as_namespace:
-                assert f.endswith(
-                    self.default_extension), 'Invalid configuration filename.expected: ns1.ns2.*%s' % self.default_extension
+                assert f.endswith(self.default_extension), \
+                    'Invalid configuration filename.expected: ns1.ns2.*%s' % self.default_extension
                 namespace = os.path.splitext(os.path.split(f)[1])[0]
                 if namespace == self.root_file_name:
                     node = self
@@ -114,7 +136,8 @@ class ConfigManager(ConfigDict):
 
     def load_dirs(self, dirs, filename_as_namespace=True):
         """
-        load directories which contains configuration files with specified extension, and merge it by current ConfigManager instance
+        load directories which contains configuration files with specified extension, and merge it by current
+        ConfigManager instance
 
         :param dirs: Dirs to search for configuration files.
         :type dirs: list,string
