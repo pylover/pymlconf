@@ -4,7 +4,7 @@ from pymlconf.config_manager import ConfigManager, IGNORE, ERROR, WARNING
 from pymlconf.errors import ConfigurationError, ConfigKeyError, ConfigurationMergeError
 from pymlconf.proxy import DeferredConfigManager
 
-__version__ = '0.6.0a'
+__version__ = '0.6.0'
 
 __all__ = ['ConfigManager',
            'Mergable',
