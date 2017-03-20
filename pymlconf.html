@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pymlconf Package &#8212; pymlconf 0.7.0 documentation</title>
+    <title>pymlconf Package &#8212; pymlconf 0.7.1 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,10 +14,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.7.0',
+        VERSION:     '0.7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -25,7 +26,6 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="pymlconf 0.7.0 documentation" href="index.html" />
     <link rel="prev" title="Tutorial" href="tutorial.html" /> 
   </head>
   <body role="document">
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.7.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.7.1 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -77,20 +77,20 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>init_value</strong> (<em>str or dict</em>) &#8211; Initial configuration value that you can pass it before reading the files and directories.can
+<li><strong>init_value</strong> (<em>str</em><em> or </em><em>dict</em>) &#8211; Initial configuration value that you can pass it before reading the files and directories.can
 be &#8216;yaml string&#8217; or python dictionary.</li>
-<li><strong>dirs</strong> (<em>str or list</em>) &#8211; Python list  or a string that contains semi-colon separated list of directories which contains
+<li><strong>dirs</strong> (<em>str</em><em> or </em><em>list</em>) &#8211; Python list  or a string that contains semi-colon separated list of directories which contains
 configuration files with specified extension(default *.conf).</li>
-<li><strong>files</strong> (<em>str or list</em>) &#8211; Python list  or a string that contains semi-colon separated list of files which contains yaml
+<li><strong>files</strong> (<em>str</em><em> or </em><em>list</em>) &#8211; Python list  or a string that contains semi-colon separated list of files which contains yaml
 configuration entries.</li>
 <li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
 <li><strong>extension</strong> (<em>str</em>) &#8211; File extension to search for configuration files, in dirs parameter, default &#8216;.conf&#8217;</li>
 <li><strong>root_file_name</strong> (<em>str</em>) &#8211; Filename to treat as root configuration file, so it loads first, and do not uses the
 filename as namespaces.</li>
-<li><strong>missing_file_behavior</strong> (<em>integer 0:ignore, 1:throw error, 2:warning</em>) &#8211; What should do when a file was not found, set to 0 (zero) to ignore. default to
+<li><strong>missing_file_behavior</strong> (<em>integer 0:ignore</em><em>, </em><em>1:throw error</em><em>, </em><em>2:warning</em>) &#8211; What should do when a file was not found, set to 0 (zero) to ignore. default to
 <code class="docutils literal"><span class="pre">warning(2)</span></code></li>
 <li><strong>context</strong> (<em>dict</em>) &#8211; dictionary to format the yaml before parsing in pre processor.</li>
-<li><strong>builtin</strong> (<em>str or dict</em>) &#8211; Same as the <code class="docutils literal"><span class="pre">init_value</span></code>, but it will be loaded before the loading the <code class="docutils literal"><span class="pre">init_value</span></code>,
+<li><strong>builtin</strong> (<em>str</em><em> or </em><em>dict</em>) &#8211; Same as the <code class="docutils literal"><span class="pre">init_value</span></code>, but it will be loaded before the loading the <code class="docutils literal"><span class="pre">init_value</span></code>,
 helps to implement builtin config pattern.</li>
 </ul>
 </td>
@@ -115,7 +115,7 @@ ConfigManager instance</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dirs</strong> (<em>list,string</em>) &#8211; Dirs to search for configuration files.</li>
+<li><strong>dirs</strong> (<em>list</em><em>,</em><em>string</em>) &#8211; Dirs to search for configuration files.</li>
 <li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
 </ul>
 </td>
@@ -152,7 +152,7 @@ ConfigManager instance</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dirs</strong> (<em>list,string</em>) &#8211; Dirs to search for configuration files.</li>
+<li><strong>dirs</strong> (<em>list</em><em>,</em><em>string</em>) &#8211; Dirs to search for configuration files.</li>
 <li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
 </ul>
 </td>
@@ -244,7 +244,7 @@ ConfigManager instance</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list or dict</em>) &#8211; Initial value to constract a mergable instance. default: None.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em><em> or </em><em>dict</em>) &#8211; Initial value to constract a mergable instance. default: None.</td>
 </tr>
 </tbody>
 </table>
@@ -392,7 +392,7 @@ ConfigManager instance</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/pymlconf.txt"
+      <li><a href="_sources/pymlconf.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -422,12 +422,12 @@ ConfigManager instance</p>
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.7.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.7.1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013, Vahid Mardani.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>
