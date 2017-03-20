@@ -2,10 +2,10 @@
 from pymlconf.config_nodes import Mergable, ConfigList, ConfigDict, ConfigNamespace
 from pymlconf.config_manager import ConfigManager, IGNORE, ERROR, WARNING
 from pymlconf.errors import ConfigurationError, ConfigKeyError, ConfigurationMergeError, \
-    ConfigurationAlreadyInitializedError
+    ConfigurationAlreadyInitializedError, ConfigurationNotInitializedError
 from pymlconf.proxy import DeferredConfigManager
 
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 
 __all__ = ['ConfigManager',
            'Mergable',
@@ -16,6 +16,7 @@ __all__ = ['ConfigManager',
            'ConfigKeyError',
            'ConfigurationMergeError',
            'ConfigurationAlreadyInitializedError',
+           'ConfigurationNotInitializedError',
            'DeferredConfigManager',
            'IGNORE',
            'ERROR',
