@@ -14,7 +14,7 @@ pymlconf
 .. image:: https://coveralls.io/repos/github/pylover/pymlconf/badge.svg?branch=master
      :target: https://coveralls.io/github/pylover/pymlconf?branch=master
 
-.. image:: https://img.shields.io/badge/license-GPLv3-brightgreen.svg
+.. image:: https://img.shields.io/badge/license-MIT-brightgreen.svg
      :target: https://github.com/pylover/pymlconf/blob/master/LICENSE
 
 

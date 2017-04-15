@@ -5,7 +5,7 @@ from pymlconf.errors import ConfigurationError, ConfigKeyError, ConfigurationMer
     ConfigurationAlreadyInitializedError, ConfigurationNotInitializedError
 from pymlconf.proxy import DeferredConfigManager
 
-__version__ = '0.7.3'
+__version__ = '0.8.0'
 
 __all__ = ['ConfigManager',
            'Mergable',
