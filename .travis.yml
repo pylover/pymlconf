@@ -19,11 +19,10 @@ before_install:
 
 install: pip install -ve .
 script: coverage run --source pymlconf $(which nosetests)
-after_success: coveralls
-
-after_deploy: if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
-
-#  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then python3 setup.py sdist upload; fi
+after_success:
+after_deploy:
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then coveralls ; fi
 
 deploy:
   provider: pypi
