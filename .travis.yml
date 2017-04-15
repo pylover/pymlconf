@@ -22,7 +22,7 @@ script: coverage run --source pymlconf $(which nosetests)
 after_success:
 after_deploy:
   - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then coveralls ; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then travis_retry coveralls ; fi
 
 deploy:
   provider: pypi
