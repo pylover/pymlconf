@@ -1,12 +1,12 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="html">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pymlconf Package &#8212; pymlconf 0.8.2 documentation</title>
+    <title>pymlconf Package &#8212; pymlconf 0.8.3 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.2',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -28,7 +28,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Tutorial" href="tutorial.html" /> 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.8.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.8.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -77,20 +77,20 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>init_value</strong> (<em>str</em><em> or </em><em>dict</em>) &#8211; Initial configuration value that you can pass it before reading the files and directories.can
-be &#8216;yaml string&#8217; or python dictionary.</li>
-<li><strong>dirs</strong> (<em>str</em><em> or </em><em>list</em>) &#8211; Python list  or a string that contains semi-colon separated list of directories which contains
+<li><strong>init_value</strong> (<em>str</em><em> or </em><em>dict</em>) -- Initial configuration value that you can pass it before reading the files and directories.can
+be 'yaml string' or python dictionary.</li>
+<li><strong>dirs</strong> (<em>str</em><em> or </em><em>list</em>) -- Python list  or a string that contains semi-colon separated list of directories which contains
 configuration files with specified extension(default *.conf).</li>
-<li><strong>files</strong> (<em>str</em><em> or </em><em>list</em>) &#8211; Python list  or a string that contains semi-colon separated list of files which contains yaml
+<li><strong>files</strong> (<em>str</em><em> or </em><em>list</em>) -- Python list  or a string that contains semi-colon separated list of files which contains yaml
 configuration entries.</li>
-<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
-<li><strong>extension</strong> (<em>str</em>) &#8211; File extension to search for configuration files, in dirs parameter, default &#8216;.conf&#8217;</li>
-<li><strong>root_file_name</strong> (<em>str</em>) &#8211; Filename to treat as root configuration file, so it loads first, and do not uses the
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) -- when loading dirs, use the filename as a namespace. default: true.</li>
+<li><strong>extension</strong> (<em>str</em>) -- File extension to search for configuration files, in dirs parameter, default '.conf'</li>
+<li><strong>root_file_name</strong> (<em>str</em>) -- Filename to treat as root configuration file, so it loads first, and do not uses the
 filename as namespaces.</li>
-<li><strong>missing_file_behavior</strong> (<em>integer 0:ignore</em><em>, </em><em>1:throw error</em><em>, </em><em>2:warning</em>) &#8211; What should do when a file was not found, set to 0 (zero) to ignore. default to
+<li><strong>missing_file_behavior</strong> (<em>integer 0:ignore</em><em>, </em><em>1:throw error</em><em>, </em><em>2:warning</em>) -- What should do when a file was not found, set to 0 (zero) to ignore. default to
 <code class="docutils literal"><span class="pre">warning(2)</span></code></li>
-<li><strong>context</strong> (<em>dict</em>) &#8211; dictionary to format the yaml before parsing in pre processor.</li>
-<li><strong>builtin</strong> (<em>str</em><em> or </em><em>dict</em>) &#8211; Same as the <code class="docutils literal"><span class="pre">init_value</span></code>, but it will be loaded before the loading the <code class="docutils literal"><span class="pre">init_value</span></code>,
+<li><strong>context</strong> (<em>dict</em>) -- dictionary to format the yaml before parsing in pre processor.</li>
+<li><strong>builtin</strong> (<em>str</em><em> or </em><em>dict</em>) -- Same as the <code class="docutils literal"><span class="pre">init_value</span></code>, but it will be loaded before the loading the <code class="docutils literal"><span class="pre">init_value</span></code>,
 helps to implement builtin config pattern.</li>
 </ul>
 </td>
@@ -115,8 +115,8 @@ ConfigManager instance</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dirs</strong> (<em>list</em><em>,</em><em>string</em>) &#8211; Dirs to search for configuration files.</li>
-<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
+<li><strong>dirs</strong> (<em>list</em><em>,</em><em>string</em>) -- Dirs to search for configuration files.</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) -- when loading dirs, use the filename as a namespace. default: true.</li>
 </ul>
 </td>
 </tr>
@@ -133,8 +133,8 @@ ConfigManager instance</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>files</strong> (<em>list</em>) &#8211; files to load and merge into existing configuration instance</li>
-<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading files, use the filename as a namespace. default: false.</li>
+<li><strong>files</strong> (<em>list</em>) -- files to load and merge into existing configuration instance</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) -- when loading files, use the filename as a namespace. default: false.</li>
 </ul>
 </td>
 </tr>
@@ -152,8 +152,8 @@ ConfigManager instance</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dirs</strong> (<em>list</em><em>,</em><em>string</em>) &#8211; Dirs to search for configuration files.</li>
-<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading dirs, use the filename as a namespace. default: true.</li>
+<li><strong>dirs</strong> (<em>list</em><em>,</em><em>string</em>) -- Dirs to search for configuration files.</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) -- when loading dirs, use the filename as a namespace. default: true.</li>
 </ul>
 </td>
 </tr>
@@ -170,8 +170,8 @@ ConfigManager instance</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>files</strong> (<em>list</em>) &#8211; files to load and merge into existing configuration instance</li>
-<li><strong>filename_as_namespace</strong> (<em>bool</em>) &#8211; when loading files, use the filename as a namespace. default: false.</li>
+<li><strong>files</strong> (<em>list</em>) -- files to load and merge into existing configuration instance</li>
+<li><strong>filename_as_namespace</strong> (<em>bool</em>) -- when loading files, use the filename as a namespace. default: false.</li>
 </ul>
 </td>
 </tr>
@@ -244,7 +244,7 @@ ConfigManager instance</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em><em> or </em><em>dict</em>) &#8211; Initial value to constract a mergable instance. default: None.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em><em> or </em><em>dict</em>) -- Initial value to constract a mergable instance. default: None.</td>
 </tr>
 </tbody>
 </table>
@@ -256,7 +256,7 @@ ConfigManager instance</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>any</em>) &#8211; An object to test.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>any</em>) -- An object to test.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool</td>
 </tr>
@@ -314,7 +314,7 @@ ConfigManager instance</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*args</strong> (<em>iterable</em>) &#8211; Configuration values to merge with current instance.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*args</strong> (<em>iterable</em>) -- Configuration values to merge with current instance.</td>
 </tr>
 </tbody>
 </table>
@@ -422,12 +422,12 @@ ConfigManager instance</p>
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.8.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pymlconf 0.8.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013, Vahid Mardani.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
     </div>
   </body>
 </html>
