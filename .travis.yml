@@ -1,8 +1,9 @@
 
 env:
   global:
-  - ENCRYPTION_LABEL: c602e3be279e
-  - COMMIT_AUTHOR_EMAIL: vahid@dobisel.com
+    - ENCRYPTION_LABEL: c602e3be279e
+    - COMMIT_AUTHOR_EMAIL: vahid@dobisel.com
+    - COVERALLS_REPO_TOKEN: Rlb2wDlvZ3jd9qSZ8Ajwffc1b1i5tVjZN
 
 language: python
 
@@ -11,7 +12,8 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
-  - "3.5-dev"
+  - "3.6"
+  - "3.6-dev"
 
 before_install:
   - pip install -U pip setuptools wheel
@@ -22,8 +24,6 @@ script: coverage run --source pymlconf $(which nosetests)
 after_success: coveralls
 
 after_deploy: if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
-
-#  - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then python3 setup.py sdist upload; fi
 
 deploy:
   provider: pypi
