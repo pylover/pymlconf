@@ -38,7 +38,7 @@ setup(
     install_requires=dependencies,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
-        "License :: Freeware",
+        "License :: MIT",
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',

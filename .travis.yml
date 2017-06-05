@@ -21,10 +21,8 @@ before_install:
 
 install: pip install -ve .
 script: coverage run --source pymlconf $(which nosetests)
-after_success: coveralls
-
+after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then travis_retry coveralls ; fi
 after_deploy: if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
-
 deploy:
   provider: pypi
   user: Vahid.Mardani
