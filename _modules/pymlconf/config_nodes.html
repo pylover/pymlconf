@@ -5,16 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="html">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>pymlconf.config_nodes &#8212; pymlconf 0.8.3 documentation</title>
-    
+    <title>pymlconf.config_nodes &#8212; pymlconf 0.8.4 documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.8.3',
+        VERSION:     '0.8.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -37,7 +34,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">pymlconf 0.8.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">pymlconf 0.8.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -94,7 +91,6 @@
 
 <span class="sd">        :returns: :class:`.Mergable`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#return copy.deepcopy(self)</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Mergable.empty"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.config_nodes.Mergable.empty">[docs]</a>    <span class="nd">@classmethod</span>
@@ -226,9 +222,6 @@
     <span class="k">def</span> <span class="nf">_merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">del</span> <span class="bp">self</span><span class="p">[:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="c1"># for item in data:</span>
-        <span class="c1">#     if item not in self:</span>
-        <span class="c1">#         self.append(item)</span>
 
 <div class="viewcode-block" id="ConfigList.copy"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.config_nodes.ConfigList.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ConfigList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span></div>
@@ -266,13 +259,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">pymlconf 0.8.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">pymlconf 0.8.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013, Vahid Mardani.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>
