@@ -44,7 +44,6 @@ class Mergable(object):
 
         :returns: :class:`.Mergable`
         """
-        #return copy.deepcopy(self)
         raise NotImplementedError()
 
     @classmethod
@@ -176,9 +175,6 @@ class ConfigList(list, Mergable):
     def _merge(self, data):
         del self[:]
         self.extend(data)
-        # for item in data:
-        #     if item not in self:
-        #         self.append(item)
 
     def copy(self):
         return ConfigList(self, context=self.context)

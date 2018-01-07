@@ -1,5 +1,4 @@
 import os.path
-import sys
 from yaml import load
 from yaml.scanner import ScannerError
 from pymlconf.errors import ConfigFileSyntaxError
@@ -9,10 +8,6 @@ except ImportError:
     from yaml import Loader
 
 from pymlconf.compat import read_file
-
-
-# def _normalize(content):
-#     return content.replace('\t', ' ')
 
 
 def pre_process(data, macros):
@@ -39,4 +34,3 @@ def load_yaml(file_path, macros=None, encoding='utf-8'):
         )
     except ScannerError as ex:
         raise ConfigFileSyntaxError(file_path, ex)
-
