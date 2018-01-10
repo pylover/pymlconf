@@ -100,7 +100,8 @@ class Mergable(object):
             ns = namespaces[0]
             if ns not in self:
                 self[ns] = ConfigNamespace(context=self.context)
-            return self.__getattr__(ns)._ensure_namespaces(*namespaces[1:])
+            # noinspection PyProtectedMember
+            return getattr(self, ns)._ensure_namespaces(*namespaces[1:])
         else:
             return self
 
@@ -137,7 +138,7 @@ class ConfigDict(OrderedDict, Mergable):
         raise ConfigKeyError(key)
 
     def __setattr__(self, key, value):
-        if not key in self:
+        if key not in self:
             self.__dict__[key] = value
         else:
             self[key] = value
