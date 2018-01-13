@@ -6,7 +6,7 @@ from pymlconf.errors import ConfigurationError, ConfigKeyError, ConfigurationMer
 from pymlconf.proxy import DeferredConfigManager
 
 
-__version__ = '0.8.5'
+__version__ = '0.8.6'
 
 
 __all__ = ['ConfigManager',
