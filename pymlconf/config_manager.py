@@ -10,9 +10,11 @@ import warnings
 IGNORE = 0
 ERROR = 1
 WARNING = 2
-missing_file_behaviors = [IGNORE,
-                          ERROR,
-                          WARNING]
+missing_file_behaviors = [
+    IGNORE,
+    ERROR,
+    WARNING
+]
 
 
 class ConfigManager(ConfigDict):
@@ -36,9 +38,10 @@ class ConfigManager(ConfigDict):
 
     default_extension = ".conf"
 
-    def __init__(self, init_value=None, dirs=None, files=None, filename_as_namespace=True,
-                 extension='.conf', root_file_name='root', missing_file_behavior=WARNING, encoding='utf-8',
-                 context=None, builtin=None):
+    def __init__(self, init_value=None, dirs=None, files=None,
+                 filename_as_namespace=True, extension='.conf',
+                 root_file_name='root', missing_file_behavior=WARNING,
+                 encoding='utf-8', context=None, builtin=None):
         """
         :param init_value: Initial configuration value that you can pass it before reading the files and directories.can
                            be 'yaml string' or python dictionary.
