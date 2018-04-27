@@ -37,3 +37,6 @@ __pycache__
 
 #PyCharm
 .idea
+
+# vim
+.ropeproject
