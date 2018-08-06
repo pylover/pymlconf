@@ -167,9 +167,3 @@ Syntax Reference
 You can find the canonical syntax reference on
 `PyYAML <http://pyyaml.org/wiki/PyYAMLDocumentation#YAMLsyntax>`__ site
 
-Change Log
-~~~~~~~~~~
-
--  [0.5.9] ci
--  [0.5.1] Encoding option for files
--  [0.4.0] Adding DeferredConfigManager
