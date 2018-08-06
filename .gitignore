@@ -38,5 +38,10 @@ __pycache__
 #PyCharm
 .idea
 
+.*.sw[po]
+
 # vim
 .ropeproject
+
+# pytest
+.pytest_cache
