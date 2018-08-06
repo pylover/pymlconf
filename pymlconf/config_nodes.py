@@ -65,11 +65,12 @@ class Mergable(object):
 
         """
         if isinstance(data, dict):
-            return ConfigDict(data=data,
-                              context=context)
+            return ConfigDict(data=data, context=context)
         elif isiterable(data):
-            return ConfigList(data=[cls.make_mergable_if_possible(i, context) for i in data],
-                              context=context)
+            return ConfigList(
+                data=[cls.make_mergable_if_possible(i, context) for i in data],
+                context=context
+            )
         else:
             return data
 

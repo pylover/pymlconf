@@ -26,14 +26,23 @@ except NameError:
     basestring = str
 
 
-def isiterable(o):
-    if isinstance(o,(basestring, type)):
-        return False
-    elif hasattr(o, '__iter__'):
-        return True
-    else:
-        return False 
-    
+if sys.version_info[0] >= 3:
+
+    from collections import Iterable
+
+    def isiterable(o):
+        if isinstance(o, (bytes, str, type)):
+            return False
+        return isinstance(o, Iterable)
+
+else:
+
+    def isiterable(o):
+        if isinstance(o,(basestring, type)):
+            return False
+        return hasattr(o, '__iter__')
+
+
 try:
     from StringIO import StringIO
 except ImportError:

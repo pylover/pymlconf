@@ -16,3 +16,7 @@ class TestBinary(unittest.TestCase):
         self.assertEqual(cm.app.name, 'MyApp')
         self.assertEqual(cm.secret, b'abc')
 
+
+if __name__ == '__main__':  # pragma: no cover
+    unittest.main()
+
