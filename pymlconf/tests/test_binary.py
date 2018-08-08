@@ -1,6 +1,6 @@
 import unittest
 
-from pymlconf import ConfigManager
+from pymlconf import Root
 
 
 class TestBinary(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestBinary(unittest.TestCase):
               name: MyApp
             secret: !!binary YWJj\n
         '''
-        cm = ConfigManager(init_value=config)
+        cm = ConfigManager(config)
 
         self.assertEqual(cm.app.name, 'MyApp')
         self.assertEqual(cm.secret, b'abc')

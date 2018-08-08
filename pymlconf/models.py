@@ -1,18 +1,16 @@
-
 import abc
-from pymlconf.errors import ConfigKeyError, ConfigurationMergeError
-from pymlconf.compat import OrderedDict, isiterable
-from pymlconf.yaml_helper import load_string
 import copy
 
+from .compat import OrderedDict, isiterable
+from .errors import ConfigKeyError, ConfigurationAlreadyInitializedError, \
+    ConfigurationNotInitializedError
+from .yaml_helper import load_string
 
-# noinspection PyUnresolvedReferences,PyUnresolvedReferences
-class Mergable(object):
-    """ Base class for all configuration nodes, so all configuration nodes are mergable
+
+class Mergable(metaclass=abc.ABCMeta):
+    """Base class for all configuration nodes, so all configuration nodes are
+    mergable
     """
-
-    # FIXME: use metaclass py >= 3
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, data=None, context=None):
         """
@@ -99,11 +97,13 @@ class Mergable(object):
             else:
                 to_merge = data
 
-            if self.can_merge(to_merge):
-                self._merge(to_merge)
-            else:
-                raise ConfigurationMergeError(
-                    'Cannot merge myself:%s with %s. data: %s' % (type(self), type(data), data))
+            if not self.can_merge(to_merge):
+                raise TypeError(
+                    'Cannot merge myself:%s with %s. data: %s' \
+                    % (type(self), type(data), data)
+                )
+
+            self._merge(to_merge)
 
     def _ensure_namespaces(self, *namespaces):
         if namespaces:
@@ -116,7 +116,7 @@ class Mergable(object):
             return self
 
 
-class ConfigurationDict(OrderedDict, Mergable):
+class MergableDict(OrderedDict, Mergable):
     """
     Configuration node that represents python dictionary data.
     """
@@ -161,18 +161,13 @@ class ConfigurationDict(OrderedDict, Mergable):
         return cls()
 
 
-# FIXME: remove the Mergable mixin here, doesn't need.
-class ConfigurationNamespace(ConfigurationDict, Mergable):
+class ConfigurationNamespace(MergableDict):
     """
     Configuration node that represents the configuration namespace node.
     """
 
-    def __init__(self, *args, **kwargs):
-        ConfigurationDict.__init__(self)
-        Mergable.__init__(self, *args, **kwargs)
 
-
-class ConfigurationList(list, Mergable):
+class MergableList(list, Mergable):
     """
     Configuration node that represents the python list data.
     """
@@ -194,4 +189,76 @@ class ConfigurationList(list, Mergable):
     @classmethod
     def empty(cls):
         return cls()
+
+
+class Root(MergableDict):
+    """
+    The main class which exposes pymlconf package.
+
+    Example::
+
+        from pymlconf import Root
+        from os import path
+        config =  Root('''
+            server:
+                host: localhost
+                port: 4455
+        ''')
+
+        print config.server.host
+        print config.server.port
+
+    """
+
+    def load_file(self, filename):
+        """
+        load file which contains yaml configuration entries.and merge it by
+        current instance
+
+        :param files: files to load and merge into existing configuration
+                      instance
+        :type files: list
+
+        """
+        if not os.path.exists(filename):
+            raise FileNotFoundError(filename)
+
+        loaded_yaml = load_yaml(f, self.context)
+        if loaded_yaml:
+            node.merge(loaded_yaml)
+
+
+class DeferredRoot(ObjectProxy):
+    _instance = None
+
+    def __init__(self):
+        super().__init__(self._get_instance)
+
+    @classmethod
+    def _get_instance(cls):
+        if cls._instance is None:
+            raise ConfigurationNotInitializedError(
+                'Configuration manager object is not initialized yet.'
+            )
+       return cls._instance
+
+    @classmethod
+    def _set_instance(cls, v):
+        cls._instance = v
+
+    def load(self, force=False, **kw):
+        """
+        Initialize the configuration manager
+
+        :param force: force initialization even if it's already initialized
+        :return:
+        """
+
+        instance = self._get_instance()
+        if not force and instance is not None:
+            raise ConfigurationAlreadyInitializedError(
+                'Configuration manager object is already initialized.'
+            )
+
+        self._set_instance(ConfigManager(**kw))
 

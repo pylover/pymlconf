@@ -1,10 +1,8 @@
 
-from pymlconf.config_nodes import Mergable, ConfigList, ConfigDict, \
-    ConfigNamespace
-from pymlconf.config_manager import ConfigManager, IGNORE, ERROR, WARNING
+from pymlconf.models import Mergable, MergableList, MergableDict, \
+    ConfigurationNamespace, Root
 from pymlconf.errors import ConfigurationError, ConfigKeyError, \
-    ConfigurationMergeError, ConfigurationAlreadyInitializedError, \
-    ConfigurationNotInitializedError
+    ConfigurationAlreadyInitializedError, ConfigurationNotInitializedError
 from pymlconf.proxy import DeferredConfigManager
 
 
