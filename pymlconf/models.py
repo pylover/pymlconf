@@ -10,6 +10,8 @@ import copy
 class Mergable(object):
     """ Base class for all configuration nodes, so all configuration nodes are mergable
     """
+
+    # FIXME: use metaclass py >= 3
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, data=None, context=None):
@@ -52,6 +54,7 @@ class Mergable(object):
         """
         raise NotImplementedError()
 
+    # FIXME: Remove this function
     @classmethod
     @abc.abstractmethod
     def empty(cls):
@@ -113,7 +116,7 @@ class Mergable(object):
             return self
 
 
-class ConfigDict(OrderedDict, Mergable):
+class ConfigurationDict(OrderedDict, Mergable):
     """
     Configuration node that represents python dictionary data.
     """
@@ -158,17 +161,18 @@ class ConfigDict(OrderedDict, Mergable):
         return cls()
 
 
-class ConfigNamespace(ConfigDict, Mergable):
+# FIXME: remove the Mergable mixin here, doesn't need.
+class ConfigurationNamespace(ConfigurationDict, Mergable):
     """
     Configuration node that represents the configuration namespace node.
     """
 
     def __init__(self, *args, **kwargs):
-        ConfigDict.__init__(self)
+        ConfigurationDict.__init__(self)
         Mergable.__init__(self, *args, **kwargs)
 
 
-class ConfigList(list, Mergable):
+class ConfigurationList(list, Mergable):
     """
     Configuration node that represents the python list data.
     """
@@ -190,3 +194,4 @@ class ConfigList(list, Mergable):
     @classmethod
     def empty(cls):
         return cls()
+

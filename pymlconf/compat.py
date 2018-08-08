@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
-"""
-Created on:    Nov 17, 2013
-@author:        vahid
-"""
 import sys
 
 # noinspection PyBroadException

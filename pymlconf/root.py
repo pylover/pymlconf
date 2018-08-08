@@ -1,20 +1,8 @@
 import os
-import warnings
 
-from pymlconf.compat import basestring
-from pymlconf.config_nodes import ConfigDict
-from pymlconf.errors import ConfigFileNotFoundError
-from pymlconf.yaml_helper import load_yaml
-
-
-IGNORE = 0
-ERROR = 1
-WARNING = 2
-missing_file_behaviors = [
-    IGNORE,
-    ERROR,
-    WARNING
-]
+from .config_nodes import ConfigDict
+from .errors import ConfigFileNotFoundError
+from .yaml_helper import load_yaml
 
 
 class Root(ConfigDict):

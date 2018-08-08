@@ -24,8 +24,9 @@ class ConfigFileNotFoundError(ConfigurationError):
 
 class ConfigFileSyntaxError(ConfigurationError):
     def __init__(self, filename, inner_exception):
-        ConfigurationError.__init__(self, '%s\nFilename: %s"'
-                                    % (str(inner_exception), abspath(filename)))
+        # FIXME: Py 3.6
+        ConfigurationError.__init__(
+            self, '%s\nFilename: %s"' % (str(inner_exception), abspath(filename)))
 
 
 class ConfigurationNotInitializedError(ConfigurationError):
