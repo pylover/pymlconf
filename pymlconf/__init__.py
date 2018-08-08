@@ -1,10 +1,10 @@
 
-from pymlconf.models import Mergable, MergableList, MergableDict, \
-    ConfigurationNamespace, Root
-from pymlconf.errors import ConfigurationError, ConfigKeyError, \
+from .models import Mergable, MergableList, MergableDict, Root, \
+    ConfigurationNamespace
+from .errors import ConfigurationError, ConfigKeyError, \
     ConfigurationAlreadyInitializedError, ConfigurationNotInitializedError
-from pymlconf.proxy import DeferredConfigManager
+from .proxy import DeferredRoot
 
 
-__version__ = '0.8.9'
+__version__ = '1.0.0dev'
 

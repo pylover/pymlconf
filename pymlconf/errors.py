@@ -12,13 +12,6 @@ class ConfigKeyError(ConfigurationError, AttributeError):
         ConfigurationError.__init__(self, 'Config key was not found: "%s"' % key)
 
 
-class ConfigFileSyntaxError(ConfigurationError):
-    def __init__(self, filename, inner_exception):
-        # FIXME: Py 3.6
-        ConfigurationError.__init__(
-            self, '%s\nFilename: %s"' % (str(inner_exception), abspath(filename)))
-
-
 class ConfigurationNotInitializedError(ConfigurationError):
     pass
 

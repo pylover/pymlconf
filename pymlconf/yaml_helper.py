@@ -1,4 +1,4 @@
-import os.path
+from os import path
 
 from yaml import load
 from yaml.scanner import ScannerError
@@ -7,32 +7,24 @@ try:
 except ImportError:
     from yaml import Loader
 
-from pymlconf.compat import read_file
-from pymlconf.errors import ConfigFileSyntaxError
+
+def pre_process(data, context):
+    if callable(context):
+        context = context()
+    return data % context
 
 
-def pre_process(data, macros):
-    if callable(macros):
-        macros = macros()
-    return data % macros
-
-
-def load_string(str_data, macros=None):
+def load_string(str_data, context=None):
     if macros:
-        str_data = pre_process(str_data, macros)
+        str_data = pre_process(str_data, context)
     return load(str_data, Loader)
 
 
-def load_yaml(file_path, macros=None, encoding='utf-8'):
-    file_dir = os.path.abspath(os.path.dirname(file_path))
-    macros = {} if macros is None else macros
-    macros.update(here=file_dir)
+def load_yaml(filename, context=None):
+    directory = path.abspath(path.dirname(filename))
+    context = context or {}
+    macros.update(here=directory)
 
-    try:
-        return load_string(
-            read_file(file_path, encoding),
-            macros
-        )
-    except ScannerError as ex:
-        raise ConfigFileSyntaxError(file_path, ex)
+    with open(filename) as f:
+        return load_string(f, context)
 

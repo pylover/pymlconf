@@ -1,6 +1,5 @@
 import sys
 from collections import Iterable, OrderedDict
-from StringIO import StringIO
 
 
 def isiterable(o):

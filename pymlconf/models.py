@@ -5,6 +5,7 @@ from .compat import OrderedDict, isiterable
 from .errors import ConfigKeyError, ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
 from .yaml_helper import load_string
+from .proxy import ObjectProxy
 
 
 class Mergable(metaclass=abc.ABCMeta):
@@ -240,7 +241,7 @@ class DeferredRoot(ObjectProxy):
             raise ConfigurationNotInitializedError(
                 'Configuration manager object is not initialized yet.'
             )
-       return cls._instance
+        return cls._instance
 
     @classmethod
     def _set_instance(cls, v):
