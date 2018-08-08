@@ -14,8 +14,14 @@ class Mergable(object):
 
     def __init__(self, data=None, context=None):
         """
-        :param data: Initial value to constract a mergable instance. default: None.
+        :param data: Initial value to constract a mergable instance. It can be
+                     ``yaml string`` or python dictionary. default: None.
         :type data: list or dict
+
+        :param context: dictionary to format the yaml before parsing in
+                        pre-processor.
+        :type context: dict
+
         """
         self.context = context if context else {}
         if data:
