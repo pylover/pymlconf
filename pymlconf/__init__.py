@@ -1,9 +1,9 @@
 
 from .models import Mergable, MergableList, MergableDict, Root, \
-    ConfigurationNamespace
+    ConfigurationNamespace, DeferredRoot
+# FIXME: remove all errors
 from .errors import ConfigurationError, ConfigKeyError, \
     ConfigurationAlreadyInitializedError, ConfigurationNotInitializedError
-from .proxy import DeferredRoot
 
 
 __version__ = '1.0.0dev'

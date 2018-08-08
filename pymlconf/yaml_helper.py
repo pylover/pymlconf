@@ -15,7 +15,7 @@ def pre_process(data, context):
 
 
 def load_string(str_data, context=None):
-    if macros:
+    if context:
         str_data = pre_process(str_data, context)
     return load(str_data, Loader)
 

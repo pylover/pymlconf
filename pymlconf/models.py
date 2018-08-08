@@ -1,11 +1,17 @@
 import abc
 import copy
+from collections import OrderedDict, Iterable
 
-from .compat import OrderedDict, isiterable
 from .errors import ConfigKeyError, ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
 from .yaml_helper import load_string
 from .proxy import ObjectProxy
+
+
+def isiterable(o):
+    if isinstance(o, (bytes, str, type)):
+        return False
+    return isinstance(o, Iterable)
 
 
 class Mergable(metaclass=abc.ABCMeta):
@@ -73,9 +79,9 @@ class Mergable(metaclass=abc.ABCMeta):
 
         """
         if isinstance(data, dict):
-            return ConfigDict(data=data, context=context)
+            return MergableDict(data=data, context=context)
         elif isiterable(data):
-            return ConfigList(
+            return MergableList(
                 data=[cls.make_mergable_if_possible(i, context) for i in data],
                 context=context
             )
