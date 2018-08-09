@@ -253,7 +253,7 @@ class DeferredRoot(ObjectProxy):
     def _set_instance(cls, v):
         cls._instance = v
 
-    def load(self, force=False, **kw):
+    def initialize(self, *args, force=False, **kw):
         """
         Initialize the configuration manager
 
@@ -261,11 +261,10 @@ class DeferredRoot(ObjectProxy):
         :return:
         """
 
-        instance = self._get_instance()
-        if not force and instance is not None:
+        if not force and self._instance is not None:
             raise ConfigurationAlreadyInitializedError(
                 'Configuration manager object is already initialized.'
             )
 
-        self._set_instance(ConfigManager(**kw))
+        self._set_instance(Root(*args, **kw))
 
