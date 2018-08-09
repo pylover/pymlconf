@@ -1,10 +1,11 @@
 import abc
 import copy
 from collections import OrderedDict, Iterable
+from os import path
 
 from .errors import ConfigKeyError, ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
-from .yaml_helper import load_string
+from .yaml_helper import load_string, load_yaml
 from .proxy import ObjectProxy
 
 
@@ -198,12 +199,12 @@ class Root(MergableDict):
         :type files: list
 
         """
-        if not os.path.exists(filename):
+        if not path.exists(filename):
             raise FileNotFoundError(filename)
 
-        loaded_yaml = load_yaml(f, self.context)
+        loaded_yaml = load_yaml(filename, self.context)
         if loaded_yaml:
-            node.merge(loaded_yaml)
+            self.merge(loaded_yaml)
 
 
 class DeferredRoot(ObjectProxy):

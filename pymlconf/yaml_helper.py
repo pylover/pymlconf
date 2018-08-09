@@ -23,8 +23,8 @@ def load_string(str_data, context=None):
 def load_yaml(filename, context=None):
     directory = path.abspath(path.dirname(filename))
     context = context or {}
-    macros.update(here=directory)
+    context.update(here=directory)
 
     with open(filename) as f:
-        return load_string(f, context)
+        return load_string(f.read(), context)
 

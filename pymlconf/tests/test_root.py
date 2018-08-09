@@ -53,6 +53,16 @@ class TestConfigManager(unittest.TestCase):
         self.assertEqual(root['server.token.salt'], 1345)
         self.assertFalse(hasattr(root, 'server'))
 
+    def test_load_file(self):
+        here = path.dirname(__file__)
+        filename = path.join(here, 'files/sample.yml')
+        root = Root()
+        root.load_file(filename)
+        self.assertEqual(2, root.a.b)
+
+        with self.assertRaises(FileNotFoundError):
+            root.load_file('not/exists')
+
 
 if __name__ == '__main__':  # pragma: no cover
     unittest.main()
