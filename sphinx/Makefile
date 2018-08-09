@@ -7,7 +7,7 @@ SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = pymlconf
 SOURCEDIR     = .
 BUILDDIR      = ./_build
-DEPLOYDIR     = ./../docs
+DEPLOYDIR     = ./../../pymlconf.io
 HOME  := $(shell echo $HOME)
 
 # Put it first so that "make" without argument is like "make help".

@@ -30,7 +30,7 @@ cd pymlconf/sphinx
 make html
 
 # Build pymlconf.io documents: ../../pymlconf.io
-make pymlconf.io
+make deploy
 
 # Commit & push
 cd ../../pymlconf.io/
