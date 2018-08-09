@@ -36,7 +36,10 @@ make deploy
 cd ../../pymlconf.io/
 git config user.name "Travis CI"
 git config user.email "$COMMIT_AUTHOR_EMAIL"
-
+touch .nojekyll 
+echo "pymlconf.dobisel.com" > CNAME
+git add .nojekyl
+git add .
 
 git commit -am "Deploy to GitHub Pages: ${SHA}"
 git push origin gh-pages
