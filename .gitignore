@@ -30,7 +30,6 @@ pip-log.txt
 .settings
 .pydevproject
 .project
-doc/_build
 
 #Python3
 __pycache__
@@ -45,3 +44,6 @@ __pycache__
 
 # pytest
 .pytest_cache
+
+# sphinx
+sphinx/_build

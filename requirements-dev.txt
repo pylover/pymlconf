@@ -1,5 +1,8 @@
 nose
+nose-pudb
 coverage
-sphinx
 coveralls
-PyYAML
+sphinx
+sphinx_rtd_theme
+sphinx-autobuild
+sphinx-serve
