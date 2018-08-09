@@ -45,6 +45,14 @@ class TestConfigManager(unittest.TestCase):
         self.assertEqual(root.b[0], 4)
         self.assertEqual(1, len(root.b))
 
+    def test_dot_in_key(self):
+        root = Root('''
+            server.token.salt: 1345
+        ''')
+
+        self.assertEqual(root['server.token.salt'], 1345)
+        self.assertFalse(hasattr(root, 'server'))
+
 
 if __name__ == '__main__':  # pragma: no cover
     unittest.main()
