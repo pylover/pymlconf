@@ -3,7 +3,6 @@ env:
   global:
     - ENCRYPTION_LABEL: c602e3be279e
     - COMMIT_AUTHOR_EMAIL: vahid@dobisel.com
-    - COVERALLS_REPO_TOKEN: Rlb2wDlvZ3jd9qSZ8Ajwffc1b1i5tVjZN
 
 language: python
 
