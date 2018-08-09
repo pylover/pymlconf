@@ -34,6 +34,9 @@ class TestDiferredRoot(unittest.TestCase):
         self.assertEqual(root.b, [1])
         self.assertEqual(root.c, 3)
 
+        root.d = [1, 2]
+        self.assertEqual([1, 2], root.d)
+
 
 if __name__ == '__main__':  # pragma: no cover
     unittest.main()

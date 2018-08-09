@@ -6,7 +6,6 @@ from os import path
 from .errors import ConfigKeyError, ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
 from .yaml_helper import load_string, load_yaml
-from .proxy import ObjectProxy
 
 
 def isiterable(o):
@@ -207,11 +206,21 @@ class Root(MergableDict):
             self.merge(loaded_yaml)
 
 
-class DeferredRoot(ObjectProxy):
+class DeferredRoot:
     _instance = None
 
-    def __init__(self):
-        super().__init__(self._get_instance)
+    def __getattr__(self, key):
+        return getattr(
+            object.__getattribute__(self, '__class__')._get_instance(),
+            key
+        )
+
+    def __setattr__(self, key, value):
+        setattr(
+            object.__getattribute__(self, '__class__')._get_instance(),
+            key,
+            value
+        )
 
     @classmethod
     def _get_instance(cls):
@@ -220,10 +229,6 @@ class DeferredRoot(ObjectProxy):
                 'Configuration manager object is not initialized yet.'
             )
         return cls._instance
-
-    @classmethod
-    def _set_instance(cls, v):
-        cls._instance = v
 
     def initialize(self, *args, force=False, **kw):
         """
@@ -238,5 +243,5 @@ class DeferredRoot(ObjectProxy):
                 'Configuration manager object is already initialized.'
             )
 
-        self._set_instance(Root(*args, **kw))
+        self.__class__._instance = Root(*args, **kw)
 
