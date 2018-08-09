@@ -38,6 +38,23 @@ class MergeTestCase(unittest.TestCase):
         self.assertEqual(2, root.a.b)
         self.assertEqual(3, root.d.b.c)
 
+    def test_merge_list(self):
+        root = Root()
+        root.merge('''
+          a:
+            b:
+             - 1
+             - 2
+          c: []
+        ''')
+
+        self.assertEqual([1, 2], root.a.b)
+
+        root.c.merge(root.a.b.copy())
+        root.a.b.append(3)
+        self.assertEqual([1, 2, 3], root.a.b)
+        self.assertEqual([1, 2], root.c)
+
 
 if __name__ == '__main__':  # pragma: no cover
     unittest.main()
