@@ -63,6 +63,14 @@ class TestConfigManager(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             root.load_file('not/exists')
 
+    def test_callable_context(self):
+        def context():
+            return dict(c=3)
+
+        root = Root('a: %(c)s', context)
+        self.assertEqual(3, root.a)
+
 
 if __name__ == '__main__':  # pragma: no cover
     unittest.main()
+

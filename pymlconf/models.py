@@ -5,7 +5,7 @@ from os import path
 
 from .errors import ConfigKeyError, ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
-from .yaml_helper import load_string, load_yaml
+from .yamling import load_string, load_yaml
 
 
 def isiterable(o):
