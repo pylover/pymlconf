@@ -13,25 +13,25 @@ class Test(unittest.TestCase):
 
     def setUp(self):
         self._builtin = '''
-app:
-    name: MyApp
-    listen:
-        sock1:
-            addr: 192.168.0.1
-            port: 8080
-        sock2:
-            addr: 127.0.0.1
-            port: "89"
-    languages:
-        - english
-        - {language: persian, country: iran}
+    app:
+        name: MyApp
+        listen:
+            sock1:
+                addr: 192.168.0.1
+                port: 8080
+            sock2:
+                addr: 127.0.0.1
+                port: "89"
+        languages:
+            - english
+            - {language: persian, country: iran}
 
 
-logging:
-    logfile: /var/log/myapp.log
-    formatter: !!python/name:str
-    writer: !!python/object:%s.MyWriter {}
-''' % __name__
+    logging:
+        logfile: /var/log/myapp.log
+        formatter: !!python/name:str
+        writer: !!python/object:%s.MyWriter {}
+    ''' % __name__
 
     def test_simple_syntax(self):
         """
@@ -53,9 +53,7 @@ logging:
         self.assertEqual(cm.app.languages[1].country, 'iran')
         self.assertEqual(cm.logging.formatter, str)
         self.assertTrue(isinstance(cm.logging.writer, MyWriter))
-#Aims to test `ConfigDict` and `ConfigList`
 
 
-if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
