@@ -3,10 +3,8 @@ import unittest
 from pymlconf import Root
 
 
-class MyWriter(object):
-    @staticmethod
-    def write(t):
-        print(t)
+class MyWriter:
+    pass
 
 
 class Test(unittest.TestCase):

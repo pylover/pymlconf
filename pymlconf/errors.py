@@ -1,16 +1,6 @@
-from os.path import abspath
-
 
 class ConfigurationError(Exception):
-    def __init__(self, message):
-        super(ConfigurationError, self).__init__(message)
-
-
-# Replace it by KeyError
-class ConfigKeyError(ConfigurationError, AttributeError):
-    def __init__(self, key):
-        AttributeError.__init__(self)
-        ConfigurationError.__init__(self, 'Config key was not found: "%s"' % key)
+    pass
 
 
 class ConfigurationNotInitializedError(ConfigurationError):

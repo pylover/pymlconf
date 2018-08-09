@@ -3,7 +3,7 @@ import copy
 from collections import OrderedDict, Iterable
 from os import path
 
-from .errors import ConfigKeyError, ConfigurationAlreadyInitializedError, \
+from .errors import ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
 from .yamling import load_string, load_yaml
 
@@ -62,7 +62,8 @@ class Mergable(metaclass=abc.ABCMeta):
     @classmethod
     def make_mergable_if_possible(cls, data, context):
         """
-        Makes an object mergable if possible. Returns the virgin object if cannot convert it to a mergable instance.
+        Makes an object mergable if possible. Returns the virgin object if
+        cannot convert it to a mergable instance.
 
         :returns: :class:`.Mergable` or type(data)
 
@@ -126,12 +127,15 @@ class MergableDict(OrderedDict, Mergable):
                 if isinstance(v, Mergable):
                     self[k] = v.copy()
                 else:
-                    self[k] = Mergable.make_mergable_if_possible(copy.deepcopy(v), self.context)
+                    self[k] = Mergable.make_mergable_if_possible(
+                        copy.deepcopy(v),
+                        self.context
+                    )
 
     def __getattr__(self, key):
         if key in self:
             return self.get(key)
-        raise ConfigKeyError(key)
+        raise AttributeError(key)
 
     def __setattr__(self, key, value):
         if key not in self:

@@ -1,8 +1,7 @@
-import re
 import unittest
 from os import path
 
-from pymlconf import MergableDict, MergableList, Root
+from pymlconf import Root
 
 
 class TestConfigManager(unittest.TestCase):
