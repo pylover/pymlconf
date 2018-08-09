@@ -8,11 +8,8 @@ env:
 language: python
 
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.6-dev"
+  - 3.6
+  - nightly
 
 before_install:
   - pip install -U pip setuptools wheel
@@ -20,8 +17,8 @@ before_install:
 
 install: pip install -ve .
 script: coverage run --source pymlconf $(which nosetests)
-after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then travis_retry coveralls ; fi
-after_deploy: if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then ./travis-gh-pages.sh ; fi
+after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then travis_retry coveralls ; fi
+after_deploy: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then ./travis-gh-pages.sh ; fi
 deploy:
   provider: pypi
   user: Vahid.Mardani
@@ -34,5 +31,5 @@ deploy:
     tags: true
     repo: pylover/pymlconf
     distributions: sdist bdist_wheel
-    condition: $TRAVIS_PYTHON_VERSION = 3.5
+    condition: $TRAVIS_PYTHON_VERSION = 3.6
 
