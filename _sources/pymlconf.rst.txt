@@ -1,21 +1,14 @@
 pymlconf Package
 ================
 
-:mod:`config_manager` Module
+:mod:`models` Module
 ----------------------------
 
-.. automodule:: pymlconf.config_manager
+.. automodule:: pymlconf.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`config_nodes` Module
---------------------------
-
-.. automodule:: pymlconf.config_nodes
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 :mod:`errors` Module
 --------------------

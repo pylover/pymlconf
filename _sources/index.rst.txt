@@ -36,7 +36,6 @@ Contents:
 .. toctree::
    :maxdepth: 4
 
-   install
    tutorial
    pymlconf
 

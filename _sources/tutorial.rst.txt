@@ -1,110 +1,56 @@
 Tutorial
 ========
 
-Story
+
+Install
+-------
+
+
+.. code-block:: bash
+
+   pip install pymlconf
+
+
+Usage
 -----
 
-Assume we need to provide flexible configuration for a web application.
+The entry point of the library is the :class:`.Root` class. But a proxy: 
+:class:`.DiferredRoot` is also provided to let users import root object 
+before initialization.
 
-We have tree configuration levels:
- 
- * builtin configurations
- * User configurations
- * Admin configurations
+.. code-block:: python
 
+   from pymlconf import DiferredRoot
 
-Config files
-------------
-
-app/conf/users/sites.mysite.conf::
-
-   name: mysite.com
-   owner:
-      name: My Name
-      phone: My Phone Number
-      address: My Address
-   
-app/conf/admin/root.conf::
-
-   server:
-      version: 0.3a
-      
-   sites:
-      admin:
-         name: admin.site.com
-         owner:
-            name: Admin Name
-            phone: Admin Phone Number
-            address: Admin Address
-     
-app/conf/admin/server.conf::
-   
-   host: 0.0.0.0
-   port: 80
-   
-../other_path/../special.conf::
-
-   licence_file: /path/to/file
-   log_file: /path/to/file
+   settings = DiferredRoot()
 
 
-app/src/builtin_config.py::
+Import ``settings`` everywhere in your application's source code.
 
-   _builtin_config={
-      'server':{'name':'Power Server'}
+Then you may initialize the ``settings`` object when your data is ready:
+
+.. code-block:: python
+
+   context = {
+       'here': 'path/to/here'
    }
 
-OR::
+   builtins = '''
+     a: %(here)s
+    '''
 
-   _builtin_config="""
-   
-   server:
-      name: Power Server
-   
-   """
-   
-Initialize
-----------
-
-You can simply merge all config files above with on statement::
-
-   from pymlconf import ConfigManager
-   from app.builtin_config import _builtin_config
-      
-   config_root = ConfigManager(
-      _builtin_config,
-      ['app/conf/admin','app/conf/users'],
-      '../other_path/../special.conf')
-      
-   # All from app/conf/users/sites.mysite.conf
-   print config_root.sites.mysite.name
-   print config_root.sites.mysite.owner.name
-   print config_root.sites.mysite.owner.address
-   print config_root.sites.mysite.owner.phone
-   
-   # All from app/conf/admin/root.conf
-   print config_root.sites.admin.name
-   print config_root.sites.admin.owner.name
-   print config_root.sites.admin.owner.address
-   print config_root.sites.admin.owner.phone
-   
-   print config_root.server.name       # from _builtin_config
-   print config_root.server.version    # from app/conf/admin/root.conf
-   print config_root.server.host       # from app/conf/admin/server.conf
-   print config_root.server.port       # from app/conf/admin/server.conf
-   
-   print config_root.licence_file      # from ../other_path/../special.conf
-   print config_root.log_file          # from ../other_path/../special.conf
+   settings.initialzie(builtins, context)
+   print(settings.a)
 
 
+Loading YAML files
+-------------------
+
+You can load and merge your configuration file(s) using
+:meth:`.Root.load_file`.
 
 
+.. code-block:: python
 
-Reserved Keys
--------------
+   settings.load_file(filename)
 
-- keys
-- can_merge
-- copy
-- empty
-- merge
