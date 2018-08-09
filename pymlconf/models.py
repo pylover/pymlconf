@@ -35,7 +35,7 @@ class Mergable(metaclass=abc.ABCMeta):
             self.merge(data)
 
     @abc.abstractmethod
-    def can_merge(self, data):
+    def can_merge(self, data):  # pragma: no cover
         """
         Determines whenever can merge with the passed argument or not.
 
@@ -47,24 +47,13 @@ class Mergable(metaclass=abc.ABCMeta):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def _merge(self, data):
+    def _merge(self, data):  # pragma: no cover
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def copy(self):
+    def copy(self):  # pragma: no cover
         """
         When implemented, returns copy of current config instance.
-
-        :returns: :class:`.Mergable`
-        """
-        raise NotImplementedError()
-
-    # FIXME: Remove this function
-    @classmethod
-    @abc.abstractmethod
-    def empty(cls):
-        """
-        When implemented, returns an empty instance of drived :class:`.Mergable` class.
 
         :returns: :class:`.Mergable`
         """
@@ -112,16 +101,6 @@ class Mergable(metaclass=abc.ABCMeta):
 
             self._merge(to_merge)
 
-    def _ensure_namespaces(self, *namespaces):
-        if namespaces:
-            ns = namespaces[0]
-            if ns not in self:
-                self[ns] = ConfigNamespace(context=self.context)
-            # noinspection PyProtectedMember
-            return getattr(self, ns)._ensure_namespaces(*namespaces[1:])
-        else:
-            return self
-
 
 class MergableDict(OrderedDict, Mergable):
     """
@@ -161,11 +140,7 @@ class MergableDict(OrderedDict, Mergable):
             self[key] = value
 
     def copy(self):
-        return ConfigDict(self, context=self.context)
-
-    @classmethod
-    def empty(cls):
-        return cls()
+        return MergableDict(self, context=self.context)
 
 
 class ConfigurationNamespace(MergableDict):
@@ -191,11 +166,7 @@ class MergableList(list, Mergable):
         self.extend(data)
 
     def copy(self):
-        return ConfigList(self, context=self.context)
-
-    @classmethod
-    def empty(cls):
-        return cls()
+        return MergableList(self, context=self.context)
 
 
 class Root(MergableDict):
