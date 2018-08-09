@@ -25,8 +25,8 @@ cd pymlconf.io
 git pull origin gh-pages
 cd ..
 
-# Build in-project documents: docs/html
-cd pymlconf/doc
+# Build in-project documents: sphinx/html
+cd pymlconf/sphinx
 make html
 
 # Build pymlconf.io documents: ../../pymlconf.io
