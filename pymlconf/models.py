@@ -234,7 +234,7 @@ class DeferredRoot:
             )
         return cls._instance
 
-    def initialize(self, *args, force=False, **kw):
+    def initialize(self, init_value, context=None, force=False):
         """
         Initialize the configuration manager
 
@@ -247,5 +247,5 @@ class DeferredRoot:
                 'Configuration manager object is already initialized.'
             )
 
-        self.__class__._instance = Root(*args, **kw)
+        self.__class__._instance = Root(init_value, context=context)
 
