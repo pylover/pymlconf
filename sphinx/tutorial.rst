@@ -15,14 +15,14 @@ Usage
 -----
 
 The entry point of the library is the :class:`.Root` class. But a proxy: 
-:class:`.DiferredRoot` is also provided to let users import root object 
+:class:`.DeferredRoot` is also provided to let users import root object 
 before initialization.
 
 .. code-block:: python
 
-   from pymlconf import DiferredRoot
+   from pymlconf import DeferredRoot
 
-   settings = DiferredRoot()
+   settings = DeferredRoot()
 
 
 Import ``settings`` everywhere in your application's source code.
