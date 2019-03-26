@@ -1,18 +1,18 @@
-import unittest
+import pytest
 
 from pymlconf import Root, Mergable
 
 
-class MergeTestCase(unittest.TestCase):
+class TestMerge:
 
     def test_merge_empty_object(self):
         root = Root()
         root.merge('')
-        self.assertEqual(0, len(root.keys()))
+        assert len(root.keys()) == 0
 
     def test_merge_errors(self):
         root = Root()
-        with self.assertRaises(TypeError):
+        with pytest.raises(TypeError):
             root.merge(None)
 
     def test_merge_deep_object(self):
@@ -23,20 +23,20 @@ class MergeTestCase(unittest.TestCase):
               c: 3
         ''')
 
-        self.assertEqual(3, root.a.b.c)
+        assert root.a.b.c == 3
         root.merge('''
           d:
             e: 1
         ''')
 
-        self.assertIsInstance(root.d, Mergable)
+        assert isinstance(root.d, Mergable)
 
         root.d.merge(root.a)
-        self.assertEqual(3, root.d.b.c)
+        assert root.d.b.c == 3
 
         root.a.b = 2
-        self.assertEqual(2, root.a.b)
-        self.assertEqual(3, root.d.b.c)
+        assert root.a.b == 2
+        assert root.d.b.c == 3
 
     def test_merge_list(self):
         root = Root()
@@ -48,14 +48,10 @@ class MergeTestCase(unittest.TestCase):
           c: []
         ''')
 
-        self.assertEqual([1, 2], root.a.b)
+        assert root.a.b == [1, 2]
 
         root.c.merge(root.a.b.copy())
         root.a.b.append(3)
-        self.assertEqual([1, 2, 3], root.a.b)
-        self.assertEqual([1, 2], root.c)
-
-
-if __name__ == '__main__':  # pragma: no cover
-    unittest.main()
+        assert root.a.b == [1, 2, 3]
+        assert root.c == [1, 2]
 
