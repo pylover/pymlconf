@@ -1,5 +1,5 @@
-nose
-nose-pudb
+pytest >= 4.0.2
+pytest-pudb
 coverage
 coveralls
 sphinx

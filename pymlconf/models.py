@@ -82,8 +82,8 @@ class Mergable(metaclass=abc.ABCMeta):
         """
         Merges this instance with new instances, in-place.
 
-        :param \*args: Configuration values to merge with current instance.
-        :type \*args: iterable
+        :param \\*args: Configuration values to merge with current instance.
+        :type \\*args: iterable
 
         """
         for data in args:
