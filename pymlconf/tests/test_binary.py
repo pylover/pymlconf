@@ -1,9 +1,7 @@
-import unittest
-
 from pymlconf import Root
 
 
-class TestBinary(unittest.TestCase):
+class TestBinary:
 
     def test_binary(self):
         root = Root('''
@@ -12,10 +10,6 @@ class TestBinary(unittest.TestCase):
             secret: !!binary YWJj\n
         ''')
 
-        self.assertEqual(root.app.name, 'MyApp')
-        self.assertEqual(root.secret, b'abc')
-
-
-if __name__ == '__main__':  # pragma: no cover
-    unittest.main()
+        assert root.app.name == 'MyApp'
+        assert root.secret == b'abc'
 

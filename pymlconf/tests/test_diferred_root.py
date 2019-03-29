@@ -1,11 +1,11 @@
-import unittest
+import pytest
 
 from pymlconf import DeferredRoot
 from pymlconf.errors import ConfigurationNotInitializedError, \
     ConfigurationAlreadyInitializedError
 
 
-class TestDiferredRoot(unittest.TestCase):
+class TestDiferredRoot:
 
     def test_deferred_config_manager(self):
         context = dict(
@@ -18,26 +18,22 @@ class TestDiferredRoot(unittest.TestCase):
         '''
 
         root = DeferredRoot()
-        with self.assertRaises(ConfigurationNotInitializedError):
+        with pytest.raises(ConfigurationNotInitializedError):
             root.attr
 
         root.initialize(config, context)
 
-        with self.assertRaises(ConfigurationAlreadyInitializedError):
+        with pytest.raises(ConfigurationAlreadyInitializedError):
             root.initialize(config)
 
         root.merge('''
             c: %(c)s
         ''')
 
-        self.assertEqual(root.a, 1)
-        self.assertEqual(root.b, [1])
-        self.assertEqual(root.c, 3)
+        assert root.a == 1
+        assert root.b == [1]
+        assert root.c == 3
 
         root.d = [1, 2]
-        self.assertEqual([1, 2], root.d)
-
-
-if __name__ == '__main__':  # pragma: no cover
-    unittest.main()
+        assert [1, 2] == root.d
 
