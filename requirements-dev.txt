@@ -1,8 +1,3 @@
-pytest
+-r requirements-ci.txt
 pytest-pudb
-coverage
-coveralls
-sphinx
-sphinx_rtd_theme
-sphinx-autobuild
-sphinx-serve
+ipython

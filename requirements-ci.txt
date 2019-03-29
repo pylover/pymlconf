@@ -1,0 +1,7 @@
+coverage
+coveralls
+pytest-cov
+sphinx
+sphinx_rtd_theme
+sphinx-autobuild
+sphinx-serve
