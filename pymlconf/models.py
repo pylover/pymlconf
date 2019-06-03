@@ -5,7 +5,7 @@ from os import path
 
 from .errors import ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
-from .yamling import load_string, load_yaml
+from .yamling import load_string, load_yaml, dump_yaml
 
 
 def isiterable(o):
@@ -48,6 +48,16 @@ class Mergable(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def _merge(self, data):  # pragma: no cover
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def dump(self):  # pragma: no cover
+        """
+        When implemented, returns a python dictionary or list from current
+        config instance.
+
+        """
+
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -146,6 +156,12 @@ class MergableDict(OrderedDict, Mergable):
     def copy(self):
         return MergableDict(self, context=self.context)
 
+    def dump(self):
+        return {
+            k: v.dump() if isinstance(v, Mergable) else v
+            for k, v in self.items()
+        }
+
 
 class ConfigurationNamespace(MergableDict):
     """
@@ -171,6 +187,12 @@ class MergableList(list, Mergable):
 
     def copy(self):
         return MergableList(self, context=self.context)
+
+    def dump(self):
+        return [
+            i.dump() if isinstance(i, Mergable) else i
+            for i in self
+        ]
 
 
 class Root(MergableDict):
@@ -208,6 +230,9 @@ class Root(MergableDict):
         loaded_yaml = load_yaml(filename, self.context)
         if loaded_yaml:
             self.merge(loaded_yaml)
+
+    def dumps(self):
+        return dump_yaml(self.dump())
 
 
 class DeferredRoot:

@@ -1,6 +1,6 @@
 from os import path
 
-from yaml import load
+import yaml
 
 try:
     from yaml import CLoader as Loader
@@ -17,7 +17,7 @@ def pre_process(data, context):
 def load_string(str_data, context=None):
     if context:
         str_data = pre_process(str_data, context)
-    return load(str_data, Loader)
+    return yaml.load(str_data, Loader)
 
 
 def load_yaml(filename, context=None):
@@ -28,3 +28,6 @@ def load_yaml(filename, context=None):
     with open(filename) as f:
         return load_string(f.read(), context)
 
+
+def  dump_yaml(o):
+    return yaml.safe_dump(o)
