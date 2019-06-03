@@ -17,13 +17,20 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -31,21 +38,16 @@
     <link rel="prev" title="Tutorial" href="tutorial.html" />
     <link href="_static/css/style.css" rel="stylesheet" type="text/css">
 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -59,7 +61,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -86,8 +88,8 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">pymlconf Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-pymlconf.models"><code class="docutils literal notranslate"><span class="pre">models</span></code> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pymlconf.errors"><code class="docutils literal notranslate"><span class="pre">errors</span></code> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pymlconf.models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pymlconf.errors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errors</span></code> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -158,159 +160,163 @@
 <span id="models-module"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">models</span></code> Module<a class="headerlink" href="#module-pymlconf.models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pymlconf.models.ConfigurationNamespace">
-<em class="property">class </em><code class="descclassname">pymlconf.models.</code><code class="descname">ConfigurationNamespace</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#ConfigurationNamespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.ConfigurationNamespace" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pymlconf.models.</code><code class="sig-name descname">ConfigurationNamespace</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#ConfigurationNamespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.ConfigurationNamespace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pymlconf.models.MergableDict" title="pymlconf.models.MergableDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.models.MergableDict</span></code></a></p>
 <p>Configuration node that represents the configuration namespace node.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pymlconf.models.DeferredRoot">
-<em class="property">class </em><code class="descclassname">pymlconf.models.</code><code class="descname">DeferredRoot</code><a class="reference internal" href="_modules/pymlconf/models.html#DeferredRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.DeferredRoot" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pymlconf.models.</code><code class="sig-name descname">DeferredRoot</code><a class="reference internal" href="_modules/pymlconf/models.html#DeferredRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.DeferredRoot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="pymlconf.models.DeferredRoot.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><em>init_value</em>, <em>context=None</em>, <em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#DeferredRoot.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.DeferredRoot.initialize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="sig-param">init_value</em>, <em class="sig-param">context=None</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#DeferredRoot.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.DeferredRoot.initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the configuration manager</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>force</strong> – force initialization even if it’s already initialized</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force</strong> – force initialization even if it’s already initialized</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="pymlconf.models.Mergable">
-<em class="property">class </em><code class="descclassname">pymlconf.models.</code><code class="descname">Mergable</code><span class="sig-paren">(</span><em>data=None</em>, <em>context=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pymlconf.models.</code><code class="sig-name descname">Mergable</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">context=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Base class for all configuration nodes, so all configuration nodes are
 mergable</p>
 <dl class="method">
 <dt id="pymlconf.models.Mergable.can_merge">
-<code class="descname">can_merge</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.can_merge" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">can_merge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.can_merge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whenever can merge with the passed argument or not.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>any</em>) – An object to test.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>any</em>) – An object to test.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pymlconf.models.Mergable.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.copy" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>When implemented, returns copy of current config instance.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mergable</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mergable</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
+<dt id="pymlconf.models.Mergable.dump">
+<em class="property">abstract </em><code class="sig-name descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>When implemented, returns a python dictionary or list from current
+config instance.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pymlconf.models.Mergable.make_mergable_if_possible">
-<em class="property">classmethod </em><code class="descname">make_mergable_if_possible</code><span class="sig-paren">(</span><em>data</em>, <em>context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.make_mergable_if_possible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.make_mergable_if_possible" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">make_mergable_if_possible</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.make_mergable_if_possible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.make_mergable_if_possible" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes an object mergable if possible. Returns the virgin object if
 cannot convert it to a mergable instance.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mergable</span></code></a> or type(data)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mergable</span></code></a> or type(data)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pymlconf.models.Mergable.merge">
-<code class="descname">merge</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.merge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">merge</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.merge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merges this instance with new instances, in-place.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*args</strong> (<em>iterable</em>) – Configuration values to merge with current instance.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>*args</strong> (<em>iterable</em>) – Configuration values to merge with current instance.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="pymlconf.models.MergableDict">
-<em class="property">class </em><code class="descclassname">pymlconf.models.</code><code class="descname">MergableDict</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pymlconf.models.</code><code class="sig-name descname">MergableDict</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a>, <a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.models.Mergable</span></code></a></p>
 <p>Configuration node that represents python dictionary data.</p>
 <dl class="method">
 <dt id="pymlconf.models.MergableDict.can_merge">
-<code class="descname">can_merge</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableDict.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict.can_merge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_merge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableDict.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict.can_merge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whenever can merge with the passed argument or not.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>any</em>) – An object to test.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>any</em>) – An object to test.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pymlconf.models.MergableDict.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a shallow copy of od<a class="reference internal" href="_modules/pymlconf/models.html#MergableDict.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict.copy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a shallow copy of od<a class="reference internal" href="_modules/pymlconf/models.html#MergableDict.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict.copy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.models.MergableDict.dump">
+<code class="sig-name descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableDict.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>When implemented, returns a python dictionary or list from current
+config instance.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="pymlconf.models.MergableList">
-<em class="property">class </em><code class="descclassname">pymlconf.models.</code><code class="descname">MergableList</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pymlconf.models.</code><code class="sig-name descname">MergableList</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.models.Mergable</span></code></a></p>
 <p>Configuration node that represents the python list data.</p>
 <dl class="method">
 <dt id="pymlconf.models.MergableList.can_merge">
-<code class="descname">can_merge</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableList.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList.can_merge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_merge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableList.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList.can_merge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whenever can merge with the passed argument or not.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>any</em>) – An object to test.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>any</em>) – An object to test.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pymlconf.models.MergableList.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; list -- a shallow copy of L<a class="reference internal" href="_modules/pymlconf/models.html#MergableList.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList.copy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; list -- a shallow copy of L<a class="reference internal" href="_modules/pymlconf/models.html#MergableList.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList.copy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="pymlconf.models.MergableList.dump">
+<code class="sig-name descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableList.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>When implemented, returns a python dictionary or list from current
+config instance.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="pymlconf.models.Root">
-<em class="property">class </em><code class="descclassname">pymlconf.models.</code><code class="descname">Root</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Root" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pymlconf.models.</code><code class="sig-name descname">Root</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pymlconf.models.MergableDict" title="pymlconf.models.MergableDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.models.MergableDict</span></code></a></p>
 <p>The main class which exposes pymlconf package.</p>
 <p>Example:</p>
@@ -327,26 +333,28 @@ cannot convert it to a mergable instance.</p>
 </pre></div>
 </div>
 <dl class="method">
+<dt id="pymlconf.models.Root.dumps">
+<code class="sig-name descname">dumps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Root.dumps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Root.dumps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pymlconf.models.Root.load_file">
-<code class="descname">load_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Root.load_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Root.load_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Root.load_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Root.load_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>load file which contains yaml configuration entries.and merge it by
 current instance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>files</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – files to load and merge into existing configuration
-instance</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – files to load and merge into existing configuration
+instance</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="pymlconf.models.isiterable">
-<code class="descclassname">pymlconf.models.</code><code class="descname">isiterable</code><span class="sig-paren">(</span><em>o</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#isiterable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.isiterable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pymlconf.models.</code><code class="sig-name descname">isiterable</code><span class="sig-paren">(</span><em class="sig-param">o</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#isiterable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.isiterable" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -354,19 +362,19 @@ instance</td>
 <span id="errors-module"></span><h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">errors</span></code> Module<a class="headerlink" href="#module-pymlconf.errors" title="Permalink to this headline">¶</a></h2>
 <dl class="exception">
 <dt id="pymlconf.errors.ConfigurationAlreadyInitializedError">
-<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigurationAlreadyInitializedError</code><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationAlreadyInitializedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationAlreadyInitializedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pymlconf.errors.</code><code class="sig-name descname">ConfigurationAlreadyInitializedError</code><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationAlreadyInitializedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationAlreadyInitializedError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="pymlconf.errors.ConfigurationError">
-<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigurationError</code><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pymlconf.errors.</code><code class="sig-name descname">ConfigurationError</code><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="pymlconf.errors.ConfigurationNotInitializedError">
-<em class="property">exception </em><code class="descclassname">pymlconf.errors.</code><code class="descname">ConfigurationNotInitializedError</code><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationNotInitializedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationNotInitializedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pymlconf.errors.</code><code class="sig-name descname">ConfigurationNotInitializedError</code><a class="reference internal" href="_modules/pymlconf/errors.html#ConfigurationNotInitializedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.errors.ConfigurationNotInitializedError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pymlconf.errors.ConfigurationError" title="pymlconf.errors.ConfigurationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.errors.ConfigurationError</span></code></a></p>
 </dd></dl>
 
@@ -382,7 +390,7 @@ instance</td>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="tutorial.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -408,26 +416,16 @@ instance</td>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
+  
     <span id="forkongithub">
       <a class="desktop" href="https://github.com/Carrene/nanohttp">Fork me on GitHub</a>
       <a class="mobile" href="https://github.com/Carrene/nanohttp">Source</a>
