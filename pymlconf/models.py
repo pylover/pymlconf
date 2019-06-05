@@ -5,7 +5,7 @@ from os import path
 
 from .errors import ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
-from .yamling import load_string, load_yaml, dump_yaml
+from .yamling import load_string, load_file, dump_yaml
 
 
 def isiterable(o):
@@ -216,18 +216,16 @@ class Root(MergableDict):
 
     def load_file(self, filename):
         """
-        load file which contains yaml configuration entries.and merge it by
-        current instance
+        load file which contains yaml configuration entries and merge it by
+        current instance.
 
-        :param files: files to load and merge into existing configuration
+        :param filename: filename to load and merge into existing configuration
                       instance
-        :type files: list
-
         """
         if not path.exists(filename):
             raise FileNotFoundError(filename)
 
-        loaded_yaml = load_yaml(filename, self.context)
+        loaded_yaml = load_file(filename, self.context)
         if loaded_yaml:
             self.merge(loaded_yaml)
 

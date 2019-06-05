@@ -20,7 +20,7 @@ def load_string(str_data, context=None):
     return yaml.load(str_data, Loader)
 
 
-def load_yaml(filename, context=None):
+def load_file(filename, context=None):
     directory = path.abspath(path.dirname(filename))
     context = context or {}
     context.update(here=directory)
