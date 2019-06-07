@@ -1,6 +1,7 @@
 import abc
 import copy
-from collections import OrderedDict, Iterable
+from collections.abc import Iterable
+from collections import OrderedDict
 from os import path
 
 from .errors import ConfigurationAlreadyInitializedError, \
