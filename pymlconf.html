@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.2
+                2.0
               </div>
             
           
@@ -192,8 +192,8 @@
 <p>Base class for all configuration nodes, so all configuration nodes are
 mergable</p>
 <dl class="method">
-<dt id="pymlconf.models.Mergable.can_merge">
-<em class="property">abstract </em><code class="sig-name descname">can_merge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.can_merge" title="Permalink to this definition">¶</a></dt>
+<dt id="pymlconf.models.Mergable.canmerge">
+<em class="property">abstract </em><code class="sig-name descname">canmerge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Mergable.canmerge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Mergable.canmerge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whenever can merge with the passed argument or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -254,8 +254,8 @@ cannot convert it to a mergable instance.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a>, <a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.models.Mergable</span></code></a></p>
 <p>Configuration node that represents python dictionary data.</p>
 <dl class="method">
-<dt id="pymlconf.models.MergableDict.can_merge">
-<code class="sig-name descname">can_merge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableDict.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict.can_merge" title="Permalink to this definition">¶</a></dt>
+<dt id="pymlconf.models.MergableDict.canmerge">
+<code class="sig-name descname">canmerge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableDict.canmerge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableDict.canmerge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whenever can merge with the passed argument or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -287,8 +287,8 @@ config instance.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference internal" href="#pymlconf.models.Mergable" title="pymlconf.models.Mergable"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymlconf.models.Mergable</span></code></a></p>
 <p>Configuration node that represents the python list data.</p>
 <dl class="method">
-<dt id="pymlconf.models.MergableList.can_merge">
-<code class="sig-name descname">can_merge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableList.can_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList.can_merge" title="Permalink to this definition">¶</a></dt>
+<dt id="pymlconf.models.MergableList.canmerge">
+<code class="sig-name descname">canmerge</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#MergableList.canmerge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.MergableList.canmerge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whenever can merge with the passed argument or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -338,8 +338,8 @@ config instance.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="pymlconf.models.Root.load_file">
-<code class="sig-name descname">load_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Root.load_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Root.load_file" title="Permalink to this definition">¶</a></dt>
+<dt id="pymlconf.models.Root.loadfile">
+<code class="sig-name descname">loadfile</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pymlconf/models.html#Root.loadfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymlconf.models.Root.loadfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>load file which contains yaml configuration entries and merge it by
 current instance.</p>
 <dl class="field-list simple">
