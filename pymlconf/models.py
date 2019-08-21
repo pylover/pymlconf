@@ -6,7 +6,7 @@ from os import path
 
 from .errors import ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
-from .yamling import load_string, load_file, dump_yaml
+from . import yaml_
 
 
 def isiterable(o):
@@ -36,7 +36,7 @@ class Mergable(metaclass=abc.ABCMeta):
             self.merge(data)
 
     @abc.abstractmethod
-    def can_merge(self, data):  # pragma: no cover
+    def canmerge(self, data):  # pragma: no cover
         """
         Determines whenever can merge with the passed argument or not.
 
@@ -99,19 +99,19 @@ class Mergable(metaclass=abc.ABCMeta):
         """
         for data in args:
             if isinstance(data, str):
-                to_merge = load_string(data, self.context)
-                if not to_merge:
+                tomerge = yaml_.loads(data, self.context)
+                if not tomerge:
                     continue
             else:
-                to_merge = data
+                tomerge = data
 
-            if not self.can_merge(to_merge):
+            if not self.canmerge(tomerge):
                 raise TypeError(
                     'Cannot merge myself:%s with %s. data: %s' \
                     % (type(self), type(data), data)
                 )
 
-            self._merge(to_merge)
+            self._merge(tomerge)
 
 
 class MergableDict(OrderedDict, Mergable):
@@ -123,7 +123,7 @@ class MergableDict(OrderedDict, Mergable):
         OrderedDict.__init__(self)
         Mergable.__init__(self, *args, **kwargs)
 
-    def can_merge(self, data):
+    def canmerge(self, data):
         return data is not None and isinstance(data, dict)
 
     def _merge(self, data):
@@ -132,7 +132,7 @@ class MergableDict(OrderedDict, Mergable):
 
             if k in self \
                     and isinstance(self[k], Mergable) \
-                    and self[k].can_merge(v):
+                    and self[k].canmerge(v):
                 self[k].merge(v)
             else:
                 if isinstance(v, Mergable):
@@ -179,7 +179,7 @@ class MergableList(list, Mergable):
         list.__init__(self)
         Mergable.__init__(self, *args, **kwargs)
 
-    def can_merge(self, data):
+    def canmerge(self, data):
         return data and hasattr(data, '__iter__')
 
     def _merge(self, data):
@@ -215,7 +215,7 @@ class Root(MergableDict):
 
     """
 
-    def load_file(self, filename):
+    def loadfile(self, filename):
         """
         load file which contains yaml configuration entries and merge it by
         current instance.
@@ -226,12 +226,12 @@ class Root(MergableDict):
         if not path.exists(filename):
             raise FileNotFoundError(filename)
 
-        loaded_yaml = load_file(filename, self.context)
-        if loaded_yaml:
-            self.merge(loaded_yaml)
+        loadedyaml = yaml_.load(filename, self.context)
+        if loadedyaml:
+            self.merge(loadedyaml)
 
     def dumps(self):
-        return dump_yaml(self.dump())
+        return yaml_.dumps(self.dump())
 
 
 class DeferredRoot:
@@ -239,19 +239,19 @@ class DeferredRoot:
 
     def __getattr__(self, key):
         return getattr(
-            object.__getattribute__(self, '__class__')._get_instance(),
+            object.__getattribute__(self, '__class__')._getinstance(),
             key
         )
 
     def __setattr__(self, key, value):
         setattr(
-            object.__getattribute__(self, '__class__')._get_instance(),
+            object.__getattribute__(self, '__class__')._getinstance(),
             key,
             value
         )
 
     @classmethod
-    def _get_instance(cls):
+    def _getinstance(cls):
         if cls._instance is None:
             raise ConfigurationNotInitializedError(
                 'Configuration manager object is not initialized yet.'

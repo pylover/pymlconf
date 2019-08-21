@@ -52,15 +52,15 @@ class TestConfigManager:
         assert root['server.token.salt'] == 1345
         assert not hasattr(root, 'server')
 
-    def test_load_file(self):
+    def test_loadfile(self):
         here = path.dirname(__file__)
         filename = path.join(here, 'files/sample.yml')
         root = Root()
-        root.load_file(filename)
+        root.loadfile(filename)
         assert root.a.b == 2
 
         with pytest.raises(FileNotFoundError):
-            root.load_file('not/exists')
+            root.loadfile('not/exists')
 
     def test_callable_context(self):
         def context():

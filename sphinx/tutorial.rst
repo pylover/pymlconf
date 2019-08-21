@@ -52,5 +52,5 @@ You can load and merge your configuration file(s) using
 
 .. code-block:: python
 
-   settings.load_file(filename)
+   settings.loadfile(filename)
 
