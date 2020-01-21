@@ -16,7 +16,7 @@ before_install:
   - pip install -r requirements-dev.txt
 
 install: pip install -ve .
-script: py.test --cov=pymlconf pymlconf/tests
+script: py.test --cov=pymlconf tests
 after_success: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then travis_retry coveralls ; fi
 after_deploy: if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then ./travis-gh-pages.sh ; fi
 deploy:
