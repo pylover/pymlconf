@@ -154,6 +154,13 @@ class MergableDict(OrderedDict, Mergable):
         else:
             self[key] = value
 
+    def __delattr__(self, key):
+        if key in self:
+            del self[key]
+            return
+
+        super().__delattr__(key)
+
     def copy(self):
         return MergableDict(self, context=self.context)
 

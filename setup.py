@@ -15,7 +15,9 @@ with open(
         .group(1)
 
 
-dependencies = ['pyyaml >= 3.10']
+dependencies = [
+    'pyyaml >= 3.10'
+]
 
 
 def read(filename):
