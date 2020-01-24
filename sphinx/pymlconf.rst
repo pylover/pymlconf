@@ -1,19 +1,28 @@
-pymlconf Package
-================
+API Reference
+=============
 
-:mod:`models` Module
-----------------------------
+.. module:: pymlconf
 
-.. automodule:: pymlconf.models
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. autoclass:: Mergable
 
+.. autoclass:: MergableList
+   :show-inheritance:
 
-:mod:`errors` Module
---------------------
+.. autoclass:: MergableDict
+   :show-inheritance:
 
-.. automodule:: pymlconf.errors
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. autoclass:: Root
+   :show-inheritance:
+
+.. autoclass:: DeferredRoot
+   :show-inheritance:
+
+.. autoclass:: ConfigurationError
+   :show-inheritance:
+
+.. autoclass:: ConfigurationAlreadyInitializedError
+   :show-inheritance:
+
+.. autoclass:: ConfigurationNotInitializedError
+   :show-inheritance:
+
