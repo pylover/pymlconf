@@ -38,7 +38,8 @@ class Mergable(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def canmerge(self, data):  # pragma: no cover
         """
-        Determines whenever can merge with the passed argument or not.
+        When implemented in the child class, determines whenever can merge with
+        the passed argument or not.
 
         :param data: An object to test.
         :type data: any
@@ -238,6 +239,12 @@ class Root(MergableDict):
             self.merge(loadedyaml)
 
     def dumps(self):
+        """
+        Encode the instance as YAML String.
+
+        .. versionadded:: 2.3
+
+        """
         return yaml_.dumps(self.dump())
 
 
