@@ -76,5 +76,5 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: _build # The folder the action should deploy.
+        FOLDER: sphinx/_build # The folder the action should deploy.
         CLEAN: true # Automatically remove deleted files from deploy branch
