@@ -6,7 +6,7 @@ from os import path
 
 from .errors import ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
-from . import yaml_
+from . import yamlhelper
 
 
 def isiterable(o):
@@ -100,7 +100,7 @@ class Mergable(metaclass=abc.ABCMeta):
         """
         for data in args:
             if isinstance(data, str):
-                tomerge = yaml_.loads(data, self.context)
+                tomerge = yamlhelper.loads(data, self.context)
                 if not tomerge:
                     continue
             else:
@@ -234,7 +234,7 @@ class Root(MergableDict):
         if not path.exists(filename):
             raise FileNotFoundError(filename)
 
-        loadedyaml = yaml_.load(filename, self.context)
+        loadedyaml = yamlhelper.load(filename, self.context)
         if loadedyaml:
             self.merge(loadedyaml)
 
@@ -245,7 +245,7 @@ class Root(MergableDict):
         .. versionadded:: 2.3
 
         """
-        return yaml_.dumps(self.dump())
+        return yamlhelper.dumps(self.dump())
 
 
 class DeferredRoot:

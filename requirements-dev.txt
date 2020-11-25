@@ -1,3 +1,4 @@
 -r requirements-ci.txt
 pytest-pudb
 ipython
+flake8
