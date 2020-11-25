@@ -86,4 +86,3 @@ class TestConfigManager:
         root = Root(builtin, context)
         dump = root.dumps()
         assert dump == 'a:\n  a1: 1\nb:\n- 1\n- 2\n- 3\n'
-

@@ -54,4 +54,3 @@ class TestMerge:
         root.a.b.append(3)
         assert root.a.b == [1, 2, 3]
         assert root.c == [1, 2]
-

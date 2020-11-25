@@ -1,5 +1,3 @@
-import pytest
-
 from pymlconf import Root
 
 
@@ -31,10 +29,7 @@ class Test:
     ''' % __name__
 
     def test_simple_syntax(self):
-        """
-        Testing simple Yaml syntax
-        """
-
+        """Testing simple Yaml syntax."""
         cm = Root(self._builtin)
         assert cm.app.name == 'MyApp'
         assert len(cm.app.listen) == 2
@@ -50,4 +45,3 @@ class Test:
         assert cm.app.languages[1].country == 'iran'
         assert cm.logging.formatter == str
         assert isinstance(cm.logging.writer, MyWriter)
-

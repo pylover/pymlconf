@@ -12,4 +12,3 @@ class TestBinary:
 
         assert root.app.name == 'MyApp'
         assert root.secret == b'abc'
-

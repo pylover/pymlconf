@@ -36,4 +36,3 @@ class TestDiferredRoot:
 
         root.d = [1, 2]
         assert [1, 2] == root.d
-

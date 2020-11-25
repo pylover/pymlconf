@@ -15,4 +15,3 @@ def test_delattribute():
 
     with pytest.raises(AttributeError):
         del root.app.invalidattribute
-
