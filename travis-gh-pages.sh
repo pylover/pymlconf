@@ -37,7 +37,6 @@ cd ../../pymlconf.io/
 git config user.name "Travis CI"
 git config user.email "$COMMIT_AUTHOR_EMAIL"
 touch .nojekyll 
-echo "pymlconf.dobisel.com" > CNAME
 git add .nojekyll
 git add .
 

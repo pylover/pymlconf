@@ -2,7 +2,7 @@
 env:
   global:
     - ENCRYPTION_LABEL: c602e3be279e
-    - COMMIT_AUTHOR_EMAIL: vahid@dobisel.com
+    - COMMIT_AUTHOR_EMAIL: vahid.mardani@gmail.com
 
 language: python
 
