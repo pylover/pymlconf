@@ -16,7 +16,7 @@ with open(
 
 
 dependencies = [
-    'pyyaml >= 3.10'
+    'pyyaml >= 5.3'
 ]
 
 
