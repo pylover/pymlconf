@@ -6,6 +6,8 @@ name: Pytest & Coverage
 on:
   push:
     branches: [ master ]
+    tags: [ 'v*' ]
+
   pull_request:
     branches: [ master ]
 
@@ -52,4 +54,12 @@ jobs:
       run: coveralls --finish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    steps:
+      - name: Echo release
+        run: echo ${{ github.ref }}
 
