@@ -34,3 +34,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --cov=pymlconf tests
+    - name: Submit coverage to coveralls.io
+      run: |
+        coveralls
