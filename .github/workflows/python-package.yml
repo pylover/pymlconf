@@ -5,7 +5,7 @@ name: Python package
 
 on:
   push:
-    branches: [ master, ci ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -37,7 +37,7 @@ jobs:
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
-  finish:
+  coveralls-finish:
     needs: test
     runs-on: ubuntu-latest
     steps:
