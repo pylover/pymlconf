@@ -161,7 +161,7 @@
 
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">ConfigurationAlreadyInitializedError</span><span class="p">,</span> \
     <span class="n">ConfigurationNotInitializedError</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">yaml_</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">yamlhelper</span>
 
 
 <span class="k">def</span> <span class="nf">isiterable</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
@@ -171,30 +171,28 @@
 
 
 <div class="viewcode-block" id="Mergable"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Mergable">[docs]</a><span class="k">class</span> <span class="nc">Mergable</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base class for all configuration nodes, so all configuration nodes are</span>
-<span class="sd">    mergable</span>
+    <span class="sd">&quot;&quot;&quot;Base class for all configuration nodes.</span>
+
+<span class="sd">    So all configuration nodes are mergable.</span>
+
+<span class="sd">    :param data: Initial value to constract a mergable instance. It can be</span>
+<span class="sd">                 ``yaml string`` or python dictionary. default: None.</span>
+<span class="sd">    :type data: list or dict</span>
+
+<span class="sd">    :param context: dictionary to format the yaml before parsing in</span>
+<span class="sd">                    pre-processor.</span>
+<span class="sd">    :type context: dict</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param data: Initial value to constract a mergable instance. It can be</span>
-<span class="sd">                     ``yaml string`` or python dictionary. default: None.</span>
-<span class="sd">        :type data: list or dict</span>
-
-<span class="sd">        :param context: dictionary to format the yaml before parsing in</span>
-<span class="sd">                        pre-processor.</span>
-<span class="sd">        :type context: dict</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="k">if</span> <span class="n">context</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Mergable.canmerge"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Mergable.canmerge">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">canmerge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        When implemented in the child class, determines whenever can merge with</span>
-<span class="sd">        the passed argument or not.</span>
+        <span class="sd">&quot;&quot;&quot;Determine whenever can merge with the passed argument or not.</span>
 
 <span class="sd">        :param data: An object to test.</span>
 <span class="sd">        :type data: any</span>
@@ -209,18 +207,12 @@
 
 <div class="viewcode-block" id="Mergable.dump"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Mergable.dump">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        When implemented, returns a python dictionary or list from current</span>
-<span class="sd">        config instance.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Return a python dictionary or list from current config instance.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Mergable.copy"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Mergable.copy">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        When implemented, returns copy of current config instance.</span>
+        <span class="sd">&quot;&quot;&quot;Return a copy of current config instance.</span>
 
 <span class="sd">        :returns: :class:`.Mergable`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -228,12 +220,11 @@
 
 <div class="viewcode-block" id="Mergable.make_mergable_if_possible"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Mergable.make_mergable_if_possible">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">make_mergable_if_possible</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes an object mergable if possible. Returns the virgin object if</span>
-<span class="sd">        cannot convert it to a mergable instance.</span>
+        <span class="sd">&quot;&quot;&quot;Make an object mergable if possible.</span>
+
+<span class="sd">        Returns the virgin object if cannot convert it to a mergable instance.</span>
 
 <span class="sd">        :returns: :class:`.Mergable` or type(data)</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">MergableDict</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
@@ -246,16 +237,15 @@
             <span class="k">return</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="Mergable.merge"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Mergable.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Merges this instance with new instances, in-place.</span>
+        <span class="sd">&quot;&quot;&quot;Merge this instance with new instances, in-place.</span>
 
-<span class="sd">        :param \\*args: Configuration values to merge with current instance.</span>
-<span class="sd">        :type \\*args: iterable</span>
+<span class="sd">        :param *args: Configuration values to merge with current instance.</span>
+<span class="sd">        :type *args: iterable</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">tomerge</span> <span class="o">=</span> <span class="n">yaml_</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+                <span class="n">tomerge</span> <span class="o">=</span> <span class="n">yamlhelper</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">tomerge</span><span class="p">:</span>
                     <span class="k">continue</span>
             <span class="k">else</span><span class="p">:</span>
@@ -263,7 +253,7 @@
 
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">canmerge</span><span class="p">(</span><span class="n">tomerge</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                    <span class="s1">&#39;Cannot merge myself:</span><span class="si">%s</span><span class="s1"> with </span><span class="si">%s</span><span class="s1">. data: </span><span class="si">%s</span><span class="s1">&#39;</span> \
+                    <span class="s1">&#39;Cannot merge myself:</span><span class="si">%s</span><span class="s1"> with </span><span class="si">%s</span><span class="s1">. data: </span><span class="si">%s</span><span class="s1">&#39;</span>
                     <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
                 <span class="p">)</span>
 
@@ -271,9 +261,7 @@
 
 
 <div class="viewcode-block" id="MergableDict"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.MergableDict">[docs]</a><span class="k">class</span> <span class="nc">MergableDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">,</span> <span class="n">Mergable</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Configuration node that represents python dictionary data.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Configuration node that represents python dictionary data.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">OrderedDict</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -300,17 +288,29 @@
                     <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find and return ``key`` in self.</span>
+
+<span class="sd">        Raise :class:`AttributeError` if not any.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set an item.</span>
+
+<span class="sd">        Same as ``self[key] = value``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete an item.</span>
+
+<span class="sd">        Same as ``del self[key]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">del</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="k">return</span>
@@ -328,15 +328,11 @@
 
 
 <div class="viewcode-block" id="ConfigurationNamespace"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.ConfigurationNamespace">[docs]</a><span class="k">class</span> <span class="nc">ConfigurationNamespace</span><span class="p">(</span><span class="n">MergableDict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Configuration node that represents the configuration namespace node.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Configuration node that represents the configuration namespace node.&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="MergableList"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.MergableList">[docs]</a><span class="k">class</span> <span class="nc">MergableList</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">Mergable</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Configuration node that represents the python list data.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Configuration node that represents the python list data.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -360,8 +356,7 @@
 
 
 <div class="viewcode-block" id="Root"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Root">[docs]</a><span class="k">class</span> <span class="nc">Root</span><span class="p">(</span><span class="n">MergableDict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The main class which exposes pymlconf package.</span>
+    <span class="sd">&quot;&quot;&quot;The main class which exposes pymlconf package.</span>
 
 <span class="sd">    Example::</span>
 
@@ -379,40 +374,39 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Root.loadfile"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Root.loadfile">[docs]</a>    <span class="k">def</span> <span class="nf">loadfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        load file which contains yaml configuration entries and merge it by</span>
-<span class="sd">        current instance.</span>
+        <span class="sd">&quot;&quot;&quot;Load yaml configuration file and merge it by current instance.</span>
 
 <span class="sd">        :param filename: filename to load and merge into existing configuration</span>
-<span class="sd">                      instance</span>
+<span class="sd">                         instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
-        <span class="n">loadedyaml</span> <span class="o">=</span> <span class="n">yaml_</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">loadedyaml</span> <span class="o">=</span> <span class="n">yamlhelper</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">loadedyaml</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">loadedyaml</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Root.dumps"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.Root.dumps">[docs]</a>    <span class="k">def</span> <span class="nf">dumps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Encode the instance as YAML String.</span>
+        <span class="sd">&quot;&quot;&quot;Encode the instance as YAML String.</span>
 
 <span class="sd">        .. versionadded:: 2.3</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">yaml_</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span></div></div>
+        <span class="k">return</span> <span class="n">yamlhelper</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span></div></div>
 
 
 <div class="viewcode-block" id="DeferredRoot"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.DeferredRoot">[docs]</a><span class="k">class</span> <span class="nc">DeferredRoot</span><span class="p">:</span>
     <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get an attribute of underlying deferred configuration instance.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span>
             <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">_getinstance</span><span class="p">(),</span>
             <span class="n">key</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set an attribute of underlying deferred configuration instance.&quot;&quot;&quot;</span>
         <span class="nb">setattr</span><span class="p">(</span>
             <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">_getinstance</span><span class="p">(),</span>
             <span class="n">key</span><span class="p">,</span>
@@ -428,20 +422,17 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
 
 <div class="viewcode-block" id="DeferredRoot.initialize"><a class="viewcode-back" href="../../pymlconf.html#pymlconf.DeferredRoot.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_value</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the configuration manager</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the configuration manager.</span>
 
 <span class="sd">        :param force: force initialization even if it&#39;s already initialized</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ConfigurationAlreadyInitializedError</span><span class="p">(</span>
                 <span class="s1">&#39;Configuration manager object is already initialized.&#39;</span>
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="n">Root</span><span class="p">(</span><span class="n">init_value</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span></div></div>
-
 </pre></div>
 
            </div>
