@@ -1,8 +1,9 @@
 name: Sphinx
 
 on:
-  release:
-    types: [ created ]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   sphinx:
