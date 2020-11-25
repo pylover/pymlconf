@@ -53,10 +53,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  release:
+  publish:
     needs: test
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    if: contains(github.ref, '/tags/v')
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
