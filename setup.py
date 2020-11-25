@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 import re
 
 from setuptools import setup, find_packages
@@ -22,6 +21,7 @@ dependencies = [
 
 def read(filename):
     return open(os.path.join(os.path.dirname(__file__), filename)).read()
+
 
 setup(
     name="pymlconf",

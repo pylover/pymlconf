@@ -16,30 +16,28 @@ def isiterable(o):
 
 
 class Mergable(metaclass=abc.ABCMeta):
-    """Base class for all configuration nodes, so all configuration nodes are
-    mergable
+    """Base class for all configuration nodes.
+
+    So all configuration nodes are mergable.
+
+    :param data: Initial value to constract a mergable instance. It can be
+                 ``yaml string`` or python dictionary. default: None.
+    :type data: list or dict
+
+    :param context: dictionary to format the yaml before parsing in
+                    pre-processor.
+    :type context: dict
+
     """
 
     def __init__(self, data=None, context=None):
-        """
-        :param data: Initial value to constract a mergable instance. It can be
-                     ``yaml string`` or python dictionary. default: None.
-        :type data: list or dict
-
-        :param context: dictionary to format the yaml before parsing in
-                        pre-processor.
-        :type context: dict
-
-        """
         self.context = context if context else {}
         if data:
             self.merge(data)
 
     @abc.abstractmethod
     def canmerge(self, data):  # pragma: no cover
-        """
-        When implemented in the child class, determines whenever can merge with
-        the passed argument or not.
+        """Determine whenever can merge with the passed argument or not.
 
         :param data: An object to test.
         :type data: any
@@ -54,18 +52,12 @@ class Mergable(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def dump(self):  # pragma: no cover
-        """
-        When implemented, returns a python dictionary or list from current
-        config instance.
-
-        """
-
+        """Return a python dictionary or list from current config instance."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def copy(self):  # pragma: no cover
-        """
-        When implemented, returns copy of current config instance.
+        """Return a copy of current config instance.
 
         :returns: :class:`.Mergable`
         """
@@ -73,12 +65,11 @@ class Mergable(metaclass=abc.ABCMeta):
 
     @classmethod
     def make_mergable_if_possible(cls, data, context):
-        """
-        Makes an object mergable if possible. Returns the virgin object if
-        cannot convert it to a mergable instance.
+        """Make an object mergable if possible.
+
+        Returns the virgin object if cannot convert it to a mergable instance.
 
         :returns: :class:`.Mergable` or type(data)
-
         """
         if isinstance(data, dict):
             return MergableDict(data=data, context=context)
@@ -91,11 +82,10 @@ class Mergable(metaclass=abc.ABCMeta):
             return data
 
     def merge(self, *args):
-        """
-        Merges this instance with new instances, in-place.
+        """Merge this instance with new instances, in-place.
 
-        :param \\*args: Configuration values to merge with current instance.
-        :type \\*args: iterable
+        :param *args: Configuration values to merge with current instance.
+        :type *args: iterable
 
         """
         for data in args:
@@ -108,7 +98,7 @@ class Mergable(metaclass=abc.ABCMeta):
 
             if not self.canmerge(tomerge):
                 raise TypeError(
-                    'Cannot merge myself:%s with %s. data: %s' \
+                    'Cannot merge myself:%s with %s. data: %s'
                     % (type(self), type(data), data)
                 )
 
@@ -116,9 +106,7 @@ class Mergable(metaclass=abc.ABCMeta):
 
 
 class MergableDict(OrderedDict, Mergable):
-    """
-    Configuration node that represents python dictionary data.
-    """
+    """Configuration node that represents python dictionary data."""
 
     def __init__(self, *args, **kwargs):
         OrderedDict.__init__(self)
@@ -145,17 +133,29 @@ class MergableDict(OrderedDict, Mergable):
                     )
 
     def __getattr__(self, key):
+        """Find and return ``key`` in self.
+
+        Raise :class:`AttributeError` if not any.
+        """
         if key in self:
             return self.get(key)
         raise AttributeError(key)
 
     def __setattr__(self, key, value):
+        """Set an item.
+
+        Same as ``self[key] = value``.
+        """
         if key not in self:
             self.__dict__[key] = value
         else:
             self[key] = value
 
     def __delattr__(self, key):
+        """Delete an item.
+
+        Same as ``del self[key]``.
+        """
         if key in self:
             del self[key]
             return
@@ -173,15 +173,11 @@ class MergableDict(OrderedDict, Mergable):
 
 
 class ConfigurationNamespace(MergableDict):
-    """
-    Configuration node that represents the configuration namespace node.
-    """
+    """Configuration node that represents the configuration namespace node."""
 
 
 class MergableList(list, Mergable):
-    """
-    Configuration node that represents the python list data.
-    """
+    """Configuration node that represents the python list data."""
 
     def __init__(self, *args, **kwargs):
         list.__init__(self)
@@ -205,8 +201,7 @@ class MergableList(list, Mergable):
 
 
 class Root(MergableDict):
-    """
-    The main class which exposes pymlconf package.
+    """The main class which exposes pymlconf package.
 
     Example::
 
@@ -224,12 +219,10 @@ class Root(MergableDict):
     """
 
     def loadfile(self, filename):
-        """
-        load file which contains yaml configuration entries and merge it by
-        current instance.
+        """Load yaml configuration file and merge it by current instance.
 
         :param filename: filename to load and merge into existing configuration
-                      instance
+                         instance
         """
         if not path.exists(filename):
             raise FileNotFoundError(filename)
@@ -239,8 +232,7 @@ class Root(MergableDict):
             self.merge(loadedyaml)
 
     def dumps(self):
-        """
-        Encode the instance as YAML String.
+        """Encode the instance as YAML String.
 
         .. versionadded:: 2.3
 
@@ -252,12 +244,14 @@ class DeferredRoot:
     _instance = None
 
     def __getattr__(self, key):
+        """Get an attribute of underlying deferred configuration instance."""
         return getattr(
             object.__getattribute__(self, '__class__')._getinstance(),
             key
         )
 
     def __setattr__(self, key, value):
+        """Set an attribute of underlying deferred configuration instance."""
         setattr(
             object.__getattribute__(self, '__class__')._getinstance(),
             key,
@@ -273,17 +267,14 @@ class DeferredRoot:
         return cls._instance
 
     def initialize(self, init_value, context=None, force=False):
-        """
-        Initialize the configuration manager
+        """Initialize the configuration manager.
 
         :param force: force initialization even if it's already initialized
         :return:
         """
-
         if not force and self._instance is not None:
             raise ConfigurationAlreadyInitializedError(
                 'Configuration manager object is already initialized.'
             )
 
         self.__class__._instance = Root(init_value, context=context)
-
