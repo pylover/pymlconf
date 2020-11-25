@@ -1,13 +1,11 @@
 name: Sphinx
 
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    type: [ created ]
 
 jobs:
   sphinx:
-    needs: test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
