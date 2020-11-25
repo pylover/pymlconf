@@ -54,12 +54,14 @@ jobs:
       run: coveralls --finish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Echo git ref 
+      run: echo ${{ github.ref }}
 
   publish:
     needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     steps:
-      - name: Echo release
-        run: echo ${{ github.ref }}
+    - name: Echo git ref 
+      run: echo ${{ github.ref }}
 
