@@ -6,4 +6,4 @@ from .errors import ConfigurationError, ConfigurationAlreadyInitializedError, \
     ConfigurationNotInitializedError
 
 
-__version__ = '2.4.14'
+__version__ = '2.4.15'
