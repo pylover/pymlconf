@@ -9,12 +9,8 @@ Welcome to pymlconf's documentation!
 .. image:: http://img.shields.io/pypi/v/pymlconf.svg
      :target: https://pypi.python.org/pypi/pymlconf
 
-.. image:: https://requires.io/github/pylover/pymlconf/requirements.svg?branch=master
-     :target: https://requires.io/github/pylover/pymlconf/requirements/?branch=master
-     :alt: Requirements Status
-
-.. image:: https://travis-ci.org/pylover/pymlconf.svg?branch=master
-     :target: https://travis-ci.org/pylover/pymlconf
+.. image:: https://github.com/pylover/pymlconf/workflows/Build/badge.svg?branch=master
+     :target: https://github.com/pylover/pymlconf/actions
 
 .. image:: https://coveralls.io/repos/github/pylover/pymlconf/badge.svg?branch=master
      :target: https://coveralls.io/github/pylover/pymlconf?branch=master
