@@ -13,7 +13,7 @@ on:
 
 jobs:
   test:
-    name: Unittests
+    name: Pytest
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -72,7 +72,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.PAT }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        release_name: ${{ github.ref }}
         draft: false
         prerelease: false 
 
