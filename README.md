@@ -3,7 +3,7 @@
 [![PyPI](http://img.shields.io/pypi/v/pymlconf.svg)](https://pypi.python.org/pypi/pymlconf)
 [![Build](https://github.com/pylover/pymlconf/workflows/Build/badge.svg?branch=master)](https://github.com/pylover/pymlconf/actions)
 [![Coverage Status](https://coveralls.io/repos/github/pylover/pymlconf/badge.svg?branch=master)](https://coveralls.io/github/pylover/pymlconf?branch=master)
-[![Documentation](https://img.shields.io/badge/Documentation-green)](https://pylover.github.io/pymlconf)
+[![Documentation](https://img.shields.io/badge/Documentation-Ready-green.svg)](https://pylover.github.io/pymlconf)
 
 
 ## About
