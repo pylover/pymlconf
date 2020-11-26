@@ -30,10 +30,11 @@ setup(
     author_email="vahid.mardani@gmail.com",
     url="http://github.com/pylover/pymlconf",
     description="Another configuration library using yaml",
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',  # This is important!
     packages=find_packages(),
     package_data={'pymlconf': ['tests/conf/*', 'tests/files/*']},
     platforms=["any"],
-    long_description=read('README.rst'),
     install_requires=dependencies,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
