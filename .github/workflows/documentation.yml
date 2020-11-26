@@ -2,7 +2,7 @@ name: Documentation
 
 on:
   release:
-    type: [ created ]
+    types: [ created ]
 
 jobs:
   sphinx:
