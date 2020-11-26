@@ -1,12 +1,12 @@
-name: Documentation
+name: PyPI
 
 on:
   release:
     types: [created]
 
 jobs:
-  sphinx:
-    name: Sphinx
+  pypi:
+    name: PyPI
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,16 +19,11 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements-ci.txt
         python -m pip install -e .
-    - name: Sphinx Build
-      working-directory: sphinx
-      run: |
-        make html
-        touch _build/html/.nojekyll 
-    - name: Deploy to gh-pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
+    - name: Create distributions
+      run: python setup.py sdist
+    - name: Publish a Python distribution to PyPI
+      uses: pypa/gh-action-pypi-publish@master
       with:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-        BRANCH: gh-pages
-        FOLDER: sphinx/_build/html
-        CLEAN: true
+        user: __token__
+        password: ${{ secrets.PYPI_TOKEN }}
 
