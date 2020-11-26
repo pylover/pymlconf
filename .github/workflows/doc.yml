@@ -1,0 +1,13 @@
+name: Documentation
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: DOc DOc
+      run: echo ${{ github.ref }}
+
