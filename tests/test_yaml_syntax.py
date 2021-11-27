@@ -1,3 +1,6 @@
+import pytest
+from yaml.scanner import ScannerError
+
 from pymlconf import Root
 
 
@@ -45,3 +48,7 @@ class Test:
         assert cm.app.languages[1].country == 'iran'
         assert cm.logging.formatter == str
         assert isinstance(cm.logging.writer, MyWriter)
+
+
+        with pytest.raises(ScannerError):
+            Root('q: s:')

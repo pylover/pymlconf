@@ -23,15 +23,9 @@ class Mergable(metaclass=abc.ABCMeta):
     :param data: Initial value to constract a mergable instance. It can be
                  ``yaml string`` or python dictionary. default: None.
     :type data: list or dict
-
-    :param context: dictionary to format the yaml before parsing in
-                    pre-processor.
-    :type context: dict
-
     """
 
-    def __init__(self, data=None, context=None):
-        self.context = context if context else {}
+    def __init__(self, data=None):
         if data:
             self.merge(data)
 
@@ -64,7 +58,7 @@ class Mergable(metaclass=abc.ABCMeta):
         raise NotImplementedError()
 
     @classmethod
-    def make_mergable_if_possible(cls, data, context):
+    def make_mergable_if_possible(cls, data):
         """Make an object mergable if possible.
 
         Returns the virgin object if cannot convert it to a mergable instance.
@@ -72,11 +66,10 @@ class Mergable(metaclass=abc.ABCMeta):
         :returns: :class:`.Mergable` or type(data)
         """
         if isinstance(data, dict):
-            return MergableDict(data=data, context=context)
+            return MergableDict(data=data)
         elif isiterable(data):
             return MergableList(
-                data=[cls.make_mergable_if_possible(i, context) for i in data],
-                context=context
+                data=[cls.make_mergable_if_possible(i) for i in data],
             )
         else:
             return data
@@ -90,7 +83,7 @@ class Mergable(metaclass=abc.ABCMeta):
         """
         for data in args:
             if isinstance(data, str):
-                tomerge = yamlhelper.loads(data, self.context)
+                tomerge = yamlhelper.loads(data)
                 if not tomerge:
                     continue
             else:
@@ -128,8 +121,7 @@ class MergableDict(OrderedDict, Mergable):
                     self[k] = v.copy()
                 else:
                     self[k] = Mergable.make_mergable_if_possible(
-                        copy.deepcopy(v),
-                        self.context
+                        copy.deepcopy(v)
                     )
 
     def __getattr__(self, key):
@@ -163,7 +155,7 @@ class MergableDict(OrderedDict, Mergable):
         super().__delattr__(key)
 
     def copy(self):
-        return MergableDict(self, context=self.context)
+        return MergableDict(self)
 
     def dump(self):
         return {
@@ -191,7 +183,7 @@ class MergableList(list, Mergable):
         self.extend(data)
 
     def copy(self):
-        return MergableList(self, context=self.context)
+        return MergableList(self)
 
     def dump(self):
         return [
@@ -227,7 +219,7 @@ class Root(MergableDict):
         if not path.exists(filename):
             raise FileNotFoundError(filename)
 
-        loadedyaml = yamlhelper.load(filename, self.context)
+        loadedyaml = yamlhelper.load(filename)
         if loadedyaml:
             self.merge(loadedyaml)
 
@@ -266,7 +258,7 @@ class DeferredRoot:
             )
         return cls._instance
 
-    def initialize(self, init_value, context=None, force=False):
+    def initialize(self, init_value, force=False):
         """Initialize the configuration manager.
 
         :param force: force initialization even if it's already initialized
@@ -277,4 +269,4 @@ class DeferredRoot:
                 'Configuration manager object is already initialized.'
             )
 
-        self.__class__._instance = Root(init_value, context=context)
+        self.__class__._instance = Root(init_value)

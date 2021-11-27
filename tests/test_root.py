@@ -6,10 +6,6 @@ from pymlconf import Root
 
 class TestConfigManager:
     def test_constructor(self):
-        context = dict(
-            c=3
-        )
-
         builtin = '''
           a:
             a1: 1
@@ -17,10 +13,10 @@ class TestConfigManager:
           b:
           - 1
           - 2
-          - %(c)s
+          - 3
         '''
 
-        root = Root(builtin, context)
+        root = Root(builtin)
         assert root.a.a1 == 1
         assert root.b[0] == 1
         assert root.b[1] == 2
@@ -62,27 +58,16 @@ class TestConfigManager:
         with pytest.raises(FileNotFoundError):
             root.loadfile('not/exists')
 
-    def test_callable_context(self):
-        def context():
-            return dict(c=3)
-
-        root = Root('a: %(c)s', context)
-        assert root.a == 3
-
     def test_dump(self):
-        context = dict(
-            c=3
-        )
-
         builtin = '''
           a:
             a1: 1
           b:
           - 1
           - 2
-          - %(c)s
+          - 3
         '''
 
-        root = Root(builtin, context)
+        root = Root(builtin)
         dump = root.dumps()
         assert dump == 'a:\n  a1: 1\nb:\n- 1\n- 2\n- 3\n'
