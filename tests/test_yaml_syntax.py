@@ -49,6 +49,5 @@ class Test:
         assert cm.logging.formatter == str
         assert isinstance(cm.logging.writer, MyWriter)
 
-
         with pytest.raises(ScannerError):
             Root('q: s:')
