@@ -4,7 +4,9 @@
 [![Build](https://github.com/pylover/pymlconf/workflows/Build/badge.svg?branch=master)](https://github.com/pylover/pymlconf/actions)
 [![Coverage Status](https://coveralls.io/repos/github/pylover/pymlconf/badge.svg?branch=master)](https://coveralls.io/github/pylover/pymlconf?branch=master)
 [![Documentation](https://img.shields.io/badge/Documentation-Ready-green.svg)](https://pylover.github.io/pymlconf)
-
+[![Downloads](https://pepy.tech/badge/pymlconf)](https://pepy.tech/project/pymlconf)
+[![Downloads](https://pepy.tech/badge/pymlconf/month)](https://pepy.tech/project/pymlconf)
+[![Downloads](https://pepy.tech/badge/pymlconf/week)](https://pepy.tech/project/pymlconf)
 
 ## About
 
