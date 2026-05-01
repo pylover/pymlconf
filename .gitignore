@@ -47,3 +47,6 @@ __pycache__
 
 # sphinx
 sphinx/_build
+
+# python-makelib
+activate.sh
