@@ -1,8 +1,0 @@
-coverage
-coveralls >= 2.2
-pytest-cov
-sphinx
-sphinx_rtd_theme
-sphinx-autobuild
-sphinx-serve
-pylama
