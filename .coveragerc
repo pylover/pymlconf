@@ -1,0 +1,9 @@
+[run]
+source = yhttp
+omit = 
+	clinic
+
+[report]
+exclude_lines=
+	raise NotImplementedError
+	pragma: no cover

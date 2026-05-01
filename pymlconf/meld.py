@@ -6,9 +6,9 @@ from . import yaml_
 class Meld(dict):
     def __init__(self, data):
         super().__init__()
-        self.mergein(data)
+        self |= data
 
-    def mergein(self, data):
+    def __ior__(self, data):
         if isinstance(data, str):
             data = yaml_.load(data)
             docopy = False
@@ -16,7 +16,9 @@ class Meld(dict):
             docopy = True
 
         if not isinstance(data, dict):
-            raise TypeError(f'Only dict and or it\'s subclasses are allowed')
+            raise TypeError(
+                'Only dict and or it\'s subclasses are allowed, '
+                f'given: {type(data)}')
 
         if docopy:
             data = copy.deepcopy(data)
@@ -25,9 +27,13 @@ class Meld(dict):
             mine = self.get(k)
             other = data.get(k)
             if isinstance(mine, Meld):
-                mine.mergein(other)
+                mine |= other
+            elif isinstance(other, dict):
+                self[k] = Meld(other)
             else:
                 self[k] = other
+
+        return self
 
     def __getattr__(self, key):
         if key not in self:
