@@ -32,8 +32,8 @@ Contents:
 .. toctree::
    :maxdepth: 4
 
-   tutorial
-   pymlconf
+   # tutorial
+   # pymlconf
 
 
 Indices and tables

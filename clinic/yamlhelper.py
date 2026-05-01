@@ -1,4 +1,5 @@
 import sys
+import functools
 
 import yaml
 from yaml import YAMLError
@@ -12,7 +13,13 @@ except ImportError:  # pragma: no cover
 def loads(string):
     try:
         return yaml.load(string, Loader)
-
+    except yaml.YAMLError, exc:
+        if hasattr(exc, 'problem_mark'):
+            mark = exc.problem_mark
+            print(
+                f'Error position: ({mark.line+1}:{mark.column+1})',
+                file=sys.stderr
+            )
     except YAMLError as ex:
         print('YAML parsing error', file=sys.stderr)
         print('Input string start', file=sys.stderr)
