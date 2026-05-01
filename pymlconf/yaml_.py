@@ -7,7 +7,7 @@ except ImportError:  # pragma: no cover
     from yaml import Loader
 
 
-load = functools.partial(yaml.load, Loader)
+load = functools.partial(yaml.load, Loader=Loader)
 dump = functools.partial(yaml.dump, default_flow_style=False)
 
 
