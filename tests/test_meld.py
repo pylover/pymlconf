@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from pymlconf import Meld
@@ -99,3 +101,30 @@ def test_include(mktmpfile):
     assert m.foo.b == 2
     assert m.bar.a == 11
     assert m.bar.b.baz == 1272
+
+
+def test_env():
+    user = os.environ['USER']
+    m = Meld('foo: !env USER')
+    assert m.foo == user
+
+
+def test_shell():
+    m = Meld('foo: !shell echo hello')
+    assert m.foo == 'hello'
+
+
+# def test_dump():
+#     m = Meld('''
+#       foo: bar
+#       baz:
+#         a: 1
+#         b: 2
+#     ''')
+#
+#     assert m.dump() == '''
+#       foo: bar
+#       baz:
+#         a: 1
+#         b: 2
+#     '''

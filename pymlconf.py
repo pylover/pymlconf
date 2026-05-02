@@ -1,6 +1,46 @@
-import copy
+"""pymlconf package."""
+__version__ = '4.0.0'
 
-from . import yaml_
+
+import os
+import copy
+import functools
+import subprocess
+
+import yaml
+try:
+    from yaml import CLoader as Loader
+except ImportError:  # pragma: no cover
+    from yaml import Loader
+
+
+load = functools.partial(yaml.load, Loader=Loader)
+
+
+def include(loader, node):
+    with open(node.value) as f:
+        return load(f)
+
+
+def env(loader, node):
+    return os.environ.get(node.value)
+
+
+def shell(loader, node):
+    result = subprocess.run(
+        node.value,
+        shell=True,
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+
+    return result.stdout.strip()
+
+
+Loader.add_constructor('!include', include)
+Loader.add_constructor('!env', env)
+Loader.add_constructor('!shell', shell)
 
 
 class Meld(dict):
@@ -14,7 +54,7 @@ class Meld(dict):
 
     def __ior__(self, data):
         if isinstance(data, str):
-            data = yaml_.load(data)
+            data = load(data)
             docopy = False
         else:
             docopy = True
@@ -55,4 +95,12 @@ class Meld(dict):
         del self[key]
 
     def load(self, file):
-        self |= yaml_.loadfile(file)
+        if isinstance(file, str):
+            with open(file) as f:
+                self.load(f)
+                return
+
+        self |= load(file)
+
+    def dump(self, **kw):
+        return yaml.dump(self, **kw)

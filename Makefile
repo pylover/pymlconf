@@ -19,4 +19,4 @@ endif
 
 
 # Include a proper bundle rules file.
-include $(PYTHON_MAKELIB_PATH)/venv-lint-test-doc-pypi.mk
+include $(PYTHON_MAKELIB_PATH)/venv-lint-test-pypi.mk

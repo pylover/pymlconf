@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
 import os
 import re
 
-from setuptools import setup, find_packages
+from setuptools import setup
+
 
 # reading pymlconf version (same way sqlalchemy does)
 with open(
-    os.path.join(os.path.dirname(__file__), 'pymlconf', '__init__.py')
+    os.path.join(os.path.dirname(__file__), 'pymlconf.py')
 ) as v_file:
     package_version = \
         re.compile(r".*__version__ = '(.*?)'", re.S) \
@@ -15,12 +15,8 @@ with open(
 
 
 dependencies = [
-    'pyyaml >= 5.3'
+    'pyyaml >= 6.0.3'
 ]
-
-
-def read(filename):
-    return open(os.path.join(os.path.dirname(__file__), filename)).read()
 
 
 setup(
@@ -32,17 +28,17 @@ setup(
     description="Another configuration library using yaml",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',  # This is important!
-    packages=find_packages(),
-    package_data={'pymlconf': ['tests/conf/*', 'tests/files/*']},
+    py_modules=['pymlconf'],
     platforms=["any"],
     install_requires=dependencies,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
-        "License :: OSI Approved :: MIT License",
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: Software Development :: Libraries'
     ],
-    test_suite='pymlconf.tests',
 )
