@@ -36,6 +36,25 @@ def test_meld_merge():
         m |= 'foo'
 
 
+def test_meld_root():
+    m = Meld('''
+      foo:
+        a: 1
+    ''')
+
+    m |= Meld(root='foo', data='''
+      b: 2
+    ''')
+
+    assert m.foo.a == 1
+    assert m.foo.b == 2
+
+    m |= Meld(root='bar', data='''
+      c: 3
+    ''')
+    assert m.bar.c == 3
+
+
 def test_meld_setattr():
     m = Meld()
     m.foo = 'bar'

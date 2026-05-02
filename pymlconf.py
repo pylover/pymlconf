@@ -1,5 +1,5 @@
 """pymlconf package."""
-__version__ = '4.0.2'
+__version__ = '4.1.0'
 
 
 import os
@@ -27,6 +27,11 @@ class Meld(dict):
 
     :param data: ``yaml string``, list of 2-tuples or dict.
     :param file: file object or filename to load.
+    :param root: enclose the ``data`` argument in another key specified by
+                 this argument.
+
+    .. versionadded:: 4.1
+       ``root`` parameter.
 
     The API is so simple:
 
@@ -68,16 +73,22 @@ class Meld(dict):
        print(m.dump())
     """
 
-    def __init__(self, data=None, file=None):
+    def __init__(self, data=None, file=None, root=None):
         super().__init__()
+        if root:
+            self[root] = Meld()
+            root = self[root]
+        else:
+            root = self
+
         if data is not None:
             if not isinstance(data, str):
                 data = dict(data)
 
-            self |= data
+            root |= data
 
         if file:
-            self.load(file)
+            root.load(file)
 
     def __ior__(self, data):
         if isinstance(data, str):
