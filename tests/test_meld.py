@@ -129,3 +129,11 @@ def test_dump(mktmpfile):
         '  a: hello\n' \
         f'  b: {user}\n' \
         '  c: qux\n'
+
+
+def test_base64():
+    foo = Meld('''
+      foo: !!binary YWJj\n
+    ''')
+
+    assert foo.foo == b'abc'

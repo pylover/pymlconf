@@ -26,15 +26,15 @@ Jump To:
  * `Source on github <https://github.com/pylover/pymlconf>`_
 
 
-Contents:
-=========
+API Reference
+=============
 
-.. toctree::
-   :maxdepth: 4
+.. module:: pymlconf
 
-   # tutorial
-   # pymlconf
-
+.. autoclass:: Meld
+    
+   .. automethod:: load
+   .. automethod:: dump
 
 Indices and tables
 ==================

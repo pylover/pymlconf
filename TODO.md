@@ -3,5 +3,4 @@
 + env var
 + shell
 + dump
-- reference to another key
-- doc
++ doc

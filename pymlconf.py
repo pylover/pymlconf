@@ -19,6 +19,55 @@ MAPPING_TAG = 'tag:yaml.org,2002:map'
 
 
 class Meld(dict):
+    """Replacement for default yaml mapping.
+
+    This class has the ability to merge with other mappings such as
+    py:class:`dict` and it's subclasses. so any configuration node can be
+    merged with other.
+
+    :param data: ``yaml string``, list of 2-tuples or dict.
+    :param file: file object or filename to load.
+
+    The API is so simple:
+
+    Create configuration instance with default value and load a file to
+    overwrite:
+
+    .. code-block::
+
+       m = Meld('''
+         foo:
+           bar: BAR
+           baz: BAZ
+       ''', file='qux.yml')
+
+    Merge/meld other mappings in:
+
+    .. code-block::
+
+       m |= dict(thud='THUD', corge=10)
+
+
+    Load a file by name:
+
+    .. code-block::
+
+       m.load('foo.yml')
+
+    Load a file-like object :
+
+    .. code-block::
+
+       with open('foo.yml') as f:
+           m.load(f)
+
+    Dump a Meld object:
+
+    .. code-block::
+
+       print(m.dump())
+    """
+
     def __init__(self, data=None, file=None):
         if isinstance(data, str):
             data = load(data)

@@ -25,4 +25,6 @@ deploy:
 	cp -rT $(BUILDDIR)/html $(DEPLOYDIR)
 
 livehtml:
-	sphinx-autobuild . -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html --watch=../$(SPHINXPROJ)
+	sphinx-autobuild . -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+		
+# --watch=../$(SPHINXPROJ)
