@@ -41,6 +41,19 @@ def test_meld_setattr():
     m.foo = 'bar'
     assert m.foo == 'bar'
 
+    m.bar = dict(
+        a=1,
+        baz=dict(
+            b=2,
+            c=3
+        )
+    )
+    assert isinstance(m.bar, Meld)
+    assert isinstance(m.bar.baz, Meld)
+    assert m.bar.a == 1
+    assert m.bar.baz.b == 2
+    assert m.bar.baz.c == 3
+
 
 def test_meld_delattr():
     m = Meld('''

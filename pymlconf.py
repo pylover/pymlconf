@@ -1,5 +1,5 @@
 """pymlconf package."""
-__version__ = '4.0.1'
+__version__ = '4.0.2'
 
 
 import os
@@ -69,10 +69,13 @@ class Meld(dict):
     """
 
     def __init__(self, data=None, file=None):
-        if isinstance(data, str):
-            data = load(data)
+        super().__init__()
+        if data is not None:
+            if not isinstance(data, str):
+                data = dict(data)
 
-        super().__init__(data or [])
+            self |= data
+
         if file:
             self.load(file)
 
@@ -94,7 +97,10 @@ class Meld(dict):
         for k in data:
             mine = self.get(k)
             other = data.get(k)
-            if isinstance(mine, Meld):
+
+            if mine is None and isinstance(other, dict):
+                self[k] = Meld(other)
+            elif isinstance(mine, Meld):
                 mine |= other
             else:
                 self[k] = other
@@ -108,6 +114,10 @@ class Meld(dict):
         return self[key]
 
     def __setattr__(self, key, value):
+        if isinstance(value, dict):
+            super().__setitem__(key, Meld(value))
+            return
+
         super().__setitem__(key, value)
 
     def __delattr__(self, key):
