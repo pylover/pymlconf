@@ -4,9 +4,10 @@ from . import yaml_
 
 
 class Meld(dict):
-    def __init__(self, data):
+    def __init__(self, data=None):
         super().__init__()
-        self |= data
+        if data is not None:
+            self |= data
 
     def __ior__(self, data):
         if isinstance(data, str):
