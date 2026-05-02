@@ -11,6 +11,9 @@ load = functools.partial(yaml.load, Loader=Loader)
 dump = functools.partial(yaml.dump, default_flow_style=False)
 
 
-def loadfile(filename):
-    with open(filename) as f:
-        return load(f.read())
+def loadfile(file):
+    if isinstance(file, str):
+        with open(file) as f:
+            return loadfile(f)
+
+    return load(file)

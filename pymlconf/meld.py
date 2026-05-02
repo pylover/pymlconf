@@ -4,10 +4,13 @@ from . import yaml_
 
 
 class Meld(dict):
-    def __init__(self, data=None):
+    def __init__(self, data=None, file=None):
         super().__init__()
         if data is not None:
             self |= data
+
+        if file:
+            self.load(file)
 
     def __ior__(self, data):
         if isinstance(data, str):
@@ -50,3 +53,6 @@ class Meld(dict):
             raise AttributeError(key)
 
         del self[key]
+
+    def load(self, file):
+        self |= yaml_.loadfile(file)
