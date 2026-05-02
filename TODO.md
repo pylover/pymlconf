@@ -1,5 +1,5 @@
 + merge with pipe: |
-- include directive
++ include directive
 - env var
 - shell
 - reference to another key

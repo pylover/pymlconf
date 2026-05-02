@@ -17,3 +17,10 @@ def loadfile(file):
             return loadfile(f)
 
     return load(file)
+
+
+def include(loader, node):
+    return loadfile(node.value)
+
+
+Loader.add_constructor('!include', include)

@@ -77,14 +77,25 @@ def test_meld_loadfile(mktmpfile):
     assert m.bar.d == 21
 
 
-# def test_include(mktmpfile):
-#     foo = mktmpfile(name='foo.yml', content='''
-#       foo:
-#         a: 1
-#         b: 2
-#     ''')
-#     m = Meld()
-#
-#     m |= f'!include {foo}'
-#     assert m.foo.a == 1
-#     assert m.foo.b == 2
+def test_include(mktmpfile):
+    baz = mktmpfile(name='baz.yml', content='''
+      baz: 1272
+    ''')
+    foo = mktmpfile(name='foo.yml', content='''
+      foo:
+        a: 1
+        b: 2
+    ''')
+    bar = mktmpfile(name='bar.yml', content=f'''
+      bar:
+        a: 11
+        b: !include {baz}
+    ''')
+    m = Meld()
+
+    m |= f'!include {foo}'
+    m |= f'!include {bar}'
+    assert m.foo.a == 1
+    assert m.foo.b == 2
+    assert m.bar.a == 11
+    assert m.bar.b.baz == 1272
