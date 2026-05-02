@@ -15,40 +15,15 @@ except ImportError:  # pragma: no cover
 
 
 load = functools.partial(yaml.load, Loader=Loader)
-
-
-def include(loader, node):
-    with open(node.value) as f:
-        return load(f)
-
-
-def env(loader, node):
-    return os.environ.get(node.value)
-
-
-def shell(loader, node):
-    result = subprocess.run(
-        node.value,
-        shell=True,
-        check=True,
-        text=True,
-        capture_output=True,
-    )
-
-    return result.stdout.strip()
-
-
-Loader.add_constructor('!include', include)
-Loader.add_constructor('!env', env)
-Loader.add_constructor('!shell', shell)
+MAPPING_TAG = 'tag:yaml.org,2002:map'
 
 
 class Meld(dict):
     def __init__(self, data=None, file=None):
-        super().__init__()
-        if data is not None:
-            self |= data
+        if isinstance(data, str):
+            data = load(data)
 
+        super().__init__(data or [])
         if file:
             self.load(file)
 
@@ -72,8 +47,6 @@ class Meld(dict):
             other = data.get(k)
             if isinstance(mine, Meld):
                 mine |= other
-            elif isinstance(other, dict):
-                self[k] = Meld(other)
             else:
                 self[k] = other
 
@@ -104,3 +77,39 @@ class Meld(dict):
 
     def dump(self, **kw):
         return yaml.dump(self, **kw)
+
+
+def meld_constructor(loader, node):
+    return Meld(loader.construct_pairs(node))
+
+
+def meld_representer(dumper, data):
+    return dumper.represent_mapping(MAPPING_TAG, data)
+
+
+def include_constructor(loader, node):
+    with open(node.value) as f:
+        return load(f)
+
+
+def env_constructor(loader, node):
+    return os.environ.get(node.value)
+
+
+def shell_constructor(loader, node):
+    result = subprocess.run(
+        node.value,
+        shell=True,
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+
+    return result.stdout.strip()
+
+
+Loader.add_constructor(MAPPING_TAG, meld_constructor)
+yaml.add_representer(Meld, meld_representer)
+Loader.add_constructor('!include', include_constructor)
+Loader.add_constructor('!env', env_constructor)
+Loader.add_constructor('!shell', shell_constructor)

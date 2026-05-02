@@ -114,17 +114,18 @@ def test_shell():
     assert m.foo == 'hello'
 
 
-# def test_dump():
-#     m = Meld('''
-#       foo: bar
-#       baz:
-#         a: 1
-#         b: 2
-#     ''')
-#
-#     assert m.dump() == '''
-#       foo: bar
-#       baz:
-#         a: 1
-#         b: 2
-#     '''
+def test_dump(mktmpfile):
+    qux = mktmpfile(content='qux')
+    user = os.environ['USER']
+    m = Meld(f'''
+      foo:
+        a: !shell echo hello
+        b: !env USER
+        c: !include {qux}
+    ''')
+
+    assert m.dump() == \
+        'foo:\n' \
+        '  a: hello\n' \
+        f'  b: {user}\n' \
+        '  c: qux\n'
