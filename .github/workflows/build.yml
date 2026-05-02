@@ -32,7 +32,6 @@ jobs:
       run: |
         sudo git clone https://github.com/pylover/python-makelib.git /usr/local/lib/python-makelib
         make install-common install-doc editable-install
-        sudo cp `which bddcli-bootstrapper` /usr/local/bin
     - name: Lint
       run: make lint
     - name: Test
