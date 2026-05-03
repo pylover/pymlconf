@@ -1,5 +1,5 @@
 """pymlconf package."""
-__version__ = '4.1.0'
+__version__ = '4.1.1'
 
 
 import os
@@ -109,9 +109,10 @@ class Meld(dict):
             mine = self.get(k)
             other = data.get(k)
 
-            if mine is None and isinstance(other, dict):
-                self[k] = Meld(other)
-            elif isinstance(mine, Meld):
+            if not isinstance(other, Meld) and isinstance(other, dict):
+                other = Meld(other)
+
+            if isinstance(mine, Meld):
                 mine |= other
             else:
                 self[k] = other
@@ -149,10 +150,6 @@ class Meld(dict):
         return yaml.dump(self, **kw)
 
 
-def meld_constructor(loader, node):
-    return Meld(loader.construct_pairs(node))
-
-
 def meld_representer(dumper, data):
     return dumper.represent_mapping(MAPPING_TAG, data)
 
@@ -178,7 +175,6 @@ def shell_constructor(loader, node):
     return result.stdout.strip()
 
 
-Loader.add_constructor(MAPPING_TAG, meld_constructor)
 yaml.add_representer(Meld, meld_representer)
 Loader.add_constructor('!include', include_constructor)
 Loader.add_constructor('!env', env_constructor)

@@ -146,6 +146,28 @@ def test_shell():
     assert m.foo == 'hello'
 
 
+def test_base64():
+    foo = Meld('''
+      foo: !!binary YWJj\n
+    ''')
+
+    assert foo.foo == b'abc'
+
+
+def test_list():
+    m = Meld('''
+    foo:
+      bars: BAR
+    ''')
+
+    m |= Meld(root='foo', data='''
+      bars:
+      - a
+    ''')
+
+    assert m.foo.bars == ['a']
+
+
 def test_dump(mktmpfile):
     qux = mktmpfile(content='qux')
     user = os.environ['USER']
@@ -161,11 +183,3 @@ def test_dump(mktmpfile):
         '  a: hello\n' \
         f'  b: {user}\n' \
         '  c: qux\n'
-
-
-def test_base64():
-    foo = Meld('''
-      foo: !!binary YWJj\n
-    ''')
-
-    assert foo.foo == b'abc'
